@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Carousel
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  body
+    #carousel-container.container
+      #prev
+        .arrow.noselect &#9664;
+      #next
+        .arrow.noselect &#9654;
+      #carousel
+        - (2..18).each do |num|
+          .card
+            img [src = "/assets/cards/card#{num}.jpg"]
+
+
