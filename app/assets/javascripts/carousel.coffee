@@ -10,11 +10,12 @@ class Carousel
     @carousel.wrapInner "<div class='carousel-track'></div>"
     @carousel.wrapInner "<div class='carousel-scroller'></div>"
     @carousel.wrapInner "<div class='carousel-container'></div>"
-    @track = @carousel.find '.carousel-track'
-    @scroller = @carousel.find '.carousel-scroller'
-    @elements = @getElements()
-    @elements.addClass 'carousel-slide'
+    @scroller = new window.Scroller('.carousel-scroller', '.carousel-track', @options)
 
+    @indexElements()
+    $elements = @getElements()
+    $elements.addClass 'carousel-slide'
+    $($elements.get(@options.initialSlide)).addClass 'carousel-current'
     @prevBtn = $ "#{@options.prev}"
     @nextBtn = $ "#{@options.next}"
 
@@ -22,7 +23,12 @@ class Carousel
     # @setPosition()
 
   getElements: ->
-    @track.find @options.slideSelector
+    @scroller.getElements()
+
+  indexElements: ->
+    $elements = @getElements()
+    for index, elem of $elements.get()
+      $(elem).attr 'data-carousel-index', index
 
   defaults: ->
     defaults =
@@ -60,51 +66,21 @@ class Carousel
       combined[attribute] = options[attribute]
     combined
 
-  slideStageDiff: (index)->
-    # deltaX of index slide to stage
-    op = @options
-    $slide = @track.find ".carousel-slide[data-carousel-index=#{index}]"
-    console.log ".carousel-slide[data-carousel-index=#{index}]"
-    console.log $slide
-    method = op.alignment.capitalize()
-    @["diff#{method}"]($slide)
-
-  diffLeft: (slide)->
-    @scroller.offset().left - slide.offset().left
-
-  diffRight: (slide)->
-    @scroller.offset().right - slide.offset().right - @scroller.width()
-
-  diffCenter: (slide)->
-    scrollerCenter = @scroller.offset().left + @scroller.width() / 2
-    slideCenter = slide.offset().left + slide.width() / 2
-    scrollerCenter - slideCenter
-
-  next: ->
-    console.log @track.find('.carousel-slide').data
-    index = @track.find('.carousel-slide').data 'carousel-index' + @options.slidesToScroll
-    diff = @slideStageDiff index
-    @moveTrack diff
-
-  prev: ->
-    index = @track.find('.carousel-slide').data 'carousel-index' - @options.slidesToScroll
-    diff = @slideStageDiff index
-    @moveTrack diff
-
-  # positive difference moves right
-  # negative difference moves left
-  moveTrack: (difference)->
-    @track.css 'left', difference
-
   handlers: ->
     @arrowHandlers()
 
+  moveDirection: (direction)->
+    return false if @moving
+    @moving = true
+    @scroller[direction]()
+    @moving = false
+
   arrowHandlers: ->
     @prevBtn.on 'click', (e)=>
-      @prev()
+      @moveDirection 'prev'
 
     @nextBtn.on 'click', (e)=>
-      @next()
+      @moveDirection 'next'
 
 $ ->
   window.Carousel = Carousel

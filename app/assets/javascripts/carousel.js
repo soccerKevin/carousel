@@ -3,6 +3,7 @@ var Carousel;
 
 Carousel = (function() {
   function Carousel(selector, options) {
+    var $elements;
     if (selector == null) {
       throw new Error('Missing Parameters Error');
     }
@@ -14,17 +15,30 @@ Carousel = (function() {
     this.carousel.wrapInner("<div class='carousel-track'></div>");
     this.carousel.wrapInner("<div class='carousel-scroller'></div>");
     this.carousel.wrapInner("<div class='carousel-container'></div>");
-    this.track = this.carousel.find('.carousel-track');
-    this.scroller = this.carousel.find('.carousel-scroller');
-    this.elements = this.getElements();
-    this.elements.addClass('carousel-slide');
+    this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
+    this.indexElements();
+    $elements = this.getElements();
+    $elements.addClass('carousel-slide');
+    $($elements.get(this.options.initialSlide)).addClass('carousel-current');
     this.prevBtn = $("" + this.options.prev);
     this.nextBtn = $("" + this.options.next);
     this.handlers();
   }
 
   Carousel.prototype.getElements = function() {
-    return this.track.find(this.options.slideSelector);
+    return this.scroller.getElements();
+  };
+
+  Carousel.prototype.indexElements = function() {
+    var $elements, elem, index, ref, results;
+    $elements = this.getElements();
+    ref = $elements.get();
+    results = [];
+    for (index in ref) {
+      elem = ref[index];
+      results.push($(elem).attr('data-carousel-index', index));
+    }
+    return results;
   };
 
   Carousel.prototype.defaults = function() {
@@ -70,63 +84,28 @@ Carousel = (function() {
     return combined;
   };
 
-  Carousel.prototype.slideStageDiff = function(index) {
-    var $slide, method, op;
-    op = this.options;
-    $slide = this.track.find(".carousel-slide[data-carousel-index=" + index + "]");
-    console.log(".carousel-slide[data-carousel-index=" + index + "]");
-    console.log($slide);
-    method = op.alignment.capitalize();
-    return this["diff" + method]($slide);
-  };
-
-  Carousel.prototype.diffLeft = function(slide) {
-    return this.scroller.offset().left - slide.offset().left;
-  };
-
-  Carousel.prototype.diffRight = function(slide) {
-    return this.scroller.offset().right - slide.offset().right - this.scroller.width();
-  };
-
-  Carousel.prototype.diffCenter = function(slide) {
-    var scrollerCenter, slideCenter;
-    scrollerCenter = this.scroller.offset().left + this.scroller.width() / 2;
-    slideCenter = slide.offset().left + slide.width() / 2;
-    return scrollerCenter - slideCenter;
-  };
-
-  Carousel.prototype.next = function() {
-    var diff, index;
-    console.log(this.track.find('.carousel-slide').data);
-    index = this.track.find('.carousel-slide').data('carousel-index' + this.options.slidesToScroll);
-    diff = this.slideStageDiff(index);
-    return this.moveTrack(diff);
-  };
-
-  Carousel.prototype.prev = function() {
-    var diff, index;
-    index = this.track.find('.carousel-slide').data('carousel-index' - this.options.slidesToScroll);
-    diff = this.slideStageDiff(index);
-    return this.moveTrack(diff);
-  };
-
-  Carousel.prototype.moveTrack = function(difference) {
-    return this.track.css('left', difference);
-  };
-
   Carousel.prototype.handlers = function() {
     return this.arrowHandlers();
+  };
+
+  Carousel.prototype.moveDirection = function(direction) {
+    if (this.moving) {
+      return false;
+    }
+    this.moving = true;
+    this.scroller[direction]();
+    return this.moving = false;
   };
 
   Carousel.prototype.arrowHandlers = function() {
     this.prevBtn.on('click', (function(_this) {
       return function(e) {
-        return _this.prev();
+        return _this.moveDirection('prev');
       };
     })(this));
     return this.nextBtn.on('click', (function(_this) {
       return function(e) {
-        return _this.next();
+        return _this.moveDirection('next');
       };
     })(this));
   };
