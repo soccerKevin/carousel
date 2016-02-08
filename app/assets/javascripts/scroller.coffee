@@ -18,7 +18,7 @@ class Scroller
     @scroller.offset().left - slide.offset().left
 
   diffRight: (slide)->
-    @scroller.offset().right - slide.offset().right - @scroller.width()
+    (@scroller.offset().left + @scroller.width()) - (slide.offset().left + slide.width())
 
   diffCenter: (slide)->
     scrollerCenter = @scroller.offset().left + @scroller.width() / 2
@@ -47,6 +47,7 @@ class Scroller
     return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
     diff = @slideStageDiff index
     @moveTrack diff
+    @setCurrent index
 
 $ ->
   window.Scroller = Scroller

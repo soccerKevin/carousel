@@ -24,7 +24,7 @@ Scroller = (function() {
   };
 
   Scroller.prototype.diffRight = function(slide) {
-    return this.scroller.offset().right - slide.offset().right - this.scroller.width();
+    return (this.scroller.offset().left + this.scroller.width()) - (slide.offset().left + slide.width());
   };
 
   Scroller.prototype.diffCenter = function(slide) {
@@ -64,7 +64,8 @@ Scroller = (function() {
       return false;
     }
     diff = this.slideStageDiff(index);
-    return this.moveTrack(diff);
+    this.moveTrack(diff);
+    return this.setCurrent(index);
   };
 
   return Scroller;
