@@ -12,6 +12,16 @@ Scroller = (function() {
     return this.track.find(this.options.slideSelector);
   };
 
+  Scroller.prototype.goto = function(index) {
+    var diff;
+    if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
+      return false;
+    }
+    diff = this.slideStageDiff(index);
+    this.moveTrack(diff);
+    return this.setCurrent(index);
+  };
+
   Scroller.prototype.slideStageDiff = function(index) {
     var $slide, method;
     $slide = this.track.find(".carousel-slide[data-carousel-index=" + index + "]");
@@ -47,25 +57,15 @@ Scroller = (function() {
   };
 
   Scroller.prototype.next = function() {
-    var diff, index;
+    var index;
     index = this.track.find('.carousel-current').data('carousel-index') + this.options.slidesToScroll;
-    if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
-      return false;
-    }
-    diff = this.slideStageDiff(index);
-    this.moveTrack(diff);
-    return this.setCurrent(index);
+    return this.goto(index);
   };
 
   Scroller.prototype.prev = function() {
-    var diff, index;
+    var index;
     index = this.track.find('.carousel-current').data('carousel-index') - this.options.slidesToScroll;
-    if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
-      return false;
-    }
-    diff = this.slideStageDiff(index);
-    this.moveTrack(diff);
-    return this.setCurrent(index);
+    return this.goto(index);
   };
 
   return Scroller;

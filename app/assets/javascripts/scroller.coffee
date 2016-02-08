@@ -7,6 +7,12 @@ class Scroller
   getElements: ->
     @track.find @options.slideSelector
 
+  goto: (index)->
+    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
+    diff = @slideStageDiff index
+    @moveTrack diff
+    @setCurrent index
+
   # delta(x) of slide[index] to stage
   # uses the already set method
   slideStageDiff: (index)->
@@ -21,8 +27,11 @@ class Scroller
     (@scroller.offset().left + @scroller.width()) - (slide.offset().left + slide.width())
 
   diffCenter: (slide)->
+    # console.log slide
     scrollerCenter = @scroller.offset().left + @scroller.width() / 2
     slideCenter = slide.offset().left + slide.width() / 2
+    # console.log "scroller: #{scrollerCenter}"
+    # console.log "slide: #{slideCenter}"
     scrollerCenter - slideCenter
 
   # positive difference moves right
@@ -37,17 +46,11 @@ class Scroller
 
   next: ->
     index = @track.find('.carousel-current').data('carousel-index') + @options.slidesToScroll
-    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
-    diff = @slideStageDiff index
-    @moveTrack diff
-    @setCurrent index
+    @goto index
 
   prev: ->
     index = @track.find('.carousel-current').data('carousel-index') - @options.slidesToScroll
-    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
-    diff = @slideStageDiff index
-    @moveTrack diff
-    @setCurrent index
+    @goto index
 
 $ ->
   window.Scroller = Scroller

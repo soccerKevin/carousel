@@ -3,7 +3,7 @@ $ ->
     next: '#next .arrow'
     prev: '#prev .arrow'
     alignment: 'center'
-    initialSlide: 0
+    initialSlide: 3
     ltr: true
     # slidesToScroll: 1
     # slidesToShow: 1

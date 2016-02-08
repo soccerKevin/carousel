@@ -5,7 +5,7 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 0,
+    initialSlide: 3,
     ltr: true
   };
   return window.carousel = new window.Carousel('#carousel', options);

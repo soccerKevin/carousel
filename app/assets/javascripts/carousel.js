@@ -19,10 +19,14 @@ Carousel = (function() {
     this.indexElements();
     $elements = this.getElements();
     $elements.addClass('carousel-slide');
-    $($elements.get(this.options.initialSlide)).addClass('carousel-current');
     this.prevBtn = $("" + this.options.prev);
     this.nextBtn = $("" + this.options.next);
     this.handlers();
+    setTimeout(((function(_this) {
+      return function() {
+        return _this.scroller.goto(_this.options.initialSlide);
+      };
+    })(this)), 30);
   }
 
   Carousel.prototype.getElements = function() {

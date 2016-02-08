@@ -15,12 +15,13 @@ class Carousel
     @indexElements()
     $elements = @getElements()
     $elements.addClass 'carousel-slide'
-    $($elements.get(@options.initialSlide)).addClass 'carousel-current'
     @prevBtn = $ "#{@options.prev}"
     @nextBtn = $ "#{@options.next}"
 
     @handlers()
-    # @setPosition()
+    setTimeout (=>
+      @scroller.goto @options.initialSlide
+    ), 30
 
   getElements: ->
     @scroller.getElements()
