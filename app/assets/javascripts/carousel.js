@@ -41,11 +41,11 @@ Carousel = (function() {
       return function() {
         return _this.scroller.goto(_this.options.initialSlide);
       };
-    })(this)), 30);
+    })(this)), 50);
   }
 
   Carousel.prototype.applyOptions = function(options) {
-    return this.setSlideWidth();
+    return this.scroller.setSlideWidth();
   };
 
   Carousel.prototype.getSlides = function() {
@@ -90,15 +90,11 @@ Carousel = (function() {
       slidesToScroll: 1,
 
       /*
-        these are percentages
-        if 1 is true, the other must be false
+        width of slides compared to carousel
+        show 2 slides at once, set to .5
+        show 4 slides at once, set to .25
        */
-
-      /* show 4 slides at once, set to 25% */
-      slideWidth: 100,
-
-      /* will expand slides to fit the height */
-      slideHeight: false,
+      slideWidth: '1',
 
       /* fake the infinite slides */
       infinite: false,
@@ -140,9 +136,10 @@ Carousel = (function() {
     return this.moving = false;
   };
 
-  Carousel.prototype.resize = function() {};
-
-  Carousel.prototype.setSlideWidth = function() {};
+  Carousel.prototype.resize = function() {
+    this.applyOptions();
+    return this.scroller.gotoCurrent();
+  };
 
   Carousel.prototype.handlers = function() {
     this.arrowHandlers();

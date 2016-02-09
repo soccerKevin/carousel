@@ -62,6 +62,12 @@ Scroller = (function() {
     return $slides.removeClass('carousel-current').eq(index).addClass('carousel-current');
   };
 
+  Scroller.prototype.setSlideWidth = function() {
+    var $slides;
+    $slides = this.getSlides();
+    return $slides.css('width', this.scroller.width() * this.options.slideWidth);
+  };
+
   Scroller.prototype.next = function() {
     var index, slides;
     slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;

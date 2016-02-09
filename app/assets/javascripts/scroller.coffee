@@ -43,6 +43,10 @@ class Scroller
     $slides = @getSlides()
     $slides.removeClass('carousel-current').eq(index).addClass 'carousel-current'
 
+  setSlideWidth: ()->
+    $slides = @getSlides()
+    $slides.css 'width', @scroller.width() * @options.slideWidth
+
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
     index = @track.find('.carousel-current').data('carousel-index') + slides

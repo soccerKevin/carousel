@@ -35,10 +35,10 @@ class Carousel
     @applyOptions @options
     setTimeout (=>
       @scroller.goto @options.initialSlide
-    ), 30
+    ), 50
 
   applyOptions: (options)->
-    @setSlideWidth()
+    @scroller.setSlideWidth()
 
   getSlides: ->
     @scroller.getSlides()
@@ -67,13 +67,11 @@ class Carousel
       slidesToScroll: 1
 
       ###
-        these are percentages
-        if 1 is true, the other must be false
+        width of slides compared to carousel
+        show 2 slides at once, set to .5
+        show 4 slides at once, set to .25
       ###
-      ### show 4 slides at once, set to 25% ###
-      slideWidth: 100
-      ### will expand slides to fit the height ###
-      slideHeight: false
+      slideWidth: '1'
 
       ### fake the infinite slides ###
       infinite: false
@@ -107,9 +105,8 @@ class Carousel
     @moving = false
 
   resize: ->
-
-  setSlideWidth: ->
-
+    @applyOptions()
+    @scroller.gotoCurrent()
 
   handlers: ->
     @arrowHandlers()

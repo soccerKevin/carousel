@@ -7,8 +7,7 @@ $(function() {
     alignment: 'center',
     initialSlide: 0,
     ltr: true,
-    slideWidth: 100,
-    slideHeight: false
+    slideWidth: '.33333'
   };
   return window.carousel = new window.Carousel('#carousel', options);
 });

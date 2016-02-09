@@ -1,6 +1,6 @@
 #carousel-container{
-  // height: 550px;
-  height: 50vh;
+  height: 550px;
+  // height: 50vh;
   width: 80%;
   position: relative;
   left: 50px;
@@ -39,7 +39,7 @@
 
     .card{
       img{
-        height: 100%;
+        width: 100%;
       }
     }
   }
