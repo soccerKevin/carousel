@@ -38,7 +38,7 @@ Carousel = (function() {
     this.applyOptions(this.options);
     setTimeout(((function(_this) {
       return function() {
-        return _this.scroller.goto(_this.options.initialSlide);
+        return _this.scroller.gotoCurrent(false);
       };
     })(this)), 50);
   }

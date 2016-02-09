@@ -3,7 +3,7 @@ $ ->
     next: '#next .arrow'
     prev: '#prev .arrow'
     alignment: 'center'
-    initialSlide: 0
+    initialSlide: 5
     ltr: true
     slideWidth: '.8'
     speed: 800 #mili-seconds

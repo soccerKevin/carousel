@@ -11,6 +11,7 @@ Scroller = (function() {
     this.options = options;
     this.setTrackTransition();
     this.indexSlides();
+    this.setCurrent(this.options.initialSlide);
     this.handlers();
   }
 
@@ -41,21 +42,29 @@ Scroller = (function() {
     }
   };
 
-  Scroller.prototype.goto = function(index) {
+  Scroller.prototype.goto = function(index, animated) {
     var diff;
+    if (animated == null) {
+      animated = true;
+    }
     if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
       return false;
     }
-    this.track.addClass(this.TRACK_TRANSITION);
+    if (animated) {
+      this.track.addClass(this.TRACK_TRANSITION);
+    }
     diff = this.slideStageDiff(index);
     this.moveTrack(diff);
     return this.setCurrent(index);
   };
 
-  Scroller.prototype.gotoCurrent = function() {
+  Scroller.prototype.gotoCurrent = function(animated) {
     var index;
+    if (animated == null) {
+      animated = true;
+    }
     index = this.track.find('.carousel-current').data('carousel-index');
-    return this.goto(index);
+    return this.goto(index, animated);
   };
 
   Scroller.prototype.slideStageDiff = function(index) {

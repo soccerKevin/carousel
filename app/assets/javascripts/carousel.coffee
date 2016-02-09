@@ -33,7 +33,7 @@ class Carousel
     @handlers()
     @applyOptions @options
     setTimeout (=>
-      @scroller.goto @options.initialSlide
+      @scroller.gotoCurrent false
     ), 50
 
   applyOptions: (options)->

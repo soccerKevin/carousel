@@ -8,6 +8,7 @@ class Scroller
     @options = options
     @setTrackTransition()
     @indexSlides()
+    @setCurrent @options.initialSlide
     @handlers()
 
   indexSlides: ->
@@ -40,16 +41,16 @@ class Scroller
     else
       $('head').append $trackTransition
 
-  goto: (index)->
+  goto: (index, animated = true)->
     return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
-    @track.addClass @TRACK_TRANSITION
+    @track.addClass @TRACK_TRANSITION if animated
     diff = @slideStageDiff index
     @moveTrack diff
     @setCurrent index
 
-  gotoCurrent: ->
+  gotoCurrent: (animated = true)->
     index = @track.find('.carousel-current').data('carousel-index')
-    @goto index
+    @goto index, animated
 
   # delta(x) of slide[index] to stage
   # uses diff[method]
