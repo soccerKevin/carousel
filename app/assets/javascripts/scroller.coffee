@@ -1,6 +1,8 @@
 class Scroller
   constructor: (scrollerSelector, trackSelector, options)->
+    @uid = window.guid()
     @scroller = $ scrollerSelector
+    @scroller.attr 'data-uid', @uid
     @track = $ trackSelector
     @TRACK_TRANSITION = 'carousel-track-transition'
     @options = options
@@ -17,10 +19,10 @@ class Scroller
     @track.find @options.slideSelector
 
   setTrackTransition: ->
-    trackTransition = $("<style id='carousel-track-transition'></style>")
+    $trackTransition = $("<style id='#{@TRACK_TRANSITION}-#{@uid}'></style>")
       .prop("type", "text/css")
       .html(
-        ".#{@TRACK_TRANSITION} {\
+        "#{@scroller.selector}[data-uid='#{@uid}'] .#{@TRACK_TRANSITION} {\
           transition: left #{@options.speed / 1000}s #{@options.cssEase} !important;\
         }
         "
@@ -32,11 +34,11 @@ class Scroller
         left:50%;\
         }"
       )
-    $elem = $('head').find @TRACK_TRANSITION
+    $elem = $('head').find $trackTransition.selector
     if $elem.get 0
-      $elem.replaceWith trackTransition
+      $elem.replaceWith $trackTransition
     else
-      $('head').append trackTransition
+      $('head').append $trackTransition
 
   goto: (index)->
     return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)

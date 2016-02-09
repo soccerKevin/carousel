@@ -3,7 +3,9 @@ var Scroller;
 
 Scroller = (function() {
   function Scroller(scrollerSelector, trackSelector, options) {
+    this.uid = window.guid();
     this.scroller = $(scrollerSelector);
+    this.scroller.attr('data-uid', this.uid);
     this.track = $(trackSelector);
     this.TRACK_TRANSITION = 'carousel-track-transition';
     this.options = options;
@@ -29,13 +31,13 @@ Scroller = (function() {
   };
 
   Scroller.prototype.setTrackTransition = function() {
-    var $elem, trackTransition;
-    trackTransition = $("<style id='carousel-track-transition'></style>").prop("type", "text/css").html("." + this.TRACK_TRANSITION + " {transition: left " + (this.options.speed / 1000) + "s " + this.options.cssEase + " !important;}", "#my-window {position: fixed;z-index: 102;display:none;top:50%;left:50%;}");
-    $elem = $('head').find(this.TRACK_TRANSITION);
+    var $elem, $trackTransition;
+    $trackTransition = $("<style id='" + this.TRACK_TRANSITION + "-" + this.uid + "'></style>").prop("type", "text/css").html(this.scroller.selector + "[data-uid='" + this.uid + "'] ." + this.TRACK_TRANSITION + " {transition: left " + (this.options.speed / 1000) + "s " + this.options.cssEase + " !important;}", "#my-window {position: fixed;z-index: 102;display:none;top:50%;left:50%;}");
+    $elem = $('head').find($trackTransition.selector);
     if ($elem.get(0)) {
-      return $elem.replaceWith(trackTransition);
+      return $elem.replaceWith($trackTransition);
     } else {
-      return $('head').append(trackTransition);
+      return $('head').append($trackTransition);
     }
   };
 
