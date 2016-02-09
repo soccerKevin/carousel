@@ -25,7 +25,6 @@ class Carousel
     @carouselContainer = @carousel.find '.carousel-container'
     @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
 
-    @indexSlides()
     $slides = @getSlides()
     $slides.addClass 'carousel-slide'
     @prevBtn = $ "#{@options.prev}"
@@ -42,11 +41,6 @@ class Carousel
 
   getSlides: ->
     @scroller.getSlides()
-
-  indexSlides: ->
-    $slides = @getSlides()
-    for index, elem of $slides.get()
-      $(elem).attr 'data-carousel-index', index
 
   defaults: ->
     defaults =

@@ -5,16 +5,14 @@ $ ->
     alignment: 'center'
     initialSlide: 0
     ltr: true
-    slideWidth: '.33333'
+    slideWidth: '.8'
+    speed: 800 #mili-seconds
+    # cssEase: 'ease-out'
     # infinite: false
     # slideSelector: '>*'
-    # respondTo: window
-    # adaptiveHeight: true
     # draggable: true
     # effect: 'fade'
-    # cssEase: 'ease-out'
     # edgeFriction: 0
-    # speed: 1000
     # touchThreshold: 5
     # lazyLoad: false
     # lazyLoadRate: 0

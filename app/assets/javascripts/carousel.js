@@ -30,7 +30,6 @@ Carousel = (function() {
     this.carousel.wrapInner("<div class='carousel-container'></div>");
     this.carouselContainer = this.carousel.find('.carousel-container');
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
-    this.indexSlides();
     $slides = this.getSlides();
     $slides.addClass('carousel-slide');
     this.prevBtn = $("" + this.options.prev);
@@ -50,18 +49,6 @@ Carousel = (function() {
 
   Carousel.prototype.getSlides = function() {
     return this.scroller.getSlides();
-  };
-
-  Carousel.prototype.indexSlides = function() {
-    var $slides, elem, index, ref, results;
-    $slides = this.getSlides();
-    ref = $slides.get();
-    results = [];
-    for (index in ref) {
-      elem = ref[index];
-      results.push($(elem).attr('data-carousel-index', index));
-    }
-    return results;
   };
 
   Carousel.prototype.defaults = function() {

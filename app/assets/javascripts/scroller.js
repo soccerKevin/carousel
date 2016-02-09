@@ -5,11 +5,38 @@ Scroller = (function() {
   function Scroller(scrollerSelector, trackSelector, options) {
     this.scroller = $(scrollerSelector);
     this.track = $(trackSelector);
+    this.TRACK_TRANSITION = 'carousel-track-transition';
     this.options = options;
+    this.setTrackTransition();
+    this.indexSlides();
+    this.handlers();
   }
+
+  Scroller.prototype.indexSlides = function() {
+    var $slides, elem, index, ref, results;
+    $slides = this.getSlides();
+    ref = $slides.get();
+    results = [];
+    for (index in ref) {
+      elem = ref[index];
+      results.push($(elem).attr('data-carousel-index', index));
+    }
+    return results;
+  };
 
   Scroller.prototype.getSlides = function() {
     return this.track.find(this.options.slideSelector);
+  };
+
+  Scroller.prototype.setTrackTransition = function() {
+    var $elem, trackTransition;
+    trackTransition = $("<style id='carousel-track-transition'></style>").prop("type", "text/css").html("." + this.TRACK_TRANSITION + " {transition: " + (this.options.speed / 1000) + "s!important;}", "#my-window {position: fixed;z-index: 102;display:none;top:50%;left:50%;}");
+    $elem = $('head').find(this.TRACK_TRANSITION);
+    if ($elem.get(0)) {
+      return $elem.replaceWith(trackTransition);
+    } else {
+      return $('head').append(trackTransition);
+    }
   };
 
   Scroller.prototype.goto = function(index) {
@@ -17,6 +44,7 @@ Scroller = (function() {
     if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
       return false;
     }
+    this.track.addClass(this.TRACK_TRANSITION);
     diff = this.slideStageDiff(index);
     this.moveTrack(diff);
     return this.setCurrent(index);
@@ -80,6 +108,20 @@ Scroller = (function() {
     slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
     index = this.track.find('.carousel-current').data('carousel-index') - slides;
     return this.goto(index);
+  };
+
+  Scroller.prototype.handlers = function() {
+    return this.animationEndHandler();
+  };
+
+  Scroller.prototype.animationEndHandler = function() {
+    var transitionEnd;
+    transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd';
+    return $(document).on(transitionEnd, (function(_this) {
+      return function() {
+        return _this.track.removeClass(_this.TRACK_TRANSITION);
+      };
+    })(this));
   };
 
   return Scroller;
