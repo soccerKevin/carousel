@@ -8,8 +8,8 @@ $ ->
     slideWidth: '.8'
     speed: 800 #mili-seconds
     cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
+    slideSelector: '.card'
     # infinite: false
-    # slideSelector: '>*'
     # draggable: true
     # effect: 'fade'
     # edgeFriction: 0
