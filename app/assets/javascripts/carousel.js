@@ -15,7 +15,7 @@ Carousel = (function() {
     options = overrides for defaults
    */
   function Carousel(selector, options) {
-    var $elements;
+    var $slides;
     if (selector == null) {
       throw new Error('Missing Parameters Error');
     }
@@ -30,13 +30,13 @@ Carousel = (function() {
     this.carousel.wrapInner("<div class='carousel-container'></div>");
     this.carouselContainer = this.carousel.find('.carousel-container');
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
-    this.indexElements();
-    $elements = this.getElements();
-    $elements.addClass('carousel-slide');
+    this.indexSlides();
+    $slides = this.getSlides();
+    $slides.addClass('carousel-slide');
     this.prevBtn = $("" + this.options.prev);
     this.nextBtn = $("" + this.options.next);
     this.handlers();
-    applyOptions(this.options);
+    this.applyOptions(this.options);
     setTimeout(((function(_this) {
       return function() {
         return _this.scroller.goto(_this.options.initialSlide);
@@ -44,16 +44,18 @@ Carousel = (function() {
     })(this)), 30);
   }
 
-  Carousel.prototype.applyOptions = function(options) {};
-
-  Carousel.prototype.getElements = function() {
-    return this.scroller.getElements();
+  Carousel.prototype.applyOptions = function(options) {
+    return this.setSlideWidth();
   };
 
-  Carousel.prototype.indexElements = function() {
-    var $elements, elem, index, ref, results;
-    $elements = this.getElements();
-    ref = $elements.get();
+  Carousel.prototype.getSlides = function() {
+    return this.scroller.getSlides();
+  };
+
+  Carousel.prototype.indexSlides = function() {
+    var $slides, elem, index, ref, results;
+    $slides = this.getSlides();
+    ref = $slides.get();
     results = [];
     for (index in ref) {
       elem = ref[index];
@@ -139,6 +141,8 @@ Carousel = (function() {
   };
 
   Carousel.prototype.resize = function() {};
+
+  Carousel.prototype.setSlideWidth = function() {};
 
   Carousel.prototype.handlers = function() {
     this.arrowHandlers();

@@ -7,7 +7,6 @@ $ ->
     ltr: true
     slideWidth: 100
     slideHeight: false
-    # slidesToShow: 1
     # infinite: false
     # slideSelector: '>*'
     # respondTo: window

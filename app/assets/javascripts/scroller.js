@@ -8,7 +8,7 @@ Scroller = (function() {
     this.options = options;
   }
 
-  Scroller.prototype.getElements = function() {
+  Scroller.prototype.getSlides = function() {
     return this.track.find(this.options.slideSelector);
   };
 
@@ -57,9 +57,9 @@ Scroller = (function() {
   };
 
   Scroller.prototype.setCurrent = function(index) {
-    var $elements;
-    $elements = this.getElements();
-    return $elements.removeClass('carousel-current').eq(index).addClass('carousel-current');
+    var $slides;
+    $slides = this.getSlides();
+    return $slides.removeClass('carousel-current').eq(index).addClass('carousel-current');
   };
 
   Scroller.prototype.next = function() {

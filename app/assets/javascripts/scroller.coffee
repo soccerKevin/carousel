@@ -4,7 +4,7 @@ class Scroller
     @track = $ trackSelector
     @options = options
 
-  getElements: ->
+  getSlides: ->
     @track.find @options.slideSelector
 
   goto: (index)->
@@ -40,8 +40,8 @@ class Scroller
     @track.css 'left', start + difference
 
   setCurrent: (index)->
-    $elements = @getElements()
-    $elements.removeClass('carousel-current').eq(index).addClass 'carousel-current'
+    $slides = @getSlides()
+    $slides.removeClass('carousel-current').eq(index).addClass 'carousel-current'
 
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1

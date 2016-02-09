@@ -25,27 +25,27 @@ class Carousel
     @carouselContainer = @carousel.find '.carousel-container'
     @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
 
-    @indexElements()
-    $elements = @getElements()
-    $elements.addClass 'carousel-slide'
+    @indexSlides()
+    $slides = @getSlides()
+    $slides.addClass 'carousel-slide'
     @prevBtn = $ "#{@options.prev}"
     @nextBtn = $ "#{@options.next}"
 
     @handlers()
-    applyOptions @options
+    @applyOptions @options
     setTimeout (=>
       @scroller.goto @options.initialSlide
     ), 30
 
   applyOptions: (options)->
+    @setSlideWidth()
 
+  getSlides: ->
+    @scroller.getSlides()
 
-  getElements: ->
-    @scroller.getElements()
-
-  indexElements: ->
-    $elements = @getElements()
-    for index, elem of $elements.get()
+  indexSlides: ->
+    $slides = @getSlides()
+    for index, elem of $slides.get()
       $(elem).attr 'data-carousel-index', index
 
   defaults: ->
@@ -107,6 +107,8 @@ class Carousel
     @moving = false
 
   resize: ->
+
+  setSlideWidth: ->
 
 
   handlers: ->
