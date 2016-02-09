@@ -1,8 +1,20 @@
+###
+  Responsive Carousel that just works
+
+  You should contain your carousel in a containing div.
+  try not to mess with the element that you tell carousel to use
+
+###
 class Carousel
+  ###
+    selector = main Carousel Container
+    options = overrides for defaults
+  ###
   constructor: (selector, options)->
     throw new Error 'Missing Parameters Error' unless selector?
 
     @carousel = $ selector
+    @carouselWrapper = new window.CarouselWrapper selector
     throw new Error 'Invalid Carousel Selector' unless @carousel[0]
 
     @options = @mergeOptions options
@@ -10,7 +22,8 @@ class Carousel
     @carousel.wrapInner "<div class='carousel-track'></div>"
     @carousel.wrapInner "<div class='carousel-scroller'></div>"
     @carousel.wrapInner "<div class='carousel-container'></div>"
-    @scroller = new window.Scroller('.carousel-scroller', '.carousel-track', @options)
+    @carouselContainer = @carousel.find '.carousel-container'
+    @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
 
     @indexElements()
     $elements = @getElements()
@@ -19,9 +32,13 @@ class Carousel
     @nextBtn = $ "#{@options.next}"
 
     @handlers()
+    applyOptions @options
     setTimeout (=>
       @scroller.goto @options.initialSlide
     ), 30
+
+  applyOptions: (options)->
+
 
   getElements: ->
     @scroller.getElements()
@@ -33,30 +50,46 @@ class Carousel
 
   defaults: ->
     defaults =
-      adaptiveHeight: true
-      autoplay: false
-      arrows: true
+      ### selector of the next arrow ###
+      next: '#next .arrow'
+      ### selector of the prev arrow ###
+      prev: '#prev .arrow'
+      ###
+        left aligned, right aligned or centered
+        values: left, right, center
+      ###
       alignment: 'left'
-      containWidth: false
-      containHeight: true
-      cssEase: 'ease-out'
-      draggable: true
-      edgeFriction: 0
-      effect: 'fade'
-      focusOnClick: false
+      ### must be positive ###
       initialSlide: 0
+      ### left to right (true or false) ###
+      ltr: true
+      ### shift this many slides###
+      slidesToScroll: 1
+
+      ###
+        these are percentages
+        if 1 is true, the other must be false
+      ###
+      ### show 4 slides at once, set to 25% ###
+      slideWidth: 100
+      ### will expand slides to fit the height ###
+      slideHeight: false
+
+      ### fake the infinite slides ###
       infinite: false
+      slideSelector: '>*'
+      adaptiveHeight: true
+      draggable: true
+      effect: 'fade'
+      cssEase: 'ease-out'
+      edgeFriction: 0
+      speed: 1000
+      touchThreshold: 5
       lazyLoad: false
       lazyLoadRate: 0
       lazyLoadAttribute: 'data-lazy'
-      pagination: false
-      respondTo: window
-      ltr: true
-      slideSelector: '>*'
-      slidesToScroll: 1
-      slidesToShow: 1
-      speed: 1000
-      touchThreshold: 5
+      arrows: true
+      hideUnclickableArrows: false
 
   mergeOptions: (options)->
     defaults = @defaults()
@@ -67,14 +100,22 @@ class Carousel
       combined[attribute] = options[attribute]
     combined
 
-  handlers: ->
-    @arrowHandlers()
-
   moveDirection: (direction)->
     return false if @moving
     @moving = true
     @scroller[direction]()
     @moving = false
+
+  resize: ->
+
+
+  handlers: ->
+    @arrowHandlers()
+    @resizeHandler()
+
+  resizeHandler: ->
+    $(window).resize =>
+      @resize() if @carouselWrapper.didResize()
 
   arrowHandlers: ->
     @prevBtn.on 'click', (e)=>
