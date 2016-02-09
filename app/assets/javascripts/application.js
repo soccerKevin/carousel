@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require carousel_wrapper
 //= require scroller
 //= require helpers
 //= require carousel

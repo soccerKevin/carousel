@@ -22,6 +22,12 @@ Scroller = (function() {
     return this.setCurrent(index);
   };
 
+  Scroller.prototype.gotoCurrent = function() {
+    var index;
+    index = this.track.find('.carousel-current').data('carousel-index');
+    return this.goto(index);
+  };
+
   Scroller.prototype.slideStageDiff = function(index) {
     var $slide, method;
     $slide = this.track.find(".carousel-slide[data-carousel-index=" + index + "]");
@@ -30,16 +36,16 @@ Scroller = (function() {
   };
 
   Scroller.prototype.diffLeft = function(slide) {
-    return this.scroller.offset().left - slide.offset().left;
+    return slide.offset().left * -1;
   };
 
   Scroller.prototype.diffRight = function(slide) {
-    return (this.scroller.offset().left + this.scroller.width()) - (slide.offset().left + slide.width());
+    return this.scroller.width() - (slide.offset().left + slide.width());
   };
 
   Scroller.prototype.diffCenter = function(slide) {
     var scrollerCenter, slideCenter;
-    scrollerCenter = this.scroller.offset().left + this.scroller.width() / 2;
+    scrollerCenter = this.scroller.width() / 2;
     slideCenter = slide.offset().left + slide.width() / 2;
     return scrollerCenter - slideCenter;
   };
@@ -57,14 +63,16 @@ Scroller = (function() {
   };
 
   Scroller.prototype.next = function() {
-    var index;
-    index = this.track.find('.carousel-current').data('carousel-index') + this.options.slidesToScroll;
+    var index, slides;
+    slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
+    index = this.track.find('.carousel-current').data('carousel-index') + slides;
     return this.goto(index);
   };
 
   Scroller.prototype.prev = function() {
-    var index;
-    index = this.track.find('.carousel-current').data('carousel-index') - this.options.slidesToScroll;
+    var index, slides;
+    slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
+    index = this.track.find('.carousel-current').data('carousel-index') - slides;
     return this.goto(index);
   };
 

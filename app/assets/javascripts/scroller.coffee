@@ -13,29 +13,28 @@ class Scroller
     @moveTrack diff
     @setCurrent index
 
+  gotoCurrent: ->
+    index = @track.find('.carousel-current').data('carousel-index')
+    @goto index
+
   # delta(x) of slide[index] to stage
-  # uses the already set method
+  # uses diff[method]
   slideStageDiff: (index)->
     $slide = @track.find ".carousel-slide[data-carousel-index=#{index}]"
     method = @options.alignment.capitalize()
     @["diff#{method}"]($slide)
 
   diffLeft: (slide)->
-    @scroller.offset().left - slide.offset().left
+    slide.offset().left * -1
 
   diffRight: (slide)->
-    (@scroller.offset().left + @scroller.width()) - (slide.offset().left + slide.width())
+    @scroller.width() - (slide.offset().left + slide.width())
 
   diffCenter: (slide)->
-    # console.log slide
-    scrollerCenter = @scroller.offset().left + @scroller.width() / 2
+    scrollerCenter = @scroller.width() / 2
     slideCenter = slide.offset().left + slide.width() / 2
-    # console.log "scroller: #{scrollerCenter}"
-    # console.log "slide: #{slideCenter}"
     scrollerCenter - slideCenter
 
-  # positive difference moves right
-  # negative difference moves left
   moveTrack: (difference)->
     start = @track.offset().left
     @track.css 'left', start + difference
@@ -45,11 +44,13 @@ class Scroller
     $elements.removeClass('carousel-current').eq(index).addClass 'carousel-current'
 
   next: ->
-    index = @track.find('.carousel-current').data('carousel-index') + @options.slidesToScroll
+    slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
+    index = @track.find('.carousel-current').data('carousel-index') + slides
     @goto index
 
   prev: ->
-    index = @track.find('.carousel-current').data('carousel-index') - @options.slidesToScroll
+    slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
+    index = @track.find('.carousel-current').data('carousel-index') - slides
     @goto index
 
 $ ->

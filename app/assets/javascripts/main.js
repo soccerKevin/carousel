@@ -5,8 +5,10 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 3,
-    ltr: true
+    initialSlide: 0,
+    ltr: true,
+    slideWidth: 100,
+    slideHeight: false
   };
   return window.carousel = new window.Carousel('#carousel', options);
 });

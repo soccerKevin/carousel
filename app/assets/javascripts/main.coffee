@@ -3,29 +3,26 @@ $ ->
     next: '#next .arrow'
     prev: '#prev .arrow'
     alignment: 'center'
-    initialSlide: 3
+    initialSlide: 0
     ltr: true
-    # slidesToScroll: 1
+    slideWidth: 100
+    slideHeight: false
     # slidesToShow: 1
-    # adaptiveHeight: true
-    # autoplay: false
-    # arrows: true
-    # containWidth: false
-    # containHeight: true
-    # cssEase: 'ease-out'
-    # draggable: true
-    # edgeFriction: 0
-    # effect: 'fade'
-    # focusOnClick: false
     # infinite: false
+    # slideSelector: '>*'
+    # respondTo: window
+    # adaptiveHeight: true
+    # draggable: true
+    # effect: 'fade'
+    # cssEase: 'ease-out'
+    # edgeFriction: 0
+    # speed: 1000
+    # touchThreshold: 5
     # lazyLoad: false
     # lazyLoadRate: 0
     # lazyLoadAttribute: 'data-lazy'
-    # pagination: false
-    # respondTo: window
-    # slideSelector: '>*'
-    # speed: 1000
-    # touchThreshold: 5
+    # arrows: true
+    # hideUnclickableArrows: false
 
   window.carousel = new window.Carousel '#carousel', options
 
