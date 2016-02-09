@@ -30,7 +30,7 @@ Scroller = (function() {
 
   Scroller.prototype.setTrackTransition = function() {
     var $elem, trackTransition;
-    trackTransition = $("<style id='carousel-track-transition'></style>").prop("type", "text/css").html("." + this.TRACK_TRANSITION + " {transition: " + (this.options.speed / 1000) + "s!important;}", "#my-window {position: fixed;z-index: 102;display:none;top:50%;left:50%;}");
+    trackTransition = $("<style id='carousel-track-transition'></style>").prop("type", "text/css").html("." + this.TRACK_TRANSITION + " {transition: left " + (this.options.speed / 1000) + "s " + this.options.cssEase + " !important;}", "#my-window {position: fixed;z-index: 102;display:none;top:50%;left:50%;}");
     $elem = $('head').find(this.TRACK_TRANSITION);
     if ($elem.get(0)) {
       return $elem.replaceWith(trackTransition);

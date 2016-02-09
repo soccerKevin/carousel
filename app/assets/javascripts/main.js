@@ -8,7 +8,8 @@ $(function() {
     initialSlide: 0,
     ltr: true,
     slideWidth: '.8',
-    speed: 800
+    speed: 800,
+    cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
   };
   return window.carousel = new window.Carousel('#carousel', options);
 });

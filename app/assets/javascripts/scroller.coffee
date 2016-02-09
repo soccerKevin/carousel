@@ -21,7 +21,7 @@ class Scroller
       .prop("type", "text/css")
       .html(
         ".#{@TRACK_TRANSITION} {\
-          transition: #{@options.speed / 1000}s!important;\
+          transition: left #{@options.speed / 1000}s #{@options.cssEase} !important;\
         }
         "
         "#my-window {\
