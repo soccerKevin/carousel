@@ -8,13 +8,14 @@ String.prototype.capitalize = function() {
 Util = (function() {
   function Util() {}
 
-  Util.override = function(object1, object2) {
-    var attribute, combined, obj;
+  Util.combineHash = function(object1, object2) {
+    var attribute, combined;
     combined = {};
-    for (obj in [object1, object2]) {
-      for (attribute in obj) {
-        combined[attribute] = obj[attribute];
-      }
+    for (attribute in object1) {
+      combined[attribute] = object1[attribute];
+    }
+    for (attribute in object2) {
+      combined[attribute] = object2[attribute];
     }
     return combined;
   };

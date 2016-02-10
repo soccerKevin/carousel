@@ -2,11 +2,12 @@ String.prototype.capitalize = ->
   @.charAt(0).toUpperCase() + @.slice 1
 
 class Util
-  @override = (object1, object2)->
+  @combineHash = (object1, object2)->
     combined = {}
-    for obj of [object1, object2]
-      for attribute of obj
-        combined[attribute] = obj[attribute]
+    for attribute of object1
+      combined[attribute] = object1[attribute]
+    for attribute of object2
+      combined[attribute] = object2[attribute]
     combined
 
   @guid = ->

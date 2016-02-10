@@ -24,7 +24,7 @@ Carousel = (function() {
     if (!this.carousel[0]) {
       throw new Error('Invalid Carousel Selector');
     }
-    this.options = this.mergeOptions(options);
+    this.options = window.Util.combineHash(this.defaults(), options);
     this.carousel.wrapInner("<div class='carousel-track'></div>");
     this.carousel.wrapInner("<div class='carousel-scroller'></div>");
     this.carousel.wrapInner("<div class='carousel-container'></div>");
@@ -99,19 +99,6 @@ Carousel = (function() {
       arrows: true,
       hideUnclickableArrows: false
     };
-  };
-
-  Carousel.prototype.mergeOptions = function(options) {
-    var attribute, combined, defaults;
-    defaults = this.defaults();
-    combined = {};
-    for (attribute in defaults) {
-      combined[attribute] = defaults[attribute];
-    }
-    for (attribute in options) {
-      combined[attribute] = options[attribute];
-    }
-    return combined;
   };
 
   Carousel.prototype.moveDirection = function(direction) {

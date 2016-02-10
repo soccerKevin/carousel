@@ -17,7 +17,7 @@ class Carousel
     @carouselWrapper = new window.CarouselWrapper selector
     throw new Error 'Invalid Carousel Selector' unless @carousel[0]
 
-    @options = @mergeOptions options
+    @options = window.Util.combineHash @defaults(), options
 
     @carousel.wrapInner "<div class='carousel-track'></div>"
     @carousel.wrapInner "<div class='carousel-scroller'></div>"
@@ -82,15 +82,6 @@ class Carousel
       lazyLoadAttribute: 'data-lazy'
       arrows: true
       hideUnclickableArrows: false
-
-  mergeOptions: (options)->
-    defaults = @defaults()
-    combined = {}
-    for attribute of defaults
-      combined[attribute] = defaults[attribute]
-    for attribute of options
-      combined[attribute] = options[attribute]
-    combined
 
   moveDirection: (direction)->
     return false if @moving
