@@ -5,6 +5,73 @@
   try not to mess with the element that you tell carousel to use
 
 ###
+
+###
+  ## defaults =
+    ## selector for next arrow
+    next: '#next .arrow'
+
+    ## selector for prev arrow
+    prev: '#prev .arrow'
+
+    ## values: left, right, center
+    alignment: 'left'
+
+    ## must be positive
+    initialSlide: 0
+
+    ## left to right (true or false)
+    ltr: true
+
+    ## shift this many slides
+    slidesToScroll: 1
+
+    ## width of slides compared to carousel as a decimal
+    ## show 2 slides at once, set to .5
+    ## show 4 slides at once, set to .25
+    slideWidth: '1'
+
+    ## fake the infinite slides
+    infinite: false
+
+    ## slide selector, what Carousel uses to get slides
+    slideSelector: '>*'
+
+    ## adaptiveHeight: true
+
+    ## is the user allowed to move the carousel using their mouse?
+    draggable: true
+
+    ## values, scroll, fade
+    effect: 'scroll'
+
+    ## the method of transition
+    cssEase: 'ease-out'
+
+    ## the speed of transition
+    speed: 1000
+
+    edgeFriction: 0
+    touchThreshold: 5
+
+    ## are you loading images after page carousel load?
+    lazyLoad: false
+
+    ## how many images ahead to load
+    lazyLoadRate: 0
+
+    ## attribute on img tag to get the source of the image for lazy loading
+    lazyLoadAttribute: 'data-lazy'
+
+    ## show arrows?
+    arrows: true
+
+    ## hide left arrow if no more slides to the left
+    ## hide right arrow if no more slides to the right
+    ## only available in non-infinite mode
+    hideUnclickableArrows: false
+  ###
+
 class Carousel
   ###
     selector = main Carousel Container
@@ -39,48 +106,76 @@ class Carousel
   applyOptions: (options)->
     @scroller.setSlideWidth()
 
+  updateOptions: (options)->
+    @options = window.Util.combineHash @options, options
+    @applyOptions()
+
   getSlides: ->
     @scroller.getSlides()
 
   defaults: ->
     defaults =
-      ### selector of the next arrow ###
+      # selector for next arrow
       next: '#next .arrow'
-      ### selector of the prev arrow ###
+
+      # selector for prev arrow
       prev: '#prev .arrow'
-      ###
-        left aligned, right aligned or centered
-        values: left, right, center
-      ###
+
+      # values: left, right, center
       alignment: 'left'
-      ### must be positive ###
+
+      # must be positive
       initialSlide: 0
-      ### left to right (true or false) ###
+
+      # left to right (true or false)
       ltr: true
-      ### shift this many slides###
+
+      # shift this many slides
       slidesToScroll: 1
 
-      ###
-        width of slides compared to carousel
-        show 2 slides at once, set to .5
-        show 4 slides at once, set to .25
-      ###
+      # width of slides compared to carousel as a decimal
+      # show 2 slides at once, set to .5
+      # show 4 slides at once, set to .25
       slideWidth: '1'
 
-      ### fake the infinite slides ###
+      # fake the infinite slides
       infinite: false
+
+      # slide selector, what Carousel uses to get slides
       slideSelector: '>*'
-      adaptiveHeight: true
+
+      # adaptiveHeight: true
+
+      # is the user allowed to move the carousel with their mouse?
       draggable: true
-      effect: 'fade'
+
+      # values, scroll, fade
+      effect: 'scroll'
+
+      # the method of transition
       cssEase: 'ease-out'
-      edgeFriction: 0
+
+      # the speed of transition
       speed: 1000
+
+      edgeFriction: 0
       touchThreshold: 5
+
+      # are you loading images after page carousel load?
       lazyLoad: false
+
+      # how many images ahead to load
       lazyLoadRate: 0
+
+      # attribute on img tag to get the source of the image for lazy loading
       lazyLoadAttribute: 'data-lazy'
+
+      # show arrows?
       arrows: true
+
+      # hide left arrow if no more slides to the left
+      # hide right arrow if no more slides to the right
+      # only available in non-infinite mode
       hideUnclickableArrows: false
 
   moveDirection: (direction)->
