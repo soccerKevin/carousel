@@ -31,8 +31,25 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>Responsive Carousel that just works</p><p>You should contain your carousel in a containing div.
-try not to mess with the element that you tell carousel to use</p>
+  <h2 id="defaults-selector-for-next-arrow-next-next-arrow-">defaults = ## selector for next arrow next: &#39;#next .arrow&#39;</h2>
+<h2 id="selector-for-prev-arrow-prev-prev-arrow-">selector for prev arrow prev: &#39;#prev .arrow&#39;</h2>
+<h2 id="values-left-right-center-alignment-left-">values: left, right, center alignment: &#39;left&#39;</h2>
+<h2 id="must-be-positive-initialslide-0">must be positive initialSlide: 0</h2>
+<h2 id="left-to-right-true-or-false-ltr-true">left to right (true or false) ltr: true</h2>
+<h2 id="shift-this-many-slides-slidestoscroll-1">shift this many slides slidesToScroll: 1</h2>
+<h2 id="width-of-slides-compared-to-carousel-as-a-decimal-show-2-slides-at-once-set-to-5-show-4-slides-at-once-set-to-25-slidewidth-1-">width of slides compared to carousel as a decimal ## show 2 slides at once, set to .5 ## show 4 slides at once, set to .25 slideWidth: &#39;1&#39;</h2>
+<h2 id="fake-the-infinite-slides-infinite-false">fake the infinite slides infinite: false</h2>
+<h2 id="slide-selector-what-carousel-uses-to-get-slides-slideselector-">slide selector, what Carousel uses to get slides slideSelector: &#39;&gt;*&#39;</h2>
+<h2 id="adaptiveheight-true">adaptiveHeight: true</h2>
+<h2 id="is-the-user-allowed-to-move-the-carousel-using-their-mouse-draggable-true">is the user allowed to move the carousel using their mouse? draggable: true</h2>
+<h2 id="values-scroll-fade-effect-scroll-">values, scroll, fade effect: &#39;scroll&#39;</h2>
+<h2 id="the-method-of-transition-cssease-ease-out-">the method of transition cssEase: &#39;ease-out&#39;</h2>
+<h2 id="the-speed-of-transition-speed-1000">the speed of transition speed: 1000</h2><p> edgeFriction: 0 touchThreshold: 5</p><h2 id="are-you-loading-images-after-page-carousel-load-lazyload-false">are you loading images after page carousel load? lazyLoad: false</h2>
+<h2 id="how-many-images-ahead-to-load-lazyloadrate-0">how many images ahead to load lazyLoadRate: 0</h2>
+<h2 id="attribute-on-img-tag-to-get-the-source-of-the-image-for-lazy-loading-lazyloadattribute-data-lazy-">attribute on img tag to get the source of the image for lazy loading lazyLoadAttribute: &#39;data-lazy&#39;</h2>
+<h2 id="show-arrows-arrows-true">show arrows? arrows: true</h2>
+<h2 id="hide-left-arrow-if-no-more-slides-to-the-left-hide-right-arrow-if-no-more-slides-to-the-right-only-available-in-non-infinite-mode-hideunclickablearrows-false">hide left arrow if no more slides to the left ## hide right arrow if no more slides to the right ## only available in non-infinite mode hideUnclickableArrows: false</h2>
+
 </div>
 <div class='tags'>
 </div>
@@ -44,6 +61,17 @@ try not to mess with the element that you tell carousel to use</p>
         #
 (void)
 <b>applyOptions</b><span>(options)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#updateOptions-dynamic'>
+        #
+(void)
+<b>updateOptions</b><span>(options)</span>
       </a>
     </span>
     <span class='desc'>
@@ -66,17 +94,6 @@ try not to mess with the element that you tell carousel to use</p>
         #
 (void)
 <b>defaults</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#mergeOptions-dynamic'>
-        #
-(void)
-<b>mergeOptions</b><span>(options)</span>
       </a>
     </span>
     <span class='desc'>
@@ -167,6 +184,15 @@ options = overrides for defaults</p>
     
   </div>
   <div class='method_details'>
+    <p class='signature' id='updateOptions-dynamic'>
+      #
+(void)
+<b>updateOptions</b><span>(options)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
     <p class='signature' id='getSlides-dynamic'>
       #
 (void)
@@ -180,15 +206,6 @@ options = overrides for defaults</p>
       #
 (void)
 <b>defaults</b><span>()</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='mergeOptions-dynamic'>
-      #
-(void)
-<b>mergeOptions</b><span>(options)</span>
       <br>
     </p>
     
