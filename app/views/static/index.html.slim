@@ -13,7 +13,7 @@ html
         .arrow.noselect &#9654;
       #carousel
         - (2..18).each do |num|
-          a href=""
+          a href="" onclick="event.preventDefault();"
             .card
               img [src = "/assets/cards/card#{num}.jpg"]
 
