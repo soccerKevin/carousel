@@ -1,6 +1,6 @@
 class Scroller
   constructor: (scrollerSelector, trackSelector, options)->
-    @uid = window.guid()
+    @uid = window.Util.guid()
     @scroller = $ scrollerSelector
     @scroller.attr 'data-uid', @uid
     @track = $ trackSelector

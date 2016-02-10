@@ -3,7 +3,7 @@ var Scroller;
 
 Scroller = (function() {
   function Scroller(scrollerSelector, trackSelector, options) {
-    this.uid = window.guid();
+    this.uid = window.Util.guid();
     this.scroller = $(scrollerSelector);
     this.scroller.attr('data-uid', this.uid);
     this.track = $(trackSelector);
