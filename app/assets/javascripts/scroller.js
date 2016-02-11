@@ -121,6 +121,11 @@ Scroller = (function() {
     return this.goto(index);
   };
 
+  Scroller.prototype.updateOptions = function(options) {
+    this.options = options;
+    return this.setSlideWidth();
+  };
+
   Scroller.prototype.handlers = function() {
     return this.transitionEndHandler();
   };

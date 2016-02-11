@@ -7,65 +7,88 @@
   try not to mess with the element that you tell carousel to use
  */
 
-/* defaults =
+/*
+   * defaults =
    * @param next [string]
-  ## next button selector (required)
+  #default: none
+  #next button selector (required)
+
    * @param prev [string]
-  ## prev button selector (required)
+  #default: none
+  #prev button selector (required)
+
    * @option alignment [string]
-  ## values: left, right, center.  default = 'left'
+  #default: 'left'
+  #values: left, right, center
+
    * @option initialSlide [int]
-  ## must be positive. default = 0
+  #default: 0
+  #must be positive
+
    * @option ltr [boolean]
-  ## left to right (true or false). default = true
+  #default: true
+  #left to right (true or false)
+
    * @option slidesToScroll [int]
-  ## shift this many slides. default = 1
+  #default: 1
+  #shift this many slides
 
-   * @option [float] width of slides compared to carousel as a decimal
-   * show 2 slides at once, set to .5
-   * show 4 slides at once, set to .25
-  slideWidth: '1'
+   * @option [float] slideWidth
+  #default: 1
+  #width of slides compared to carousel as a decimal
+  #example:
+  #show 2 slides at once, set to .5
+  #show 4 slides at once, set to .25
 
-   * @option [boolean] fake the infinite slides
-  infinite: false
+   * @option [boolean] infinite
+  #default: false
+  #fake the infinite slides
 
-   * @option [string] slide selector, what Carousel uses to get slides
-  slideSelector: '>*'
+   * @option [string] slideSelector
+  #default: '>*'
+  #Carousel uses to get elements to use as slides
 
-   *
-   * adaptiveHeight: true
+   * @option [boolean] draggable
+  #default: true
+  #allow the user to move the carousel using their mouse
 
-   * @option is the user allowed to move the carousel using their mouse?
-  draggable: true
+   * @option [string] effect
+  #default: 'scroll'
+  #possible: scroll, fade
+  #the effect to use when changing slides
 
-   * @option values, scroll, fade
-  effect: 'scroll'
+   * @option [string] cssEase
+  #default: 'ease-out'
+  #method of transition
 
-   * @option the method of transition
-  cssEase: 'ease-out'
+   * @option [int] speed
+  #default: 1000
+  #speed of transition in ms
 
-   * @option the speed of transition
-  speed: 1000
+  #edgeFriction: 0
+  #touchThreshold: 5
 
-  edgeFriction: 0
-  touchThreshold: 5
+   * @option [boolean] lazyLoad
+  #default: false
+  #load images as you need them vs all at once
 
-   * @option are you loading images after page carousel load?
-  lazyLoad: false
+   * @option [int] lazyLoadRate
+  #default: 0
+  #load this many images past the current image
 
-   * @option how many images ahead to load
-  lazyLoadRate: 0
+   * @option [string] lazyLoadAttribute
+  #default: 'data-lazy'
+  #attribute on img tag to get the source of the image for lazy loading
 
-   * @option attribute on img tag to get the source of the image for lazy loading
-  lazyLoadAttribute: 'data-lazy'
+   * @option [boolean] arrows
+  #default: true
+  #show the prev and next arrows
 
-   * @option show arrows?
-  arrows: true
-
-   * @option hide left arrow if no more slides to the left
-   * @option hide right arrow if no more slides to the right
-   * @option only available in non-infinite mode
-  hideUnclickableArrows: false
+   * @option [boolean] hideUnclickableArrows
+  #default: false
+  #hide left arrow if no more slides to the left
+  #hide right arrow if no more slides to the right
+  #only available in non-infinite mode
  */
 var Carousel;
 
@@ -104,8 +127,8 @@ Carousel = (function() {
     })(this)), 50);
   }
 
-  Carousel.prototype.applyOptions = function(options) {
-    return this.scroller.setSlideWidth();
+  Carousel.prototype.applyOptions = function() {
+    return this.scroller.updateOptions(this.options);
   };
 
   Carousel.prototype.updateOptions = function(options) {

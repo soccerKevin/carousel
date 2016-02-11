@@ -83,6 +83,10 @@ class Scroller
     index = @track.find('.carousel-current').data('carousel-index') - slides
     @goto index
 
+  updateOptions: (options)->
+    @options = options
+    @setSlideWidth()
+
   handlers: ->
     @transitionEndHandler()
 
