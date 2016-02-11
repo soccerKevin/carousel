@@ -125,8 +125,18 @@ class Scroller
   # titleSlide: false
   updateOptions: (options)->
     @options = options
-    @setSlideWidth()
+    for index, option of @resetableOptions()
+      @["set#{option.capitalize()}"]()
     @gotoCurrent false
+
+  ###
+    @return [array] resetable options
+    @private
+  ###
+  resetableOptions: ->
+    [
+      'slideWidth'
+    ]
 
   handlers: ->
     @transitionEndHandler()
