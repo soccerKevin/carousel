@@ -80,10 +80,6 @@
   #default: 'data-lazy'
   #attribute on img tag to get the source of the image for lazy loading
 
-   * @option [boolean] arrows
-  #default: true
-  #show the prev and next arrows
-
    * @option [boolean] hideUnclickableArrows
   #default: false
   #hide left arrow if no more slides to the left
@@ -123,8 +119,6 @@ Carousel = (function() {
     this.carouselContainer = this.carousel.find('.carousel-container');
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
     this.getSlides().addClass('carousel-slide');
-    this.setNext();
-    this.setPrev();
     this.initialHandlers();
     this.applyOptions(this.options);
     setTimeout(((function(_this) {
@@ -205,7 +199,7 @@ Carousel = (function() {
   /* @private */
 
   Carousel.prototype.resetableOptions = function() {
-    return ['next', 'prev'];
+    return ['arrows'];
   };
 
 
@@ -221,7 +215,7 @@ Carousel = (function() {
 
   /*
     @param [string] direction
-     * 'next'/'prev'
+    #'next'/'prev'
    */
 
   Carousel.prototype.moveDirection = function(direction) {
@@ -255,18 +249,23 @@ Carousel = (function() {
     return this.applyOptions();
   };
 
-  Carousel.prototype.setNext = function() {
+  Carousel.prototype.setArrows = function() {
     if (this.nextBtn != null) {
       this.nextBtn.off();
     }
+    if (this.prevBtn != null) {
+      this.prevBtn.off();
+    }
+    this.setNext();
+    return this.setPrev();
+  };
+
+  Carousel.prototype.setNext = function() {
     this.nextBtn = $(this.options.next);
     return this.nextHandler();
   };
 
   Carousel.prototype.setPrev = function() {
-    if (this.prevBtn != null) {
-      this.prevBtn.off();
-    }
     this.prevBtn = $(this.options.prev);
     return this.prevHandler();
   };

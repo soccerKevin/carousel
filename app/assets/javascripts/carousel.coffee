@@ -78,10 +78,6 @@
   #default: 'data-lazy'
   #attribute on img tag to get the source of the image for lazy loading
 
-  # @option [boolean] arrows
-  #default: true
-  #show the prev and next arrows
-
   # @option [boolean] hideUnclickableArrows
   #default: false
   #hide left arrow if no more slides to the left
@@ -119,9 +115,6 @@ class Carousel
     @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
 
     @getSlides().addClass 'carousel-slide'
-
-    @setNext()
-    @setPrev()
     @initialHandlers()
 
     @applyOptions @options
@@ -181,9 +174,7 @@ class Carousel
   ### @private ###
   resetableOptions: ->
     [
-      'next'
-      'prev'
-      # 'arrows'
+      'arrows'
       # 'hideUnclickableArrows'
     ]
 
@@ -196,7 +187,7 @@ class Carousel
 
   ###
     @param [string] direction
-    # 'next'/'prev'
+    #'next'/'prev'
   ###
   moveDirection: (direction)->
     return false if @moving
@@ -220,13 +211,17 @@ class Carousel
     @options = window.Util.combineHash @options, options
     @applyOptions()
 
-  setNext: ->
+  setArrows: ->
     @nextBtn.off() if @nextBtn?
+    @prevBtn.off() if @prevBtn?
+    @setNext()
+    @setPrev()
+
+  setNext: ->
     @nextBtn = $(@options.next)
     @nextHandler()
 
   setPrev: ->
-    @prevBtn.off() if @prevBtn?
     @prevBtn = $(@options.prev)
     @prevHandler()
 
