@@ -33,7 +33,7 @@ Scroller = (function() {
 
   Scroller.prototype.setTrackTransition = function() {
     var $elem, $trackTransition;
-    $trackTransition = $("<style id='" + this.TRACK_TRANSITION + "-" + this.uid + "'></style>").prop("type", "text/css").html(this.scroller.selector + "[data-uid='" + this.uid + "'] ." + this.TRACK_TRANSITION + " {transition: left " + (this.options.speed / 1000) + "s " + this.options.cssEase + " !important;}", "#my-window {position: fixed;z-index: 102;display:none;top:50%;left:50%;}");
+    $trackTransition = $("<style id='" + this.TRACK_TRANSITION + "-" + this.uid + "'></style>").prop("type", "text/css").html(this.scroller.selector + "[data-uid='" + this.uid + "'] ." + this.TRACK_TRANSITION + " {transition: left " + (this.options.speed / 1000) + "s " + this.options.cssEase + " !important;}");
     $elem = $('head').find($trackTransition.selector);
     if ($elem.get(0)) {
       return $elem.replaceWith($trackTransition);
@@ -122,10 +122,10 @@ Scroller = (function() {
   };
 
   Scroller.prototype.handlers = function() {
-    return this.animationEndHandler();
+    return this.transitionEndHandler();
   };
 
-  Scroller.prototype.animationEndHandler = function() {
+  Scroller.prototype.transitionEndHandler = function() {
     var transitionEnd;
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd';
     return $(document).on(transitionEnd, (function(_this) {

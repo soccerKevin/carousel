@@ -22,19 +22,10 @@ class Scroller
   setTrackTransition: ->
     $trackTransition = $("<style id='#{@TRACK_TRANSITION}-#{@uid}'></style>")
       .prop("type", "text/css")
-      .html(
-        "#{@scroller.selector}[data-uid='#{@uid}'] .#{@TRACK_TRANSITION} {\
+      .html "
+        #{@scroller.selector}[data-uid='#{@uid}'] .#{@TRACK_TRANSITION} {\
           transition: left #{@options.speed / 1000}s #{@options.cssEase} !important;\
-        }
-        "
-        "#my-window {\
-        position: fixed;\
-        z-index: 102;\
-        display:none;\
-        top:50%;\
-        left:50%;\
         }"
-      )
     $elem = $('head').find $trackTransition.selector
     if $elem.get 0
       $elem.replaceWith $trackTransition
@@ -93,9 +84,9 @@ class Scroller
     @goto index
 
   handlers: ->
-    @animationEndHandler()
+    @transitionEndHandler()
 
-  animationEndHandler: ->
+  transitionEndHandler: ->
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd'
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
