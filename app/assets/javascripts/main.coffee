@@ -31,8 +31,8 @@ $ ->
 
   options2 =
     slideWidth: '1'
-    # next: '#next .arrow'
-    # prev: '#prev .arrow'
+    next: '#prev .arrow'
+    prev: '#next .arrow'
     # alignment: 'left'
     # initialSlide: 3
     # ltr: true

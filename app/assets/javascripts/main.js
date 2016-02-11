@@ -15,7 +15,9 @@ $(function() {
   };
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {
-    slideWidth: '1'
+    slideWidth: '1',
+    next: '#prev .arrow',
+    prev: '#next .arrow'
   };
   return $('#change-options').on('click', function() {
     return window.carousel.updateOptions(options2);

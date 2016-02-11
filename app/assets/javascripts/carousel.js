@@ -125,9 +125,9 @@ Carousel = (function() {
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
     $slides = this.getSlides();
     $slides.addClass('carousel-slide');
-    this.prevBtn = $("" + this.options.prev);
-    this.nextBtn = $("" + this.options.next);
-    this.handlers();
+    this.setNext();
+    this.setPrev();
+    this.initialHandlers();
     this.applyOptions(this.options);
     setTimeout(((function(_this) {
       return function() {
@@ -203,8 +203,11 @@ Carousel = (function() {
     };
   };
 
+
+  /* @private */
+
   Carousel.prototype.resetableOptions = function() {
-    return [];
+    return ['next', 'prev'];
   };
 
 
@@ -239,7 +242,7 @@ Carousel = (function() {
 
   Carousel.prototype.resize = function() {
     this.applyOptions();
-    return this.scroller.gotoCurrent();
+    return this.scroller.gotoCurrent(false);
   };
 
 
@@ -254,20 +257,31 @@ Carousel = (function() {
     return this.applyOptions();
   };
 
+  Carousel.prototype.setNext = function() {
+    if (this.nextBtn != null) {
+      this.nextBtn.off();
+    }
+    this.nextBtn = $(this.options.next);
+    return this.nextHandler();
+  };
 
-  /*
-    @private
-   */
+  Carousel.prototype.setPrev = function() {
+    if (this.prevBtn != null) {
+      this.prevBtn.off();
+    }
+    this.prevBtn = $(this.options.prev);
+    return this.prevHandler();
+  };
 
-  Carousel.prototype.handlers = function() {
-    this.arrowHandlers();
+
+  /* @private */
+
+  Carousel.prototype.initialHandlers = function() {
     return this.resizeHandler();
   };
 
 
-  /*
-    @private
-   */
+  /* @private */
 
   Carousel.prototype.resizeHandler = function() {
     return $(window).resize((function(_this) {
@@ -280,19 +294,20 @@ Carousel = (function() {
   };
 
 
-  /*
-    @private
-   */
+  /* @private */
 
-  Carousel.prototype.arrowHandlers = function() {
-    this.prevBtn.on('click', (function(_this) {
-      return function(e) {
-        return _this.moveDirection('prev');
-      };
-    })(this));
+  Carousel.prototype.nextHandler = function() {
     return this.nextBtn.on('click', (function(_this) {
       return function(e) {
         return _this.moveDirection('next');
+      };
+    })(this));
+  };
+
+  Carousel.prototype.prevHandler = function() {
+    return this.prevBtn.on('click', (function(_this) {
+      return function(e) {
+        return _this.moveDirection('prev');
       };
     })(this));
   };

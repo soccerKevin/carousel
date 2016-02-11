@@ -120,10 +120,10 @@ class Carousel
 
     $slides = @getSlides()
     $slides.addClass 'carousel-slide'
-    @prevBtn = $ "#{@options.prev}"
-    @nextBtn = $ "#{@options.next}"
+    @setNext()
+    @setPrev()
 
-    @handlers()
+    @initialHandlers()
     @applyOptions @options
     setTimeout (=>
       @scroller.gotoCurrent false
@@ -178,10 +178,11 @@ class Carousel
       hideUnclickableArrows: false
       titleSlide: false
 
+  ### @private ###
   resetableOptions: ->
     [
-      # 'next'
-      # 'prev'
+      'next'
+      'prev'
       # 'arrows'
       # 'hideUnclickableArrows'
     ]
@@ -208,7 +209,7 @@ class Carousel
   ###
   resize: ->
     @applyOptions()
-    @scroller.gotoCurrent()
+    @scroller.gotoCurrent false
 
   ###
     Update options after instance construction
@@ -219,29 +220,33 @@ class Carousel
     @options = window.Util.combineHash @options, options
     @applyOptions()
 
-  ###
-    @private
-  ###
-  handlers: ->
-    @arrowHandlers()
+  setNext: ->
+    @nextBtn.off() if @nextBtn?
+    @nextBtn = $(@options.next)
+    @nextHandler()
+
+  setPrev: ->
+    @prevBtn.off() if @prevBtn?
+    @prevBtn = $(@options.prev)
+    @prevHandler()
+
+  ### @private ###
+  initialHandlers: ->
     @resizeHandler()
 
-  ###
-    @private
-  ###
+  ### @private ###
   resizeHandler: ->
     $(window).resize =>
       @resize() if @carouselWrapper.didResize()
 
-  ###
-    @private
-  ###
-  arrowHandlers: ->
-    @prevBtn.on 'click', (e)=>
-      @moveDirection 'prev'
-
+  ### @private ###
+  nextHandler: ->
     @nextBtn.on 'click', (e)=>
       @moveDirection 'next'
+
+  prevHandler: ->
+    @prevBtn.on 'click', (e)=>
+      @moveDirection 'prev'
 
 $ ->
   window.Carousel = Carousel
