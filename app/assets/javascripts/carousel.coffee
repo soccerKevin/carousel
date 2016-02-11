@@ -118,12 +118,12 @@ class Carousel
     @carouselContainer = @carousel.find '.carousel-container'
     @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
 
-    $slides = @getSlides()
-    $slides.addClass 'carousel-slide'
+    @getSlides().addClass 'carousel-slide'
+
     @setNext()
     @setPrev()
-
     @initialHandlers()
+
     @applyOptions @options
     setTimeout (=>
       @scroller.gotoCurrent false
@@ -189,7 +189,7 @@ class Carousel
 
   ###
     @return [array] slides
-    #JQuery array of the slides of this carousel
+    #JQuery array of the slides of this carousel's scroller
   ###
   getSlides: ->
     @scroller.getSlides()

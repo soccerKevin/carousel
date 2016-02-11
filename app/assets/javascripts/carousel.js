@@ -108,7 +108,6 @@ Carousel = (function() {
     @return [object] carousel instance
    */
   function Carousel(selector, options) {
-    var $slides;
     if (selector == null) {
       throw new Error('Missing Parameters Error');
     }
@@ -123,8 +122,7 @@ Carousel = (function() {
     this.carousel.wrapInner("<div class='carousel-container'></div>");
     this.carouselContainer = this.carousel.find('.carousel-container');
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
-    $slides = this.getSlides();
-    $slides.addClass('carousel-slide');
+    this.getSlides().addClass('carousel-slide');
     this.setNext();
     this.setPrev();
     this.initialHandlers();
@@ -213,7 +211,7 @@ Carousel = (function() {
 
   /*
     @return [array] slides
-    #JQuery array of the slides of this carousel
+    #JQuery array of the slides of this carousel's scroller
    */
 
   Carousel.prototype.getSlides = function() {

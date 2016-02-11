@@ -1,5 +1,7 @@
-
-
+###
+  A simple class to handle responsive aspects of Carousel
+  determines if the Carousel needs to resize
+###
 class CarouselWrapper
   constructor: (selector)->
     @carousel = $ selector
