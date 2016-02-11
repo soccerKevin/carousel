@@ -20,6 +20,7 @@ $ ->
     # lazyLoadAttribute: 'data-lazy'
     # arrows: true
     # hideUnclickableArrows: false
+    # titleSlide: false
 
     # quicker move through slides (hold down button/similar)
     # title slide?
@@ -49,6 +50,7 @@ $ ->
     # lazyLoadAttribute: 'data-lazy'
     # arrows: true
     # hideUnclickableArrows: false
+    # titleSlide: false
 
   $('#change-options').on 'click', ->
     window.carousel.updateOptions options2

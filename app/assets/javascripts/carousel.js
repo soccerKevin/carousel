@@ -89,6 +89,10 @@
   #hide left arrow if no more slides to the left
   #hide right arrow if no more slides to the right
   #only available in non-infinite mode
+
+   * @option [boolean] titleSlide
+  #default: false
+  #marks the first slide as a title slide
  */
 var Carousel;
 
@@ -144,29 +148,6 @@ Carousel = (function() {
 
 
   /*
-    Update options after instance construction
-    @param [hash] options
-    #any set of options you wish to change
-   */
-
-  Carousel.prototype.updateOptions = function(options) {
-    this.options = window.Util.combineHash(this.options, options);
-    return this.applyOptions();
-  };
-
-
-  /*
-    @return [array] slides
-    #JQuery array of the slides of this carousel
-    @private
-   */
-
-  Carousel.prototype.getSlides = function() {
-    return this.scroller.getSlides();
-  };
-
-
-  /*
     @return [hash] defaults
     @private
    */
@@ -193,15 +174,26 @@ Carousel = (function() {
       lazyLoadRate: 0,
       lazyLoadAttribute: 'data-lazy',
       arrows: true,
-      hideUnclickableArrows: false
+      hideUnclickableArrows: false,
+      titleSlide: false
     };
+  };
+
+
+  /*
+    @return [array] slides
+    #JQuery array of the slides of this carousel
+    @private
+   */
+
+  Carousel.prototype.getSlides = function() {
+    return this.scroller.getSlides();
   };
 
 
   /*
     @param [string] direction
      * 'next'/'prev'
-    @private
    */
 
   Carousel.prototype.moveDirection = function(direction) {
@@ -221,6 +213,18 @@ Carousel = (function() {
   Carousel.prototype.resize = function() {
     this.applyOptions();
     return this.scroller.gotoCurrent();
+  };
+
+
+  /*
+    Update options after instance construction
+    @param [hash] options
+    #any set of options you wish to change
+   */
+
+  Carousel.prototype.updateOptions = function(options) {
+    this.options = window.Util.combineHash(this.options, options);
+    return this.applyOptions();
   };
 
 

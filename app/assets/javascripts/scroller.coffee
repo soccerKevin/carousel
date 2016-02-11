@@ -1,5 +1,5 @@
 ###
-
+  A Carousel Scroller.  Controls the track
 ###
 
 class Scroller
@@ -105,6 +105,7 @@ class Scroller
   # lazyLoad: false
   # lazyLoadRate: 0
   # lazyLoadAttribute: 'data-lazy'
+  # titleSlide: false
   updateOptions: (options)->
     @options = options
     @setSlideWidth()
