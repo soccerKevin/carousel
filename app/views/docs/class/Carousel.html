@@ -31,25 +31,8 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>defaults =</p><h1 id="-param-next-string-">@param next [string]</h1>
-<h2 id="next-button-selector-required-">next button selector (required)</h2>
-<h1 id="-param-prev-string-">@param prev [string]</h1>
-<h2 id="prev-button-selector-required-">prev button selector (required)</h2>
-<h1 id="-option-alignment-string-">@option alignment [string]</h1>
-<h2 id="values-left-right-center-default-left-">values: left, right, center.  default = &#39;left&#39;</h2>
-<h1 id="-option-initialslide-int-">@option initialSlide [int]</h1>
-<h2 id="must-be-positive-default-0">must be positive. default = 0</h2>
-<h1 id="-option-ltr-boolean-">@option ltr [boolean]</h1>
-<h2 id="left-to-right-true-or-false-default-true">left to right (true or false). default = true</h2>
-<h1 id="-option-slidestoscroll-int-">@option slidesToScroll [int]</h1>
-<h2 id="shift-this-many-slides-default-1">shift this many slides. default = 1</h2>
-<h1 id="-option-float-width-of-slides-compared-to-carousel-as-a-decimal">@option [float] width of slides compared to carousel as a decimal</h1>
-<h1 id="show-2-slides-at-once-set-to-5">show 2 slides at once, set to .5</h1>
-<h1 id="show-4-slides-at-once-set-to-25">show 4 slides at once, set to .25</h1><p> slideWidth: &#39;1&#39;</p><h1 id="-option-boolean-fake-the-infinite-slides">@option [boolean] fake the infinite slides</h1><p> infinite: false</p><h1 id="-option-string-slide-selector-what-carousel-uses-to-get-slides">@option [string] slide selector, what Carousel uses to get slides</h1><p> slideSelector: &#39;&gt;*&#39;</p><p> #</p><h1 id="adaptiveheight-true">adaptiveHeight: true</h1>
-<h1 id="-option-is-the-user-allowed-to-move-the-carousel-using-their-mouse-">@option is the user allowed to move the carousel using their mouse?</h1><p> draggable: true</p><h1 id="-option-values-scroll-fade">@option values, scroll, fade</h1><p> effect: &#39;scroll&#39;</p><h1 id="-option-the-method-of-transition">@option the method of transition</h1><p> cssEase: &#39;ease-out&#39;</p><h1 id="-option-the-speed-of-transition">@option the speed of transition</h1><p> speed: 1000</p><p> edgeFriction: 0
- touchThreshold: 5</p><h1 id="-option-are-you-loading-images-after-page-carousel-load-">@option are you loading images after page carousel load?</h1><p> lazyLoad: false</p><h1 id="-option-how-many-images-ahead-to-load">@option how many images ahead to load</h1><p> lazyLoadRate: 0</p><h1 id="-option-attribute-on-img-tag-to-get-the-source-of-the-image-for-lazy-loading">@option attribute on img tag to get the source of the image for lazy loading</h1><p> lazyLoadAttribute: &#39;data-lazy&#39;</p><h1 id="-option-show-arrows-">@option show arrows?</h1><p> arrows: true</p><h1 id="-option-hide-left-arrow-if-no-more-slides-to-the-left">@option hide left arrow if no more slides to the left</h1>
-<h1 id="-option-hide-right-arrow-if-no-more-slides-to-the-right">@option hide right arrow if no more slides to the right</h1>
-<h1 id="-option-only-available-in-non-infinite-mode">@option only available in non-infinite mode</h1><p> hideUnclickableArrows: false</p>
+  <h1 id="defaults-">defaults =</h1>
+<h1 id="-param-next-string-">@param next [string]</h1><p>#default: none</p><p>#next button selector (required)</p><h1 id="-param-prev-string-">@param prev [string]</h1><p>#default: none</p><p>#prev button selector (required)</p><h1 id="-option-alignment-string-">@option alignment [string]</h1><p>#default: &#39;left&#39;</p><p>#values: left, right, center</p><h1 id="-option-initialslide-int-">@option initialSlide [int]</h1><p>#default: 0</p><p>#must be positive</p><h1 id="-option-ltr-boolean-">@option ltr [boolean]</h1><p>#default: true</p><p>#left to right (true or false)</p><h1 id="-option-slidestoscroll-int-">@option slidesToScroll [int]</h1><p>#default: 1</p><p>#shift this many slides</p><h1 id="-option-float-slidewidth">@option [float] slideWidth</h1><p>#default: 1</p><p>#width of slides compared to carousel as a decimal</p><p>#example:</p><p>#show 2 slides at once, set to .5</p><p>#show 4 slides at once, set to .25</p><h1 id="-option-boolean-infinite">@option [boolean] infinite</h1><p>#default: false</p><p>#fake the infinite slides</p><h1 id="-option-string-slideselector">@option [string] slideSelector</h1><p>#default: &#39;&gt;*&#39;</p><p>#Carousel uses to get elements to use as slides</p><h1 id="-option-boolean-draggable">@option [boolean] draggable</h1><p>#default: true</p><p>#allow the user to move the carousel using their mouse</p><h1 id="-option-string-effect">@option [string] effect</h1><p>#default: &#39;scroll&#39;</p><p>#possible: scroll, fade</p><p>#the effect to use when changing slides</p><h1 id="-option-string-cssease">@option [string] cssEase</h1><p>#default: &#39;ease-out&#39;</p><p>#method of transition</p><h1 id="-option-int-speed">@option [int] speed</h1><p>#default: 1000</p><p>#speed of transition in ms</p><p>#edgeFriction: 0</p><p>#touchThreshold: 5</p><h1 id="-option-boolean-lazyload">@option [boolean] lazyLoad</h1><p>#default: false</p><p>#load images as you need them vs all at once</p><h1 id="-option-int-lazyloadrate">@option [int] lazyLoadRate</h1><p>#default: 0</p><p>#load this many images past the current image</p><h1 id="-option-string-lazyloadattribute">@option [string] lazyLoadAttribute</h1><p>#default: &#39;data-lazy&#39;</p><p>#attribute on img tag to get the source of the image for lazy loading</p><h1 id="-option-boolean-arrows">@option [boolean] arrows</h1><p>#default: true</p><p>#show the prev and next arrows</p><h1 id="-option-boolean-hideunclickablearrows">@option [boolean] hideUnclickableArrows</h1><p>#default: false</p><p>#hide left arrow if no more slides to the left</p><p>#hide right arrow if no more slides to the right</p><p>#only available in non-infinite mode</p>
 </div>
 <div class='tags'>
 </div>
@@ -60,7 +43,7 @@
       <a href='#applyOptions-dynamic'>
         #
 (void)
-<b>applyOptions</b><span>(options)</span>
+<b>applyOptions</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -178,7 +161,7 @@ options = overrides for defaults</p>
     <p class='signature' id='applyOptions-dynamic'>
       #
 (void)
-<b>applyOptions</b><span>(options)</span>
+<b>applyOptions</b><span>()</span>
       <br>
     </p>
     
