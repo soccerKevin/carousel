@@ -3,74 +3,68 @@
 
   You should contain your carousel in a containing div.
   try not to mess with the element that you tell carousel to use
-
 ###
 
+### defaults =
+  # @param next [string]
+  ## next button selector (required)
+  # @param prev [string]
+  ## prev button selector (required)
+  # @option alignment [string]
+  ## values: left, right, center.  default = 'left'
+  # @option initialSlide [int]
+  ## must be positive. default = 0
+  # @option ltr [boolean]
+  ## left to right (true or false). default = true
+  # @option slidesToScroll [int]
+  ## shift this many slides. default = 1
+
+  # @option [float] width of slides compared to carousel as a decimal
+  # show 2 slides at once, set to .5
+  # show 4 slides at once, set to .25
+  slideWidth: '1'
+
+  # @option [boolean] fake the infinite slides
+  infinite: false
+
+  # @option [string] slide selector, what Carousel uses to get slides
+  slideSelector: '>*'
+
+  #
+  # adaptiveHeight: true
+
+  # @option is the user allowed to move the carousel using their mouse?
+  draggable: true
+
+  # @option values, scroll, fade
+  effect: 'scroll'
+
+  # @option the method of transition
+  cssEase: 'ease-out'
+
+  # @option the speed of transition
+  speed: 1000
+
+  edgeFriction: 0
+  touchThreshold: 5
+
+  # @option are you loading images after page carousel load?
+  lazyLoad: false
+
+  # @option how many images ahead to load
+  lazyLoadRate: 0
+
+  # @option attribute on img tag to get the source of the image for lazy loading
+  lazyLoadAttribute: 'data-lazy'
+
+  # @option show arrows?
+  arrows: true
+
+  # @option hide left arrow if no more slides to the left
+  # @option hide right arrow if no more slides to the right
+  # @option only available in non-infinite mode
+  hideUnclickableArrows: false
 ###
-  ## defaults =
-    ## selector for next arrow
-    next: '#next .arrow'
-
-    ## selector for prev arrow
-    prev: '#prev .arrow'
-
-    ## values: left, right, center
-    alignment: 'left'
-
-    ## must be positive
-    initialSlide: 0
-
-    ## left to right (true or false)
-    ltr: true
-
-    ## shift this many slides
-    slidesToScroll: 1
-
-    ## width of slides compared to carousel as a decimal
-    ## show 2 slides at once, set to .5
-    ## show 4 slides at once, set to .25
-    slideWidth: '1'
-
-    ## fake the infinite slides
-    infinite: false
-
-    ## slide selector, what Carousel uses to get slides
-    slideSelector: '>*'
-
-    ## adaptiveHeight: true
-
-    ## is the user allowed to move the carousel using their mouse?
-    draggable: true
-
-    ## values, scroll, fade
-    effect: 'scroll'
-
-    ## the method of transition
-    cssEase: 'ease-out'
-
-    ## the speed of transition
-    speed: 1000
-
-    edgeFriction: 0
-    touchThreshold: 5
-
-    ## are you loading images after page carousel load?
-    lazyLoad: false
-
-    ## how many images ahead to load
-    lazyLoadRate: 0
-
-    ## attribute on img tag to get the source of the image for lazy loading
-    lazyLoadAttribute: 'data-lazy'
-
-    ## show arrows?
-    arrows: true
-
-    ## hide left arrow if no more slides to the left
-    ## hide right arrow if no more slides to the right
-    ## only available in non-infinite mode
-    hideUnclickableArrows: false
-  ###
 
 class Carousel
   ###
@@ -115,67 +109,25 @@ class Carousel
 
   defaults: ->
     defaults =
-      # selector for next arrow
       next: '#next .arrow'
-
-      # selector for prev arrow
       prev: '#prev .arrow'
-
-      # values: left, right, center
       alignment: 'left'
-
-      # must be positive
       initialSlide: 0
-
-      # left to right (true or false)
       ltr: true
-
-      # shift this many slides
       slidesToScroll: 1
-
-      # width of slides compared to carousel as a decimal
-      # show 2 slides at once, set to .5
-      # show 4 slides at once, set to .25
       slideWidth: '1'
-
-      # fake the infinite slides
       infinite: false
-
-      # slide selector, what Carousel uses to get slides
       slideSelector: '>*'
-
-      # adaptiveHeight: true
-
-      # is the user allowed to move the carousel with their mouse?
       draggable: true
-
-      # values, scroll, fade
       effect: 'scroll'
-
-      # the method of transition
       cssEase: 'ease-out'
-
-      # the speed of transition
       speed: 1000
-
       edgeFriction: 0
       touchThreshold: 5
-
-      # are you loading images after page carousel load?
       lazyLoad: false
-
-      # how many images ahead to load
       lazyLoadRate: 0
-
-      # attribute on img tag to get the source of the image for lazy loading
       lazyLoadAttribute: 'data-lazy'
-
-      # show arrows?
       arrows: true
-
-      # hide left arrow if no more slides to the left
-      # hide right arrow if no more slides to the right
-      # only available in non-infinite mode
       hideUnclickableArrows: false
 
   moveDirection: (direction)->

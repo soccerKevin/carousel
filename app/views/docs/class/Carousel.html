@@ -31,25 +31,25 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <h2 id="defaults-selector-for-next-arrow-next-next-arrow-">defaults = ## selector for next arrow next: &#39;#next .arrow&#39;</h2>
-<h2 id="selector-for-prev-arrow-prev-prev-arrow-">selector for prev arrow prev: &#39;#prev .arrow&#39;</h2>
-<h2 id="values-left-right-center-alignment-left-">values: left, right, center alignment: &#39;left&#39;</h2>
-<h2 id="must-be-positive-initialslide-0">must be positive initialSlide: 0</h2>
-<h2 id="left-to-right-true-or-false-ltr-true">left to right (true or false) ltr: true</h2>
-<h2 id="shift-this-many-slides-slidestoscroll-1">shift this many slides slidesToScroll: 1</h2>
-<h2 id="width-of-slides-compared-to-carousel-as-a-decimal-show-2-slides-at-once-set-to-5-show-4-slides-at-once-set-to-25-slidewidth-1-">width of slides compared to carousel as a decimal ## show 2 slides at once, set to .5 ## show 4 slides at once, set to .25 slideWidth: &#39;1&#39;</h2>
-<h2 id="fake-the-infinite-slides-infinite-false">fake the infinite slides infinite: false</h2>
-<h2 id="slide-selector-what-carousel-uses-to-get-slides-slideselector-">slide selector, what Carousel uses to get slides slideSelector: &#39;&gt;*&#39;</h2>
-<h2 id="adaptiveheight-true">adaptiveHeight: true</h2>
-<h2 id="is-the-user-allowed-to-move-the-carousel-using-their-mouse-draggable-true">is the user allowed to move the carousel using their mouse? draggable: true</h2>
-<h2 id="values-scroll-fade-effect-scroll-">values, scroll, fade effect: &#39;scroll&#39;</h2>
-<h2 id="the-method-of-transition-cssease-ease-out-">the method of transition cssEase: &#39;ease-out&#39;</h2>
-<h2 id="the-speed-of-transition-speed-1000">the speed of transition speed: 1000</h2><p> edgeFriction: 0 touchThreshold: 5</p><h2 id="are-you-loading-images-after-page-carousel-load-lazyload-false">are you loading images after page carousel load? lazyLoad: false</h2>
-<h2 id="how-many-images-ahead-to-load-lazyloadrate-0">how many images ahead to load lazyLoadRate: 0</h2>
-<h2 id="attribute-on-img-tag-to-get-the-source-of-the-image-for-lazy-loading-lazyloadattribute-data-lazy-">attribute on img tag to get the source of the image for lazy loading lazyLoadAttribute: &#39;data-lazy&#39;</h2>
-<h2 id="show-arrows-arrows-true">show arrows? arrows: true</h2>
-<h2 id="hide-left-arrow-if-no-more-slides-to-the-left-hide-right-arrow-if-no-more-slides-to-the-right-only-available-in-non-infinite-mode-hideunclickablearrows-false">hide left arrow if no more slides to the left ## hide right arrow if no more slides to the right ## only available in non-infinite mode hideUnclickableArrows: false</h2>
-
+  <p>defaults =</p><h1 id="-param-next-string-">@param next [string]</h1>
+<h2 id="next-button-selector-required-">next button selector (required)</h2>
+<h1 id="-param-prev-string-">@param prev [string]</h1>
+<h2 id="prev-button-selector-required-">prev button selector (required)</h2>
+<h1 id="-option-alignment-string-">@option alignment [string]</h1>
+<h2 id="values-left-right-center-default-left-">values: left, right, center.  default = &#39;left&#39;</h2>
+<h1 id="-option-initialslide-int-">@option initialSlide [int]</h1>
+<h2 id="must-be-positive-default-0">must be positive. default = 0</h2>
+<h1 id="-option-ltr-boolean-">@option ltr [boolean]</h1>
+<h2 id="left-to-right-true-or-false-default-true">left to right (true or false). default = true</h2>
+<h1 id="-option-slidestoscroll-int-">@option slidesToScroll [int]</h1>
+<h2 id="shift-this-many-slides-default-1">shift this many slides. default = 1</h2>
+<h1 id="-option-float-width-of-slides-compared-to-carousel-as-a-decimal">@option [float] width of slides compared to carousel as a decimal</h1>
+<h1 id="show-2-slides-at-once-set-to-5">show 2 slides at once, set to .5</h1>
+<h1 id="show-4-slides-at-once-set-to-25">show 4 slides at once, set to .25</h1><p> slideWidth: &#39;1&#39;</p><h1 id="-option-boolean-fake-the-infinite-slides">@option [boolean] fake the infinite slides</h1><p> infinite: false</p><h1 id="-option-string-slide-selector-what-carousel-uses-to-get-slides">@option [string] slide selector, what Carousel uses to get slides</h1><p> slideSelector: &#39;&gt;*&#39;</p><p> #</p><h1 id="adaptiveheight-true">adaptiveHeight: true</h1>
+<h1 id="-option-is-the-user-allowed-to-move-the-carousel-using-their-mouse-">@option is the user allowed to move the carousel using their mouse?</h1><p> draggable: true</p><h1 id="-option-values-scroll-fade">@option values, scroll, fade</h1><p> effect: &#39;scroll&#39;</p><h1 id="-option-the-method-of-transition">@option the method of transition</h1><p> cssEase: &#39;ease-out&#39;</p><h1 id="-option-the-speed-of-transition">@option the speed of transition</h1><p> speed: 1000</p><p> edgeFriction: 0
+ touchThreshold: 5</p><h1 id="-option-are-you-loading-images-after-page-carousel-load-">@option are you loading images after page carousel load?</h1><p> lazyLoad: false</p><h1 id="-option-how-many-images-ahead-to-load">@option how many images ahead to load</h1><p> lazyLoadRate: 0</p><h1 id="-option-attribute-on-img-tag-to-get-the-source-of-the-image-for-lazy-loading">@option attribute on img tag to get the source of the image for lazy loading</h1><p> lazyLoadAttribute: &#39;data-lazy&#39;</p><h1 id="-option-show-arrows-">@option show arrows?</h1><p> arrows: true</p><h1 id="-option-hide-left-arrow-if-no-more-slides-to-the-left">@option hide left arrow if no more slides to the left</h1>
+<h1 id="-option-hide-right-arrow-if-no-more-slides-to-the-right">@option hide right arrow if no more slides to the right</h1>
+<h1 id="-option-only-available-in-non-infinite-mode">@option only available in non-infinite mode</h1><p> hideUnclickableArrows: false</p>
 </div>
 <div class='tags'>
 </div>
