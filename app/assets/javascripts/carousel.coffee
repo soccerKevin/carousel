@@ -133,12 +133,9 @@ class Carousel
     Apply options used to set new and override existing options
     @private
   ###
-  # next: '#next .arrow'
-  # prev: '#prev .arrow'
-  # arrows: true
-  # hideUnclickableArrows: false
   applyOptions: ()->
-    #apply carousel options
+    for index, option of @resetableOptions()
+      @["set#{option.capitalize()}"]()
     @scroller.updateOptions @options
 
   ###
@@ -180,6 +177,14 @@ class Carousel
       arrows: true
       hideUnclickableArrows: false
       titleSlide: false
+
+  resetableOptions: ->
+    [
+      # 'next'
+      # 'prev'
+      # 'arrows'
+      # 'hideUnclickableArrows'
+    ]
 
   ###
     @return [array] slides

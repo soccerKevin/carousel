@@ -143,6 +143,12 @@ Carousel = (function() {
    */
 
   Carousel.prototype.applyOptions = function() {
+    var index, option, ref;
+    ref = this.resetableOptions();
+    for (index in ref) {
+      option = ref[index];
+      this["set" + (option.capitalize())]();
+    }
     return this.scroller.updateOptions(this.options);
   };
 
@@ -195,6 +201,10 @@ Carousel = (function() {
       hideUnclickableArrows: false,
       titleSlide: false
     };
+  };
+
+  Carousel.prototype.resetableOptions = function() {
+    return [];
   };
 
 
