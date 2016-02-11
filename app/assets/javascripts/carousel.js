@@ -95,8 +95,13 @@ var Carousel;
 Carousel = (function() {
 
   /*
-    selector = main Carousel Container
-    options = overrides for defaults
+    @param [string] selector
+    #main Carousel Container
+  
+    @param [hash] options
+    #overrides for defaults
+  
+    @return [object] carousel instance
    */
   function Carousel(selector, options) {
     var $slides;
@@ -127,18 +132,44 @@ Carousel = (function() {
     })(this)), 50);
   }
 
+
+  /*
+    Apply options used to set new and override existing options
+    @private
+   */
+
   Carousel.prototype.applyOptions = function() {
     return this.scroller.updateOptions(this.options);
   };
+
+
+  /*
+    Update options after instance construction
+    @param [hash] options
+    #any set of options you wish to change
+   */
 
   Carousel.prototype.updateOptions = function(options) {
     this.options = window.Util.combineHash(this.options, options);
     return this.applyOptions();
   };
 
+
+  /*
+    @return [array] slides
+    #JQuery array of the slides of this carousel
+    @private
+   */
+
   Carousel.prototype.getSlides = function() {
     return this.scroller.getSlides();
   };
+
+
+  /*
+    @return [hash] defaults
+    @private
+   */
 
   Carousel.prototype.defaults = function() {
     var defaults;
@@ -166,6 +197,13 @@ Carousel = (function() {
     };
   };
 
+
+  /*
+    @param [string] direction
+     * 'next'/'prev'
+    @private
+   */
+
   Carousel.prototype.moveDirection = function(direction) {
     if (this.moving) {
       return false;
@@ -175,15 +213,30 @@ Carousel = (function() {
     return this.moving = false;
   };
 
+
+  /*
+    resize this carousel
+   */
+
   Carousel.prototype.resize = function() {
     this.applyOptions();
     return this.scroller.gotoCurrent();
   };
 
+
+  /*
+    @private
+   */
+
   Carousel.prototype.handlers = function() {
     this.arrowHandlers();
     return this.resizeHandler();
   };
+
+
+  /*
+    @private
+   */
 
   Carousel.prototype.resizeHandler = function() {
     return $(window).resize((function(_this) {
@@ -194,6 +247,11 @@ Carousel = (function() {
       };
     })(this));
   };
+
+
+  /*
+    @private
+   */
 
   Carousel.prototype.arrowHandlers = function() {
     this.prevBtn.on('click', (function(_this) {

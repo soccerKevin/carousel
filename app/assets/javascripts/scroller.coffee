@@ -1,3 +1,7 @@
+###
+
+###
+
 class Scroller
   constructor: (scrollerSelector, trackSelector, options)->
     @uid = window.Util.guid()
@@ -83,6 +87,24 @@ class Scroller
     index = @track.find('.carousel-current').data('carousel-index') - slides
     @goto index
 
+
+  # slideWidth: '1'
+
+  # alignment: 'left'
+  # initialSlide: 0
+  # ltr: true
+  # slidesToScroll: 1
+  # infinite: false
+  # slideSelector: '>*'
+  # draggable: true
+  # effect: 'scroll'
+  # cssEase: 'ease-out'
+  # speed: 1000
+  # edgeFriction: 0
+  # touchThreshold: 5
+  # lazyLoad: false
+  # lazyLoadRate: 0
+  # lazyLoadAttribute: 'data-lazy'
   updateOptions: (options)->
     @options = options
     @setSlideWidth()

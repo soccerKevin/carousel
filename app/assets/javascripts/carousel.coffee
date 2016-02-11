@@ -91,8 +91,13 @@
 
 class Carousel
   ###
-    selector = main Carousel Container
-    options = overrides for defaults
+    @param [string] selector
+    #main Carousel Container
+
+    @param [hash] options
+    #overrides for defaults
+
+    @return [object] carousel instance
   ###
   constructor: (selector, options)->
     throw new Error 'Missing Parameters Error' unless selector?
@@ -120,16 +125,38 @@ class Carousel
       @scroller.gotoCurrent false
     ), 50
 
+  ###
+    Apply options used to set new and override existing options
+    @private
+  ###
+  # next: '#next .arrow'
+  # prev: '#prev .arrow'
+  # arrows: true
+  # hideUnclickableArrows: false
   applyOptions: ()->
     @scroller.updateOptions @options
 
+  ###
+    Update options after instance construction
+    @param [hash] options
+    #any set of options you wish to change
+  ###
   updateOptions: (options)->
     @options = window.Util.combineHash @options, options
     @applyOptions()
 
+  ###
+    @return [array] slides
+    #JQuery array of the slides of this carousel
+    @private
+  ###
   getSlides: ->
     @scroller.getSlides()
 
+  ###
+    @return [hash] defaults
+    @private
+  ###
   defaults: ->
     defaults =
       next: '#next .arrow'
@@ -153,24 +180,41 @@ class Carousel
       arrows: true
       hideUnclickableArrows: false
 
+  ###
+    @param [string] direction
+    # 'next'/'prev'
+    @private
+  ###
   moveDirection: (direction)->
     return false if @moving
     @moving = true
     @scroller[direction]()
     @moving = false
 
+  ###
+    resize this carousel
+  ###
   resize: ->
     @applyOptions()
     @scroller.gotoCurrent()
 
+  ###
+    @private
+  ###
   handlers: ->
     @arrowHandlers()
     @resizeHandler()
 
+  ###
+    @private
+  ###
   resizeHandler: ->
     $(window).resize =>
       @resize() if @carouselWrapper.didResize()
 
+  ###
+    @private
+  ###
   arrowHandlers: ->
     @prevBtn.on 'click', (e)=>
       @moveDirection 'prev'
