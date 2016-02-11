@@ -151,7 +151,8 @@ Scroller = (function() {
 
   Scroller.prototype.updateOptions = function(options) {
     this.options = options;
-    return this.setSlideWidth();
+    this.setSlideWidth();
+    return this.gotoCurrent(false);
   };
 
   Scroller.prototype.handlers = function() {

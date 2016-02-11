@@ -30,16 +30,16 @@ $ ->
 
 
   options2 =
+    slideWidth: '1'
     # next: '#next .arrow'
     # prev: '#prev .arrow'
-    alignment: 'left'
-    initialSlide: 3
-    ltr: true
-    slidesToScroll: 1
-    slideWidth: '.4'
-    speed: 800 #mili-seconds
-    cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
-    slideSelector: '.card'
+    # alignment: 'left'
+    # initialSlide: 3
+    # ltr: true
+    # slidesToScroll: 1
+    # speed: 800 #mili-seconds
+    # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
+    # slideSelector: '.card'
     # infinite: false
     # draggable: true
     # effect: 'fade'

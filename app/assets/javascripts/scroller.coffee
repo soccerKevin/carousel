@@ -126,6 +126,7 @@ class Scroller
   updateOptions: (options)->
     @options = options
     @setSlideWidth()
+    @gotoCurrent false
 
   handlers: ->
     @transitionEndHandler()

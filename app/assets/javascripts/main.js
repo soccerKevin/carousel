@@ -15,14 +15,7 @@ $(function() {
   };
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {
-    alignment: 'left',
-    initialSlide: 3,
-    ltr: true,
-    slidesToScroll: 1,
-    slideWidth: '.4',
-    speed: 800,
-    cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)',
-    slideSelector: '.card'
+    slideWidth: '1'
   };
   return $('#change-options').on('click', function() {
     return window.carousel.updateOptions(options2);
