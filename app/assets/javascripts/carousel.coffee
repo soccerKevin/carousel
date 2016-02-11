@@ -142,6 +142,18 @@ class Carousel
     @scroller.updateOptions @options
 
   ###
+    @return JQuery object of the current slide
+  ###
+  currentSlide: ()->
+    @scroller.currentSlide()
+
+  ###
+    @return index of the current slide
+  ###
+  currentSlideIndex: ()->
+    @scroller.currentSlideIndex()
+
+  ###
     @return [hash] defaults
     @private
   ###
@@ -172,7 +184,6 @@ class Carousel
   ###
     @return [array] slides
     #JQuery array of the slides of this carousel
-    @private
   ###
   getSlides: ->
     @scroller.getSlides()

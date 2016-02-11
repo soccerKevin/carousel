@@ -19,6 +19,24 @@ Scroller = (function() {
     this.handlers();
   }
 
+
+  /*
+    @return the current slide for this scroller
+   */
+
+  Scroller.prototype.currentSlide = function() {
+    return this.track.find('.carousel-current');
+  };
+
+
+  /*
+    @return the index of the current slide
+   */
+
+  Scroller.prototype.currentSlideIndex = function() {
+    return this.currentSlide().data('carousel-index');
+  };
+
   Scroller.prototype.indexSlides = function() {
     var $slides, elem, index, ref, results;
     $slides = this.getSlides();
@@ -63,12 +81,10 @@ Scroller = (function() {
   };
 
   Scroller.prototype.gotoCurrent = function(animated) {
-    var index;
     if (animated == null) {
       animated = true;
     }
-    index = this.track.find('.carousel-current').data('carousel-index');
-    return this.goto(index, animated);
+    return this.goto(this.currentSlideIndex(), animated);
   };
 
   Scroller.prototype.slideStageDiff = function(index) {

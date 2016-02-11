@@ -148,6 +148,24 @@ Carousel = (function() {
 
 
   /*
+    @return JQuery object of the current slide
+   */
+
+  Carousel.prototype.currentSlide = function() {
+    return this.scroller.currentSlide();
+  };
+
+
+  /*
+    @return index of the current slide
+   */
+
+  Carousel.prototype.currentSlideIndex = function() {
+    return this.scroller.currentSlideIndex();
+  };
+
+
+  /*
     @return [hash] defaults
     @private
    */
@@ -183,7 +201,6 @@ Carousel = (function() {
   /*
     @return [array] slides
     #JQuery array of the slides of this carousel
-    @private
    */
 
   Carousel.prototype.getSlides = function() {

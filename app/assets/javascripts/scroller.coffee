@@ -15,6 +15,18 @@ class Scroller
     @setCurrent @options.initialSlide
     @handlers()
 
+  ###
+    @return the current slide for this scroller
+  ###
+  currentSlide: ->
+    @track.find('.carousel-current')
+
+  ###
+    @return the index of the current slide
+  ###
+  currentSlideIndex: ->
+    @currentSlide().data('carousel-index')
+
   indexSlides: ->
     $slides = @getSlides()
     for index, elem of $slides.get()
@@ -44,8 +56,7 @@ class Scroller
     @setCurrent index
 
   gotoCurrent: (animated = true)->
-    index = @track.find('.carousel-current').data('carousel-index')
-    @goto index, animated
+    @goto @currentSlideIndex(), animated
 
   # delta(x) of slide[index] to stage
   # uses diff[method]
