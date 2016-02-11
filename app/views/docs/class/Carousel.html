@@ -40,20 +40,6 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#applyOptions-dynamic'>
-        #
-(void)
-<b>applyOptions</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-      <p>next: &#39;#next .arrow&#39; prev: &#39;#prev .arrow&#39;
-arrows: true
-hideUnclickableArrows: false</p>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#currentSlide-dynamic'>
         #
 (?)
@@ -76,6 +62,18 @@ hideUnclickableArrows: false</p>
   </li>
   <li>
     <span class='signature'>
+      <a href='#resetableOptions-dynamic'>
+        #
+(void)
+<b>resetableOptions</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#getSlides-dynamic'>
         #
 (array)
@@ -83,7 +81,7 @@ hideUnclickableArrows: false</p>
       </a>
     </span>
     <span class='desc'>
-      #JQuery array of the slides of this carousel 
+      #JQuery array of the slides of this carousel&#39;s scroller 
     </span>
   </li>
   <li>
@@ -120,6 +118,75 @@ hideUnclickableArrows: false</p>
     </span>
     <span class='desc'>
       Update options after instance construction <p>#any set of options you wish to change</p>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setNext-dynamic'>
+        #
+(void)
+<b>setNext</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setPrev-dynamic'>
+        #
+(void)
+<b>setPrev</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initialHandlers-dynamic'>
+        #
+(void)
+<b>initialHandlers</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#resizeHandler-dynamic'>
+        #
+(void)
+<b>resizeHandler</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#nextHandler-dynamic'>
+        #
+(void)
+<b>nextHandler</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prevHandler-dynamic'>
+        #
+(void)
+<b>prevHandler</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
     </span>
   </li>
 </ul>
@@ -172,22 +239,6 @@ hideUnclickableArrows: false</p>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='applyOptions-dynamic'>
-      #
-(void)
-<b>applyOptions</b><span>()</span>
-      <br>
-    </p>
-    <div class='docstring'>
-  <p>next: &#39;#next .arrow&#39;
-prev: &#39;#prev .arrow&#39;
-arrows: true
-hideUnclickableArrows: false</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='currentSlide-dynamic'>
       #
 (?)
@@ -230,6 +281,20 @@ hideUnclickableArrows: false</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='resetableOptions-dynamic'>
+      #
+(void)
+<b>resetableOptions</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='getSlides-dynamic'>
       #
 (array)
@@ -237,7 +302,7 @@ hideUnclickableArrows: false</p>
       <br>
     </p>
     <div class='docstring'>
-  <p>#JQuery array of the slides of this carousel</p>
+  <p>#JQuery array of the slides of this carousel&#39;s scroller</p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -314,6 +379,75 @@ hideUnclickableArrows: false</p>
     </li>
   </ul>
 </div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setNext-dynamic'>
+      #
+(void)
+<b>setNext</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setPrev-dynamic'>
+      #
+(void)
+<b>setPrev</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='initialHandlers-dynamic'>
+      #
+(void)
+<b>initialHandlers</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='resizeHandler-dynamic'>
+      #
+(void)
+<b>resizeHandler</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='nextHandler-dynamic'>
+      #
+(void)
+<b>nextHandler</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prevHandler-dynamic'>
+      #
+(void)
+<b>prevHandler</b><span>()</span>
+      <br>
+    </p>
+    
   </div>
 </div>
     </div>

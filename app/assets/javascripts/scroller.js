@@ -136,17 +136,15 @@ Scroller = (function() {
   };
 
   Scroller.prototype.next = function() {
-    var index, slides;
+    var slides;
     slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
-    index = this.track.find('.carousel-current').data('carousel-index') + slides;
-    return this.goto(index);
+    return this.goto(this.currentSlideIndex() + slides);
   };
 
   Scroller.prototype.prev = function() {
-    var index, slides;
+    var slides;
     slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
-    index = this.track.find('.carousel-current').data('carousel-index') - slides;
-    return this.goto(index);
+    return this.goto(this.currentSlideIndex() - slides);
   };
 
   Scroller.prototype.updateOptions = function(options) {

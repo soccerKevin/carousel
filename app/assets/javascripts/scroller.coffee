@@ -96,13 +96,11 @@ class Scroller
 
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
-    index = @track.find('.carousel-current').data('carousel-index') + slides
-    @goto index
+    @goto @currentSlideIndex() + slides
 
   prev: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
-    index = @track.find('.carousel-current').data('carousel-index') - slides
-    @goto index
+    @goto @currentSlideIndex() - slides
 
 
   # slideWidth: '1'
