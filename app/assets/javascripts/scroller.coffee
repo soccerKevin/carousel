@@ -16,13 +16,15 @@ class Scroller
     @handlers()
 
   ###
-    @return the current slide for this scroller
+    @return [object]
+    #JQuery object of the current slide for this scroller
   ###
   currentSlide: ->
     @track.find('.carousel-current')
 
   ###
-    @return the index of the current slide
+    @return [int]
+    #the index of the current slide
   ###
   currentSlideIndex: ->
     @currentSlide().data('carousel-index')
@@ -32,6 +34,10 @@ class Scroller
     for index, elem of $slides.get()
       $(elem).attr 'data-carousel-index', index
 
+  ###
+    @return [array]
+    #array of jquery slide objects
+  ###
   getSlides: ->
     @track.find @options.slideSelector
 

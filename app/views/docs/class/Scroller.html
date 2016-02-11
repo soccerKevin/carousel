@@ -29,8 +29,38 @@
           <td>app&#47;assets&#47;javascripts&#47;scroller.coffee</td>
         </tr>
       </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>A Carousel Scroller.  Controls the track</p>
+</div>
+<div class='tags'>
+</div>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#currentSlide-dynamic'>
+        #
+(object)
+<b>currentSlide</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      #JQuery object of the current slide for this scroller 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#currentSlideIndex-dynamic'>
+        #
+(int)
+<b>currentSlideIndex</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      #the index of the current slide 
+    </span>
+  </li>
   <li>
     <span class='signature'>
       <a href='#indexSlides-dynamic'>
@@ -46,11 +76,12 @@
     <span class='signature'>
       <a href='#getSlides-dynamic'>
         #
-(void)
+(array)
 <b>getSlides</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
+      #array of jquery slide objects 
     </span>
   </li>
   <li>
@@ -196,6 +227,21 @@
       </a>
     </span>
     <span class='desc'>
+      <p>alignment: &#39;left&#39; initialSlide: 0
+ltr: true
+slidesToScroll: 1
+infinite: false
+slideSelector: &#39;&gt;*&#39;
+draggable: true
+effect: &#39;scroll&#39;
+cssEase: &#39;ease-out&#39;
+speed: 1000
+edgeFriction: 0
+touchThreshold: 5
+lazyLoad: false
+lazyLoadRate: 0
+lazyLoadAttribute: &#39;data-lazy&#39;
+titleSlide: false</p>
     </span>
   </li>
   <li>
@@ -236,6 +282,46 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
+    <p class='signature' id='currentSlide-dynamic'>
+      #
+(object)
+<b>currentSlide</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#JQuery object of the current slide for this scroller</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>object</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='currentSlideIndex-dynamic'>
+      #
+(int)
+<b>currentSlideIndex</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#the index of the current slide</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>int</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='indexSlides-dynamic'>
       #
 (void)
@@ -247,11 +333,22 @@
   <div class='method_details'>
     <p class='signature' id='getSlides-dynamic'>
       #
-(void)
+(array)
 <b>getSlides</b><span>()</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>#array of jquery slide objects</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>array</tt>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='setTrackTransition-dynamic'>
@@ -373,7 +470,26 @@ uses diff[method]</p>
 <b>updateOptions</b><span>(options)</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>alignment: &#39;left&#39;
+initialSlide: 0
+ltr: true
+slidesToScroll: 1
+infinite: false
+slideSelector: &#39;&gt;*&#39;
+draggable: true
+effect: &#39;scroll&#39;
+cssEase: &#39;ease-out&#39;
+speed: 1000
+edgeFriction: 0
+touchThreshold: 5
+lazyLoad: false
+lazyLoadRate: 0
+lazyLoadAttribute: &#39;data-lazy&#39;
+titleSlide: false</p>
+</div>
+<div class='tags'>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='handlers-dynamic'>

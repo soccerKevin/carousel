@@ -21,7 +21,8 @@ Scroller = (function() {
 
 
   /*
-    @return the current slide for this scroller
+    @return [object]
+    #JQuery object of the current slide for this scroller
    */
 
   Scroller.prototype.currentSlide = function() {
@@ -30,7 +31,8 @@ Scroller = (function() {
 
 
   /*
-    @return the index of the current slide
+    @return [int]
+    #the index of the current slide
    */
 
   Scroller.prototype.currentSlideIndex = function() {
@@ -48,6 +50,12 @@ Scroller = (function() {
     }
     return results;
   };
+
+
+  /*
+    @return [array]
+    #array of jquery slide objects
+   */
 
   Scroller.prototype.getSlides = function() {
     return this.track.find(this.options.slideSelector);
