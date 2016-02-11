@@ -5,10 +5,10 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 5,
+    initialSlide: 2,
     ltr: true,
-    slidesToScroll: 3,
-    slideWidth: '.8',
+    slidesToScroll: 1,
+    slideWidth: '.4',
     speed: 800,
     cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)',
     slideSelector: '.card'
