@@ -4,7 +4,8 @@
 
 class Scroller
   constructor: (scrollerSelector, trackSelector, options)->
-    @uid = window.Util.guid()
+    @Util = window.Util
+    @uid = @Util.guid()
     @scroller = $ scrollerSelector
     @scroller.attr 'data-uid', @uid
     @track = $ trackSelector
@@ -14,6 +15,21 @@ class Scroller
     @indexSlides()
     @setCurrent @options.initialSlide
     @handlers()
+    setTimeout (=>
+      @applyOptions()
+    ), 50
+
+  ###
+    #use to apply the initial options
+    @params [hash] options
+    #only set these options
+    #will set all options otherwise
+    @private
+  ###
+  applyOptions: (options=null)->
+    options = if options? then options else @options
+    @setSlideWidth() if @Util.present options.slideWidth
+    @gotoCurrent false
 
   ###
     @return [object]
@@ -55,7 +71,7 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
-    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
+    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)?
     @track.addClass @TRACK_TRANSITION if animated
     diff = @slideStageDiff index
     @moveTrack diff
@@ -106,13 +122,13 @@ class Scroller
 
 
   # slideWidth: '1'
-
   # alignment: 'left'
   # initialSlide: 0
   # ltr: true
   # slidesToScroll: 1
-  # infinite: false
   # slideSelector: '>*'
+
+  # infinite: false
   # draggable: true
   # effect: 'scroll'
   # cssEase: 'ease-out'
@@ -123,10 +139,14 @@ class Scroller
   # lazyLoadRate: 0
   # lazyLoadAttribute: 'data-lazy'
   # titleSlide: false
+
+  ###
+    @params [hash] new options
+    #a set of only the options you wish to change
+  ###
   updateOptions: (options)->
-    @options = options
-    @setSlideWidth()
-    @gotoCurrent false
+    @options = @Util.combineHash @options, options
+    @applyOptions options
 
   handlers: ->
     @transitionEndHandler()

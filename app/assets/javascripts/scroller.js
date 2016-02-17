@@ -7,7 +7,8 @@ var Scroller;
 
 Scroller = (function() {
   function Scroller(scrollerSelector, trackSelector, options) {
-    this.uid = window.Util.guid();
+    this.Util = window.Util;
+    this.uid = this.Util.guid();
     this.scroller = $(scrollerSelector);
     this.scroller.attr('data-uid', this.uid);
     this.track = $(trackSelector);
@@ -17,7 +18,32 @@ Scroller = (function() {
     this.indexSlides();
     this.setCurrent(this.options.initialSlide);
     this.handlers();
+    setTimeout(((function(_this) {
+      return function() {
+        return _this.applyOptions();
+      };
+    })(this)), 50);
   }
+
+
+  /*
+    #use to apply the initial options
+    @params [hash] options
+    #only set these options
+    #will set all options otherwise
+    @private
+   */
+
+  Scroller.prototype.applyOptions = function(options) {
+    if (options == null) {
+      options = null;
+    }
+    options = options != null ? options : this.options;
+    if (this.Util.present(options.slideWidth)) {
+      this.setSlideWidth();
+    }
+    return this.gotoCurrent(false);
+  };
 
 
   /*
@@ -77,7 +103,7 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
-    if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
+    if (this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0) == null) {
       return false;
     }
     if (animated) {
@@ -149,10 +175,15 @@ Scroller = (function() {
     return this.goto(this.currentSlideIndex() - slides);
   };
 
+
+  /*
+    @params [hash] new options
+    #a set of only the options you wish to change
+   */
+
   Scroller.prototype.updateOptions = function(options) {
-    this.options = options;
-    this.setSlideWidth();
-    return this.gotoCurrent(false);
+    this.options = this.Util.combineHash(this.options, options);
+    return this.applyOptions(options);
   };
 
   Scroller.prototype.handlers = function() {

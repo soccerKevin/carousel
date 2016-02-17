@@ -136,8 +136,7 @@ Carousel = (function() {
    */
 
   Carousel.prototype.applyOptions = function() {
-    this.setArrows();
-    return this.scroller.updateOptions(this.options);
+    return this.setArrows();
   };
 
 
@@ -236,7 +235,8 @@ Carousel = (function() {
   Carousel.prototype.updateOptions = function(options) {
     options = Carousel.deleteNonResetables(options);
     this.options = window.Util.combineHash(this.options, options);
-    return this.applyOptions();
+    this.applyOptions();
+    return this.scroller.updateOptions(this.options);
   };
 
 

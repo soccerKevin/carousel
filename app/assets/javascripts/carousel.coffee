@@ -129,7 +129,6 @@ class Carousel
   ###
   applyOptions: ()->
     @setArrows()
-    @scroller.updateOptions @options
 
   ###
     @return JQuery object of the current slide
@@ -204,6 +203,7 @@ class Carousel
     options = Carousel.deleteNonResetables options
     @options = window.Util.combineHash @options, options
     @applyOptions()
+    @scroller.updateOptions @options
 
   ### @private ###
   @deleteNonResetables: (options)->
