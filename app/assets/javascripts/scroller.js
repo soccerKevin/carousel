@@ -148,24 +148,9 @@ Scroller = (function() {
   };
 
   Scroller.prototype.updateOptions = function(options) {
-    var index, option, ref;
     this.options = options;
-    ref = this.resetableOptions();
-    for (index in ref) {
-      option = ref[index];
-      this["set" + (option.capitalize())]();
-    }
+    this.setSlideWidth();
     return this.gotoCurrent(false);
-  };
-
-
-  /*
-    @return [array] resetable options
-    @private
-   */
-
-  Scroller.prototype.resetableOptions = function() {
-    return ['slideWidth'];
   };
 
   Scroller.prototype.handlers = function() {

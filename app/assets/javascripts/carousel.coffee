@@ -45,6 +45,7 @@
   # @option [string] slideSelector
   #default: '>*'
   #Carousel uses to get elements to use as slides
+  #incase direct children are not what you want to be referenced as slides
 
   # @option [boolean] draggable
   #default: true
@@ -127,8 +128,7 @@ class Carousel
     @private
   ###
   applyOptions: ()->
-    for index, option of @resetableOptions()
-      @["set#{option.capitalize()}"]()
+    @setArrows()
     @scroller.updateOptions @options
 
   ###
@@ -171,13 +171,6 @@ class Carousel
       hideUnclickableArrows: false
       titleSlide: false
 
-  ### @private ###
-  resetableOptions: ->
-    [
-      'arrows'
-      # 'hideUnclickableArrows'
-    ]
-
   ###
     @return [array] slides
     #JQuery array of the slides of this carousel's scroller
@@ -208,8 +201,14 @@ class Carousel
     #any set of options you wish to change
   ###
   updateOptions: (options)->
+    options = Carousel.deleteNonResetables options
     @options = window.Util.combineHash @options, options
     @applyOptions()
+
+  ### @private ###
+  @deleteNonResetables: (options)->
+    delete options.slideSelector
+    options
 
   setArrows: ->
     @nextBtn.off() if @nextBtn?

@@ -47,6 +47,7 @@
    * @option [string] slideSelector
   #default: '>*'
   #Carousel uses to get elements to use as slides
+  #incase direct children are not what you want to be referenced as slides
 
    * @option [boolean] draggable
   #default: true
@@ -135,12 +136,7 @@ Carousel = (function() {
    */
 
   Carousel.prototype.applyOptions = function() {
-    var index, option, ref;
-    ref = this.resetableOptions();
-    for (index in ref) {
-      option = ref[index];
-      this["set" + (option.capitalize())]();
-    }
+    this.setArrows();
     return this.scroller.updateOptions(this.options);
   };
 
@@ -196,13 +192,6 @@ Carousel = (function() {
   };
 
 
-  /* @private */
-
-  Carousel.prototype.resetableOptions = function() {
-    return ['arrows'];
-  };
-
-
   /*
     @return [array] slides
     #JQuery array of the slides of this carousel's scroller
@@ -245,8 +234,17 @@ Carousel = (function() {
    */
 
   Carousel.prototype.updateOptions = function(options) {
+    options = Carousel.deleteNonResetables(options);
     this.options = window.Util.combineHash(this.options, options);
     return this.applyOptions();
+  };
+
+
+  /* @private */
+
+  Carousel.deleteNonResetables = function(options) {
+    delete options.slideSelector;
+    return options;
   };
 
   Carousel.prototype.setArrows = function() {
