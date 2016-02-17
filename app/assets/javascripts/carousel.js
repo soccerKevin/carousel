@@ -244,6 +244,7 @@ Carousel = (function() {
 
   Carousel.deleteNonResetables = function(options) {
     delete options.slideSelector;
+    delete options.initialSlide;
     return options;
   };
 

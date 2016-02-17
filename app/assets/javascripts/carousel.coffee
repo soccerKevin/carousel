@@ -208,6 +208,7 @@ class Carousel
   ### @private ###
   @deleteNonResetables: (options)->
     delete options.slideSelector
+    delete options.initialSlide
     options
 
   setArrows: ->

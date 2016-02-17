@@ -130,9 +130,11 @@ Scroller = (function() {
   };
 
   Scroller.prototype.setSlideWidth = function() {
-    var $slides;
+    var $slides, scrollerWidth, width;
     $slides = this.getSlides();
-    return $slides.css('width', this.scroller.width() * this.options.slideWidth);
+    scrollerWidth = this.scroller[0].getBoundingClientRect().width;
+    width = Math.ceil(scrollerWidth * this.options.slideWidth);
+    return $slides.css('width', width);
   };
 
   Scroller.prototype.next = function() {
