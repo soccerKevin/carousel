@@ -8,14 +8,14 @@ String.prototype.capitalize = function() {
 Util = (function() {
   function Util() {}
 
-  Util.combineHash = function(object1, object2) {
+  Util.combineHash = function(hash1, hash2) {
     var attribute, combined;
     combined = {};
-    for (attribute in object1) {
-      combined[attribute] = object1[attribute];
+    for (attribute in hash1) {
+      combined[attribute] = hash1[attribute];
     }
-    for (attribute in object2) {
-      combined[attribute] = object2[attribute];
+    for (attribute in hash2) {
+      combined[attribute] = hash2[attribute];
     }
     return combined;
   };
@@ -26,6 +26,13 @@ Util = (function() {
       return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     };
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  };
+
+  Util.present = function(variable) {
+    if (variable !== 'undefined' && variable !== null) {
+      return true;
+    }
+    return false;
   };
 
   return Util;
