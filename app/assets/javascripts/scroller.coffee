@@ -92,7 +92,9 @@ class Scroller
 
   setSlideWidth: ()->
     $slides = @getSlides()
-    $slides.css 'width', @scroller.width() * @options.slideWidth
+    scrollerWidth = @scroller[0].getBoundingClientRect().width
+    width = Math.ceil scrollerWidth * @options.slideWidth
+    $slides.css 'width', width
 
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
