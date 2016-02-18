@@ -106,13 +106,19 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
-    if (this.getSlides().filter("[data-carousel-index=" + index + "]").get(0) == null) {
+    if (!((this.getSlide(index).get(0) != null) || this.options.infinite)) {
       return false;
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
     diff = this.slideStageDiff(index);
+    if (index < 0) {
+      index = this.slideCount() + index;
+    }
+    if (index > this.slideCount() - 1) {
+      index = index - this.slideCount();
+    }
     this.moveTrack(diff);
     return this.setCurrent(index);
   };
@@ -124,9 +130,27 @@ Scroller = (function() {
     return this.goto(this.currentSlideIndex(), animated);
   };
 
+  Scroller.prototype.getSlide = function(index) {
+    return this.getSlides().filter("[data-carousel-index=" + index + "]");
+  };
+
+  Scroller.prototype.getClone = function(index, end) {
+    return this.track.find(this.options.slideSelector).filter(".clone." + end + "[data-carousel-index=" + index + "]");
+  };
+
+  Scroller.prototype.slideCount = function() {
+    return this.getSlides().length;
+  };
+
   Scroller.prototype.slideStageDiff = function(index) {
     var $slide, method;
-    $slide = this.getSlides().filter("[data-carousel-index=" + index + "]");
+    if (index < 0) {
+      $slide = this.getClone(this.slideCount() + index, 'front');
+    } else if (index > this.slideCount() - 1) {
+      $slide = this.getClone(index - this.slideCount(), 'rear');
+    } else {
+      $slide = this.getSlide(index);
+    }
     method = this.options.alignment.capitalize();
     return this["diff" + method]($slide);
   };
@@ -175,8 +199,8 @@ Scroller = (function() {
   };
 
   Scroller.prototype.addInfiniteSlides = function() {
-    this.track.prepend(this.cloneSlides());
-    return this.track.append(this.cloneSlides());
+    this.track.prepend(this.cloneSlides().addClass('front'));
+    return this.track.append(this.cloneSlides().addClass('rear'));
   };
 
   Scroller.prototype.cloneSlides = function() {
@@ -219,7 +243,10 @@ Scroller = (function() {
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd';
     return $(document).on(transitionEnd, (function(_this) {
       return function() {
-        return _this.track.removeClass(_this.TRACK_TRANSITION);
+        _this.track.removeClass(_this.TRACK_TRANSITION);
+        if (_this.options.infinite) {
+          return _this.gotoCurrent(false);
+        }
       };
     })(this));
   };

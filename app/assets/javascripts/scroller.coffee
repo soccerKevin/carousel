@@ -72,19 +72,38 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
-    return false unless @getSlides().filter("[data-carousel-index=#{index}]").get(0)?
+    return false unless @getSlide(index).get(0)? || @options.infinite
     @track.addClass @TRACK_TRANSITION if animated
     diff = @slideStageDiff index
+    if index < 0
+      index = @slideCount() + index
+    if index > @slideCount() - 1
+      index = index - @slideCount()
     @moveTrack diff
     @setCurrent index
 
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
 
+  getSlide: (index)->
+    @getSlides().filter("[data-carousel-index=#{index}]")
+
+  getClone: (index, end)->
+    @track.find(@options.slideSelector).filter(".clone.#{end}[data-carousel-index=#{index}]")
+
+  slideCount: ->
+    @getSlides().length
+
   # delta(x) of slide[index] to stage
   # uses diff[method]
   slideStageDiff: (index)->
-    $slide = @getSlides().filter("[data-carousel-index=#{index}]")
+    if index < 0
+      $slide = @getClone @slideCount() + index, 'front'
+    else if index > @slideCount() - 1
+      $slide = @getClone index - @slideCount(), 'rear'
+    else
+      $slide = @getSlide index
+
     method = @options.alignment.capitalize()
     @["diff#{method}"]($slide)
 
@@ -120,8 +139,8 @@ class Scroller
       @removeInfiniteSlides()
 
   addInfiniteSlides: ->
-    @track.prepend @cloneSlides()
-    @track.append @cloneSlides()
+    @track.prepend @cloneSlides().addClass 'front'
+    @track.append @cloneSlides().addClass 'rear'
 
   cloneSlides: ->
     @getSlides().clone().removeClass('carousel-current').addClass 'clone'
@@ -172,6 +191,8 @@ class Scroller
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd'
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
+      # needs to be done when moveTrack is finished
+      @gotoCurrent false if @options.infinite
 
 $ ->
   window.Scroller = Scroller
