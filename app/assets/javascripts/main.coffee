@@ -3,28 +3,26 @@ $ ->
     next: '#next .arrow'
     prev: '#prev .arrow'
     alignment: 'center'
-    initialSlide: 3
+    initialSlide: 15
     ltr: true
     slidesToScroll: 1
-    # slideWidth: 0.4
+    slideWidth: .33333
     speed: 800 #mili-seconds
-    cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
+    # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
+    cssEase: 'ease-out'
     slideSelector: '.card'
     infinite: false
+    # lazyLoad: false
+    # lazyLoadRate: 0
+    # lazyLoadAttribute: 'data-lazy'
+
     # draggable: true
     # effect: 'fade'
     # edgeFriction: 0
     # touchThreshold: 5
-    # lazyLoad: false
-    # lazyLoadRate: 0
-    # lazyLoadAttribute: 'data-lazy'
     # arrows: true
     # hideUnclickableArrows: false
     # titleSlide: false
-
-    # quicker move through slides (hold down button/similar)
-    # title slide?
-    # click and drag (snap into place)
 
   window.carousel = new window.Carousel '#carousel', options
 
@@ -53,6 +51,8 @@ $ ->
     # titleSlide: false
 
   $('#change-options').on 'click', ->
+    $slides = $('#extras').children()
+    window.carousel.addSlides $slides
     window.carousel.updateOptions options2
 
 

@@ -5,11 +5,12 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 3,
+    initialSlide: 15,
     ltr: true,
     slidesToScroll: 1,
+    slideWidth: .33333,
     speed: 800,
-    cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)',
+    cssEase: 'ease-out',
     slideSelector: '.card',
     infinite: false
   };
@@ -20,6 +21,9 @@ $(function() {
     infinite: true
   };
   return $('#change-options').on('click', function() {
+    var $slides;
+    $slides = $('#extras').children();
+    window.carousel.addSlides($slides);
     return window.carousel.updateOptions(options2);
   });
 });

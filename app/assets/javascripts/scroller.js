@@ -15,7 +15,7 @@ Scroller = (function() {
     this.track = $(trackSelector);
     this.TRACK_TRANSITION = 'carousel-track-transition';
     this.setTrackTransition();
-    this.indexSlides();
+    this.initilizeSlides();
     this.setCurrent(this.options.initialSlide);
     this.handlers();
     setTimeout(((function(_this) {
@@ -48,6 +48,20 @@ Scroller = (function() {
     return this.gotoCurrent(false);
   };
 
+  Scroller.prototype.addSlides = function(slides) {
+    if (this.options.infinite) {
+      this.removeInfiniteSlides();
+    }
+    this.track.append($(slides));
+    this.initilizeSlides();
+    return this.applyOptions(this.options);
+  };
+
+  Scroller.prototype.initilizeSlides = function() {
+    this.getSlides().addClass('carousel-slide');
+    return this.indexSlides();
+  };
+
 
   /*
     @return [object]
@@ -69,9 +83,8 @@ Scroller = (function() {
   };
 
   Scroller.prototype.indexSlides = function() {
-    var $slides, elem, index, ref, results;
-    $slides = this.getSlides();
-    ref = $slides.get();
+    var elem, index, ref, results;
+    ref = this.getSlides().get();
     results = [];
     for (index in ref) {
       elem = ref[index];
@@ -126,7 +139,7 @@ Scroller = (function() {
       if (index < 0) {
         $slide = this.getClone(this.slideCount() + index, 'front');
         index += this.slideCount();
-      } else if (index > this.slideCount() - 1) {
+      } else if (index >= this.slideCount() - 1) {
         $slide = this.getClone(index - this.slideCount(), 'rear');
         index -= this.slideCount();
       } else {
@@ -135,7 +148,7 @@ Scroller = (function() {
     } else {
       if (index < 0) {
         index = 0;
-      } else if (index > this.slideCount() - 1) {
+      } else if (index >= this.slideCount() - 1) {
         index = this.slideCount() - 1;
       }
       $slide = this.getSlide(index);

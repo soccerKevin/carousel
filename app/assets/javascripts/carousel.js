@@ -120,7 +120,6 @@ Carousel = (function() {
     this.carousel.wrapInner("<div class='carousel-container'></div>");
     this.carouselContainer = this.carousel.find('.carousel-container');
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
-    this.getSlides().addClass('carousel-slide');
     this.initialHandlers();
     this.applyOptions(this.options);
     setTimeout(((function(_this) {
@@ -189,6 +188,30 @@ Carousel = (function() {
       hideUnclickableArrows: false,
       titleSlide: false
     };
+  };
+
+
+  /*
+    @param [array] slides
+    #an array of slides to add
+   */
+
+  Carousel.prototype.addSlides = function(slides) {
+    return this.scroller.addSlides(slides);
+  };
+
+
+  /*
+    @param [int] startIndex
+    #where to start removing slides from
+    @param [int] count
+    #how many slides to remove
+   */
+
+  Carousel.prototype.removeSlides = function(startIndex, count) {
+    if (count == null) {
+      count = 1;
+    }
   };
 
 

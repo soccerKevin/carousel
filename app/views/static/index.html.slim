@@ -19,4 +19,9 @@ html
               .number = num - 1
               img [src = asset_path("cards/card#{num}.jpg")]
 
-
+      #extras style='display:none'
+        - (2..18).each do |num|
+          a href="" onclick="event.preventDefault();"
+            .card
+              .number = num - 1 + 17
+              img [src = asset_path("cards/card#{num}.jpg")]

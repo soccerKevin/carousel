@@ -11,7 +11,7 @@ class Scroller
     @track = $ trackSelector
     @TRACK_TRANSITION = 'carousel-track-transition'
     @setTrackTransition()
-    @indexSlides()
+    @initilizeSlides()
     @setCurrent @options.initialSlide
     @handlers()
     setTimeout (=>
@@ -31,6 +31,16 @@ class Scroller
     @setInfiniteSlides() if @Util.present options.infinite
     @gotoCurrent false
 
+  addSlides: (slides)->
+    @removeInfiniteSlides() if @options.infinite
+    @track.append $(slides)
+    @initilizeSlides()
+    @applyOptions @options
+
+  initilizeSlides: ->
+    @getSlides().addClass 'carousel-slide'
+    @indexSlides()
+
   ###
     @return [object]
     #JQuery object of the current slide for this scroller
@@ -46,8 +56,7 @@ class Scroller
     @currentSlide().data('carousel-index')
 
   indexSlides: ->
-    $slides = @getSlides()
-    for index, elem of $slides.get()
+    for index, elem of @getSlides().get()
       $(elem).attr 'data-carousel-index', index
 
   ###
@@ -85,7 +94,7 @@ class Scroller
       if index < 0
         $slide = @getClone @slideCount() + index, 'front'
         index += @slideCount()
-      else if index > @slideCount() - 1
+      else if index >= @slideCount() - 1
         $slide = @getClone index - @slideCount(), 'rear'
         index -= @slideCount()
       else
@@ -93,7 +102,7 @@ class Scroller
     else
       if index < 0
         index = 0
-      else if index > @slideCount() - 1
+      else if index >= @slideCount() - 1
         index = @slideCount() - 1
       $slide = @getSlide index
     [$slide, index]

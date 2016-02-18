@@ -116,7 +116,6 @@ class Carousel
     @carouselContainer = @carousel.find '.carousel-container'
     @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
 
-    @getSlides().addClass 'carousel-slide'
     @initialHandlers()
 
     @applyOptions @options
@@ -170,6 +169,22 @@ class Carousel
       arrows: true
       hideUnclickableArrows: false
       titleSlide: false
+
+  ###
+    @param [array] slides
+    #an array of slides to add
+  ###
+  addSlides: (slides)->
+    @scroller.addSlides slides
+
+  ###
+    @param [int] startIndex
+    #where to start removing slides from
+    @param [int] count
+    #how many slides to remove
+  ###
+  removeSlides: (startIndex, count=1)->
+
 
   ###
     @return [array] slides
