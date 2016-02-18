@@ -97,7 +97,7 @@ Scroller = (function() {
    */
 
   Scroller.prototype.currentSlideIndex = function() {
-    return this.currentSlide().data('carousel-index');
+    return parseInt(this.currentSlide().data('carousel-index'));
   };
 
   Scroller.prototype.indexSlides = function() {

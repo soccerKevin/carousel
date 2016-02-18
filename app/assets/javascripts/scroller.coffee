@@ -62,7 +62,7 @@ class Scroller
     #the index of the current slide
   ###
   currentSlideIndex: ->
-    @currentSlide().data('carousel-index')
+    parseInt @currentSlide().data('carousel-index')
 
   indexSlides: ->
     for index, elem of @getSlides().get()
