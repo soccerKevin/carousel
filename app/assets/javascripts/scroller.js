@@ -102,13 +102,23 @@ Scroller = (function() {
   };
 
   Scroller.prototype.goto = function(index, animated) {
-    var $slide, diff;
+    var $slide, diff, slide_index;
     if (animated == null) {
       animated = true;
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
+    slide_index = this.calculateNextSlideAndIndex(index);
+    $slide = slide_index.slide;
+    index = slide_index.index;
+    diff = this.slideStageDiff($slide);
+    this.moveTrack(diff);
+    return this.setCurrent(index);
+  };
+
+  Scroller.prototype.calculateNextSlideAndIndex = function(index) {
+    var $slide;
     if (this.options.infinite) {
       if (index < 0) {
         $slide = this.getClone(this.slideCount() + index, 'front');
@@ -127,11 +137,10 @@ Scroller = (function() {
       }
       $slide = this.getSlide(index);
     }
-    console.log(index);
-    console.log($slide);
-    diff = this.slideStageDiff($slide);
-    this.moveTrack(diff);
-    return this.setCurrent(index);
+    return {
+      slide: $slide,
+      index: index
+    };
   };
 
   Scroller.prototype.gotoCurrent = function(animated) {

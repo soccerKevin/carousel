@@ -73,6 +73,14 @@ class Scroller
 
   goto: (index, animated = true)->
     @track.addClass @TRACK_TRANSITION if animated
+    slide_index = @calculateNextSlideAndIndex index
+    $slide = slide_index.slide
+    index = slide_index.index
+    diff = @slideStageDiff $slide
+    @moveTrack diff
+    @setCurrent index
+
+  calculateNextSlideAndIndex: (index)->
     if @options.infinite
       if index < 0
         $slide = @getClone @slideCount() + index, 'front'
@@ -87,15 +95,8 @@ class Scroller
         index = 0
       else if index > @slideCount() - 1
         index = @slideCount() - 1
-
       $slide = @getSlide index
-
-    console.log index
-    console.log $slide
-
-    diff = @slideStageDiff $slide
-    @moveTrack diff
-    @setCurrent index
+    {slide: $slide, index: index}
 
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
