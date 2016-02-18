@@ -42,6 +42,9 @@ Scroller = (function() {
     if (this.Util.present(options.slideWidth)) {
       this.setSlideWidth();
     }
+    if (options.infinite) {
+      this.setInfiniteSlides;
+    }
     return this.gotoCurrent(false);
   };
 
@@ -161,6 +164,13 @@ Scroller = (function() {
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
     width = Math.ceil(scrollerWidth * this.options.slideWidth);
     return $slides.css('width', width);
+  };
+
+  Scroller.prototype.setInfiniteSlides = function() {
+    if (this.options.infinite && !this.track.find('.clone')) {
+      this.addInfiniteSlides;
+    }
+    return this.removeInfiniteSlides;
   };
 
   Scroller.prototype.next = function() {

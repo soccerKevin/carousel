@@ -29,6 +29,7 @@ class Scroller
   applyOptions: (options=null)->
     options = if options? then options else @options
     @setSlideWidth() if @Util.present options.slideWidth
+    @setInfiniteSlides if options.infinite
     @gotoCurrent false
 
   ###
@@ -111,6 +112,10 @@ class Scroller
     scrollerWidth = @scroller[0].getBoundingClientRect().width
     width = Math.ceil scrollerWidth * @options.slideWidth
     $slides.css 'width', width
+
+  setInfiniteSlides: ()->
+    @addInfiniteSlides if @options.infinite && !@track.find '.clone'
+    @removeInfiniteSlides
 
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
