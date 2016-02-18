@@ -4,7 +4,8 @@
 
 class Scroller
   constructor: (scrollerSelector, trackSelector, options)->
-    @uid = window.Util.guid()
+    @Util = window.Util
+    @uid = @Util.guid()
     @scroller = $ scrollerSelector
     @scroller.attr 'data-uid', @uid
     @track = $ trackSelector
@@ -14,6 +15,22 @@ class Scroller
     @indexSlides()
     @setCurrent @options.initialSlide
     @handlers()
+    setTimeout (=>
+      @applyOptions()
+    ), 50
+
+  ###
+    #use to apply the initial options
+    @params [hash] options
+    #only set these options
+    #will set all options otherwise
+    @private
+  ###
+  applyOptions: (options=null)->
+    options = if options? then options else @options
+    @setSlideWidth() if @Util.present options.slideWidth
+    @setInfiniteSlides() if @Util.present options.infinite
+    @gotoCurrent false
 
   ###
     @return [object]
@@ -39,7 +56,7 @@ class Scroller
     #array of jquery slide objects
   ###
   getSlides: ->
-    @track.find @options.slideSelector
+    @track.find(@options.slideSelector).not('.clone')
 
   setTrackTransition: ->
     $trackTransition = $("<style id='#{@TRACK_TRANSITION}-#{@uid}'></style>")
@@ -55,19 +72,38 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
-    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)
+    return false unless @getSlide(index).get(0)? || @options.infinite
     @track.addClass @TRACK_TRANSITION if animated
     diff = @slideStageDiff index
+    if index < 0
+      index = @slideCount() + index
+    if index > @slideCount() - 1
+      index = index - @slideCount()
     @moveTrack diff
     @setCurrent index
 
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
 
+  getSlide: (index)->
+    @getSlides().filter("[data-carousel-index=#{index}]")
+
+  getClone: (index, end)->
+    @track.find(@options.slideSelector).filter(".clone.#{end}[data-carousel-index=#{index}]")
+
+  slideCount: ->
+    @getSlides().length
+
   # delta(x) of slide[index] to stage
   # uses diff[method]
   slideStageDiff: (index)->
-    $slide = @track.find ".carousel-slide[data-carousel-index=#{index}]"
+    if index < 0
+      $slide = @getClone @slideCount() + index, 'front'
+    else if index > @slideCount() - 1
+      $slide = @getClone index - @slideCount(), 'rear'
+    else
+      $slide = @getSlide index
+
     method = @options.alignment.capitalize()
     @["diff#{method}"]($slide)
 
@@ -96,6 +132,22 @@ class Scroller
     width = Math.ceil scrollerWidth * @options.slideWidth
     $slides.css 'width', width
 
+  setInfiniteSlides: ()->
+    if @options.infinite && @track.find('.clone').length < 1
+      @addInfiniteSlides()
+    else
+      @removeInfiniteSlides()
+
+  addInfiniteSlides: ->
+    @track.prepend @cloneSlides().addClass 'front'
+    @track.append @cloneSlides().addClass 'rear'
+
+  cloneSlides: ->
+    @getSlides().clone().removeClass('carousel-current').addClass 'clone'
+
+  removeInfiniteSlides: ->
+    @track.find('.clone').remove()
+
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
     @goto @currentSlideIndex() + slides
@@ -106,13 +158,13 @@ class Scroller
 
 
   # slideWidth: '1'
-
   # alignment: 'left'
   # initialSlide: 0
   # ltr: true
   # slidesToScroll: 1
-  # infinite: false
   # slideSelector: '>*'
+
+  # infinite: false
   # draggable: true
   # effect: 'scroll'
   # cssEase: 'ease-out'
@@ -123,10 +175,14 @@ class Scroller
   # lazyLoadRate: 0
   # lazyLoadAttribute: 'data-lazy'
   # titleSlide: false
+
+  ###
+    @params [hash] new options
+    #a set of only the options you wish to change
+  ###
   updateOptions: (options)->
-    @options = options
-    @setSlideWidth()
-    @gotoCurrent false
+    @options = @Util.combineHash @options, options
+    @applyOptions options
 
   handlers: ->
     @transitionEndHandler()
@@ -135,6 +191,8 @@ class Scroller
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd'
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
+      # needs to be done when moveTrack is finished
+      @gotoCurrent false if @options.infinite
 
 $ ->
   window.Scroller = Scroller

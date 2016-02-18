@@ -5,26 +5,19 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 2,
+    initialSlide: 0,
     ltr: true,
     slidesToScroll: 1,
     slideWidth: 0.4,
     speed: 800,
     cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)',
-    slideSelector: '.card'
+    slideSelector: '.card',
+    infinite: false
   };
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {
     slideWidth: 1,
-    next: '#prev .arrow',
-    prev: '#next .arrow',
-    alignment: 'left',
-    initialSlide: 3,
-    slideSelector: '.card',
-    ltr: true,
-    slidesToScroll: 3,
-    speed: 800,
-    cssEase: 'ease'
+    infinite: true
   };
   return $('#change-options').on('click', function() {
     return window.carousel.updateOptions(options2);

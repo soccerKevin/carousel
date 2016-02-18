@@ -7,7 +7,8 @@ var Scroller;
 
 Scroller = (function() {
   function Scroller(scrollerSelector, trackSelector, options) {
-    this.uid = window.Util.guid();
+    this.Util = window.Util;
+    this.uid = this.Util.guid();
     this.scroller = $(scrollerSelector);
     this.scroller.attr('data-uid', this.uid);
     this.track = $(trackSelector);
@@ -17,7 +18,35 @@ Scroller = (function() {
     this.indexSlides();
     this.setCurrent(this.options.initialSlide);
     this.handlers();
+    setTimeout(((function(_this) {
+      return function() {
+        return _this.applyOptions();
+      };
+    })(this)), 50);
   }
+
+
+  /*
+    #use to apply the initial options
+    @params [hash] options
+    #only set these options
+    #will set all options otherwise
+    @private
+   */
+
+  Scroller.prototype.applyOptions = function(options) {
+    if (options == null) {
+      options = null;
+    }
+    options = options != null ? options : this.options;
+    if (this.Util.present(options.slideWidth)) {
+      this.setSlideWidth();
+    }
+    if (this.Util.present(options.infinite)) {
+      this.setInfiniteSlides();
+    }
+    return this.gotoCurrent(false);
+  };
 
 
   /*
@@ -58,7 +87,7 @@ Scroller = (function() {
    */
 
   Scroller.prototype.getSlides = function() {
-    return this.track.find(this.options.slideSelector);
+    return this.track.find(this.options.slideSelector).not('.clone');
   };
 
   Scroller.prototype.setTrackTransition = function() {
@@ -77,13 +106,19 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
-    if (!this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0)) {
+    if (!((this.getSlide(index).get(0) != null) || this.options.infinite)) {
       return false;
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
     diff = this.slideStageDiff(index);
+    if (index < 0) {
+      index = this.slideCount() + index;
+    }
+    if (index > this.slideCount() - 1) {
+      index = index - this.slideCount();
+    }
     this.moveTrack(diff);
     return this.setCurrent(index);
   };
@@ -95,9 +130,27 @@ Scroller = (function() {
     return this.goto(this.currentSlideIndex(), animated);
   };
 
+  Scroller.prototype.getSlide = function(index) {
+    return this.getSlides().filter("[data-carousel-index=" + index + "]");
+  };
+
+  Scroller.prototype.getClone = function(index, end) {
+    return this.track.find(this.options.slideSelector).filter(".clone." + end + "[data-carousel-index=" + index + "]");
+  };
+
+  Scroller.prototype.slideCount = function() {
+    return this.getSlides().length;
+  };
+
   Scroller.prototype.slideStageDiff = function(index) {
     var $slide, method;
-    $slide = this.track.find(".carousel-slide[data-carousel-index=" + index + "]");
+    if (index < 0) {
+      $slide = this.getClone(this.slideCount() + index, 'front');
+    } else if (index > this.slideCount() - 1) {
+      $slide = this.getClone(index - this.slideCount(), 'rear');
+    } else {
+      $slide = this.getSlide(index);
+    }
     method = this.options.alignment.capitalize();
     return this["diff" + method]($slide);
   };
@@ -137,6 +190,27 @@ Scroller = (function() {
     return $slides.css('width', width);
   };
 
+  Scroller.prototype.setInfiniteSlides = function() {
+    if (this.options.infinite && this.track.find('.clone').length < 1) {
+      return this.addInfiniteSlides();
+    } else {
+      return this.removeInfiniteSlides();
+    }
+  };
+
+  Scroller.prototype.addInfiniteSlides = function() {
+    this.track.prepend(this.cloneSlides().addClass('front'));
+    return this.track.append(this.cloneSlides().addClass('rear'));
+  };
+
+  Scroller.prototype.cloneSlides = function() {
+    return this.getSlides().clone().removeClass('carousel-current').addClass('clone');
+  };
+
+  Scroller.prototype.removeInfiniteSlides = function() {
+    return this.track.find('.clone').remove();
+  };
+
   Scroller.prototype.next = function() {
     var slides;
     slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
@@ -149,10 +223,15 @@ Scroller = (function() {
     return this.goto(this.currentSlideIndex() - slides);
   };
 
+
+  /*
+    @params [hash] new options
+    #a set of only the options you wish to change
+   */
+
   Scroller.prototype.updateOptions = function(options) {
-    this.options = options;
-    this.setSlideWidth();
-    return this.gotoCurrent(false);
+    this.options = this.Util.combineHash(this.options, options);
+    return this.applyOptions(options);
   };
 
   Scroller.prototype.handlers = function() {
@@ -164,7 +243,10 @@ Scroller = (function() {
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd';
     return $(document).on(transitionEnd, (function(_this) {
       return function() {
-        return _this.track.removeClass(_this.TRACK_TRANSITION);
+        _this.track.removeClass(_this.TRACK_TRANSITION);
+        if (_this.options.infinite) {
+          return _this.gotoCurrent(false);
+        }
       };
     })(this));
   };
