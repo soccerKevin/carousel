@@ -51,8 +51,9 @@ $ ->
     # titleSlide: false
 
   $('#change-options').on 'click', ->
-    $slides = $('#extras').children()
-    window.carousel.addSlides $slides
-    window.carousel.updateOptions options2
+    # $slides = $('#extras').children()
+    # window.carousel.addSlides $slides
+    window.carousel.removeSlides 4, 5
+    # window.carousel.updateOptions options2
 
 

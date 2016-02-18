@@ -212,6 +212,7 @@ Carousel = (function() {
     if (count == null) {
       count = 1;
     }
+    return this.scroller.removeSlides(startIndex, count);
   };
 
 

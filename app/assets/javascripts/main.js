@@ -21,9 +21,6 @@ $(function() {
     infinite: true
   };
   return $('#change-options').on('click', function() {
-    var $slides;
-    $slides = $('#extras').children();
-    window.carousel.addSlides($slides);
-    return window.carousel.updateOptions(options2);
+    return window.carousel.removeSlides(4, 5);
   });
 });

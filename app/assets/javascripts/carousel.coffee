@@ -184,7 +184,7 @@ class Carousel
     #how many slides to remove
   ###
   removeSlides: (startIndex, count=1)->
-
+    @scroller.removeSlides startIndex, count
 
   ###
     @return [array] slides

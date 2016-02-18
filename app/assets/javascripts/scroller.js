@@ -54,7 +54,25 @@ Scroller = (function() {
     }
     this.track.append($(slides));
     this.initilizeSlides();
-    return this.applyOptions(this.options);
+    return this.applyOptions();
+  };
+
+  Scroller.prototype.removeSlides = function(startIndex, count) {
+    var $remove;
+    if (count == null) {
+      count = 1;
+    }
+    if (this.options.infinite) {
+      this.removeInfiniteSlides;
+    }
+    $remove = this.getSlides().filter(function() {
+      var ref;
+      return (startIndex <= (ref = $(this).data('carousel-index')) && ref < startIndex + count);
+    });
+    $remove.remove();
+    this.indexSlides();
+    this.applyOptions();
+    return $remove;
   };
 
   Scroller.prototype.initilizeSlides = function() {
@@ -88,7 +106,7 @@ Scroller = (function() {
     results = [];
     for (index in ref) {
       elem = ref[index];
-      results.push($(elem).attr('data-carousel-index', index));
+      results.push($(elem).attr('data-carousel-index', index).data('carousel-index', index));
     }
     return results;
   };

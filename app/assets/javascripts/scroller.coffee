@@ -35,7 +35,16 @@ class Scroller
     @removeInfiniteSlides() if @options.infinite
     @track.append $(slides)
     @initilizeSlides()
-    @applyOptions @options
+    @applyOptions()
+
+  removeSlides: (startIndex, count=1)->
+    @removeInfiniteSlides if @options.infinite
+    $remove = @getSlides().filter ->
+      startIndex <= $(@).data('carousel-index') < startIndex + count
+    $remove.remove()
+    @indexSlides()
+    @applyOptions()
+    $remove
 
   initilizeSlides: ->
     @getSlides().addClass 'carousel-slide'
@@ -57,7 +66,9 @@ class Scroller
 
   indexSlides: ->
     for index, elem of @getSlides().get()
-      $(elem).attr 'data-carousel-index', index
+      #just set both to avoid errors.  stupid data attribute
+      $(elem).attr('data-carousel-index', index)
+        .data 'carousel-index', index
 
   ###
     @return [array]
