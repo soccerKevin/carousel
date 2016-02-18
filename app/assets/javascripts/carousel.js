@@ -173,7 +173,7 @@ Carousel = (function() {
       initialSlide: 0,
       ltr: true,
       slidesToScroll: 1,
-      slideWidth: '1',
+      slideWidth: 'auto',
       infinite: false,
       slideSelector: '>*',
       draggable: true,

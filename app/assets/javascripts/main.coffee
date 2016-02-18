@@ -5,8 +5,8 @@ $ ->
     alignment: 'center'
     initialSlide: 3
     ltr: true
-    slidesToScroll: 5
-    slideWidth: 0.4
+    slidesToScroll: 1
+    # slideWidth: 0.4
     speed: 800 #mili-seconds
     cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
     slideSelector: '.card'

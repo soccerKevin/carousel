@@ -109,13 +109,18 @@ Scroller = (function() {
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
-    ref = this.calculateNextSlideAndIndex(index), $slide = ref[0], index = ref[1];
+    ref = this.nextSlideAndIndex(index), $slide = ref[0], index = ref[1];
     diff = this.slideStageDiff($slide);
     this.moveTrack(diff);
     return this.setCurrent(index);
   };
 
-  Scroller.prototype.calculateNextSlideAndIndex = function(index) {
+
+  /*
+    @private
+   */
+
+  Scroller.prototype.nextSlideAndIndex = function(index) {
     var $slide;
     if (this.options.infinite) {
       if (index < 0) {
@@ -193,6 +198,10 @@ Scroller = (function() {
   Scroller.prototype.setSlideWidth = function() {
     var $slides, scrollerWidth, width;
     $slides = this.getSlides();
+    if (this.options.slideWidth === 'auto') {
+      $slides.css('width', 'auto');
+      return;
+    }
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
     width = Math.ceil(scrollerWidth * this.options.slideWidth);
     return $slides.css('width', width);

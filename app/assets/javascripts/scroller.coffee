@@ -72,12 +72,15 @@ class Scroller
 
   goto: (index, animated = true)->
     @track.addClass @TRACK_TRANSITION if animated
-    [$slide, index] = @calculateNextSlideAndIndex index
+    [$slide, index] = @nextSlideAndIndex index
     diff = @slideStageDiff $slide
     @moveTrack diff
     @setCurrent index
 
-  calculateNextSlideAndIndex: (index)->
+  ###
+    @private
+  ###
+  nextSlideAndIndex: (index)->
     if @options.infinite
       if index < 0
         $slide = @getClone @slideCount() + index, 'front'
@@ -134,6 +137,9 @@ class Scroller
 
   setSlideWidth: ()->
     $slides = @getSlides()
+    if @options.slideWidth == 'auto'
+      $slides.css 'width', 'auto'
+      return
     scrollerWidth = @scroller[0].getBoundingClientRect().width
     width = Math.ceil scrollerWidth * @options.slideWidth
     $slides.css 'width', width
@@ -169,11 +175,11 @@ class Scroller
   # ltr: true
   # slidesToScroll: 1
   # slideSelector: '>*'
+  # infinite: true
+  # cssEase: 'ease-out'
 
-  # infinite: false
   # draggable: true
   # effect: 'scroll'
-  # cssEase: 'ease-out'
   # speed: 1000
   # edgeFriction: 0
   # touchThreshold: 5
