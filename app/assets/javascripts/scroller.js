@@ -42,8 +42,8 @@ Scroller = (function() {
     if (this.Util.present(options.slideWidth)) {
       this.setSlideWidth();
     }
-    if (options.infinite) {
-      this.setInfiniteSlides;
+    if (this.Util.present(options.infinite)) {
+      this.setInfiniteSlides();
     }
     return this.gotoCurrent(false);
   };
@@ -87,7 +87,7 @@ Scroller = (function() {
    */
 
   Scroller.prototype.getSlides = function() {
-    return this.track.find(this.options.slideSelector);
+    return this.track.find(this.options.slideSelector).not('.clone');
   };
 
   Scroller.prototype.setTrackTransition = function() {
@@ -106,7 +106,7 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
-    if (this.track.find(".carousel-slide[data-carousel-index=" + index + "]").get(0) == null) {
+    if (this.getSlides().filter("[data-carousel-index=" + index + "]").get(0) == null) {
       return false;
     }
     if (animated) {
@@ -126,7 +126,7 @@ Scroller = (function() {
 
   Scroller.prototype.slideStageDiff = function(index) {
     var $slide, method;
-    $slide = this.track.find(".carousel-slide[data-carousel-index=" + index + "]");
+    $slide = this.getSlides().filter("[data-carousel-index=" + index + "]");
     method = this.options.alignment.capitalize();
     return this["diff" + method]($slide);
   };
@@ -167,10 +167,24 @@ Scroller = (function() {
   };
 
   Scroller.prototype.setInfiniteSlides = function() {
-    if (this.options.infinite && !this.track.find('.clone')) {
-      this.addInfiniteSlides;
+    if (this.options.infinite && this.track.find('.clone').length < 1) {
+      return this.addInfiniteSlides();
+    } else {
+      return this.removeInfiniteSlides();
     }
-    return this.removeInfiniteSlides;
+  };
+
+  Scroller.prototype.addInfiniteSlides = function() {
+    this.track.prepend(this.cloneSlides());
+    return this.track.append(this.cloneSlides());
+  };
+
+  Scroller.prototype.cloneSlides = function() {
+    return this.getSlides().clone().removeClass('carousel-current').addClass('clone');
+  };
+
+  Scroller.prototype.removeInfiniteSlides = function() {
+    return this.track.find('.clone').remove();
   };
 
   Scroller.prototype.next = function() {

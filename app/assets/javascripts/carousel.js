@@ -113,7 +113,8 @@ Carousel = (function() {
     if (!this.carousel[0]) {
       throw new Error('Invalid Carousel Selector');
     }
-    this.options = window.Util.combineHash(this.defaults(), options);
+    this.Util = window.Util;
+    this.options = this.Util.combineHash(this.defaults(), options);
     this.carousel.wrapInner("<div class='carousel-track'></div>");
     this.carousel.wrapInner("<div class='carousel-scroller'></div>");
     this.carousel.wrapInner("<div class='carousel-container'></div>");
@@ -234,9 +235,9 @@ Carousel = (function() {
 
   Carousel.prototype.updateOptions = function(options) {
     options = Carousel.deleteNonResetables(options);
-    this.options = window.Util.combineHash(this.options, options);
+    this.options = this.Util.combineHash(this.options, options);
     this.applyOptions();
-    return this.scroller.updateOptions(this.options);
+    return this.scroller.updateOptions(options);
   };
 
 

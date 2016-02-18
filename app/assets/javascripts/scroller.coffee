@@ -29,7 +29,7 @@ class Scroller
   applyOptions: (options=null)->
     options = if options? then options else @options
     @setSlideWidth() if @Util.present options.slideWidth
-    @setInfiniteSlides if options.infinite
+    @setInfiniteSlides() if @Util.present options.infinite
     @gotoCurrent false
 
   ###
@@ -56,7 +56,7 @@ class Scroller
     #array of jquery slide objects
   ###
   getSlides: ->
-    @track.find @options.slideSelector
+    @track.find(@options.slideSelector).not('.clone')
 
   setTrackTransition: ->
     $trackTransition = $("<style id='#{@TRACK_TRANSITION}-#{@uid}'></style>")
@@ -72,7 +72,7 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
-    return false unless @track.find(".carousel-slide[data-carousel-index=#{index}]").get(0)?
+    return false unless @getSlides().filter("[data-carousel-index=#{index}]").get(0)?
     @track.addClass @TRACK_TRANSITION if animated
     diff = @slideStageDiff index
     @moveTrack diff
@@ -84,7 +84,7 @@ class Scroller
   # delta(x) of slide[index] to stage
   # uses diff[method]
   slideStageDiff: (index)->
-    $slide = @track.find ".carousel-slide[data-carousel-index=#{index}]"
+    $slide = @getSlides().filter("[data-carousel-index=#{index}]")
     method = @options.alignment.capitalize()
     @["diff#{method}"]($slide)
 
@@ -114,8 +114,20 @@ class Scroller
     $slides.css 'width', width
 
   setInfiniteSlides: ()->
-    @addInfiniteSlides if @options.infinite && !@track.find '.clone'
-    @removeInfiniteSlides
+    if @options.infinite && @track.find('.clone').length < 1
+      @addInfiniteSlides()
+    else
+      @removeInfiniteSlides()
+
+  addInfiniteSlides: ->
+    @track.prepend @cloneSlides()
+    @track.append @cloneSlides()
+
+  cloneSlides: ->
+    @getSlides().clone().removeClass('carousel-current').addClass 'clone'
+
+  removeInfiniteSlides: ->
+    @track.find('.clone').remove()
 
   next: ->
     slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1

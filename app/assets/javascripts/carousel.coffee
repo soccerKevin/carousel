@@ -107,7 +107,8 @@ class Carousel
     @carouselWrapper = new window.CarouselWrapper selector
     throw new Error 'Invalid Carousel Selector' unless @carousel[0]
 
-    @options = window.Util.combineHash @defaults(), options
+    @Util = window.Util
+    @options = @Util.combineHash @defaults(), options
 
     @carousel.wrapInner "<div class='carousel-track'></div>"
     @carousel.wrapInner "<div class='carousel-scroller'></div>"
@@ -201,9 +202,9 @@ class Carousel
   ###
   updateOptions: (options)->
     options = Carousel.deleteNonResetables options
-    @options = window.Util.combineHash @options, options
+    @options = @Util.combineHash @options, options
     @applyOptions()
-    @scroller.updateOptions @options
+    @scroller.updateOptions options
 
   ### @private ###
   @deleteNonResetables: (options)->
