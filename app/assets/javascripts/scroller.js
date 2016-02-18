@@ -6,14 +6,14 @@
 var Scroller;
 
 Scroller = (function() {
-  function Scroller(scrollerSelector, trackSelector, options) {
+  function Scroller(scrollerSelector, trackSelector, options1) {
+    this.options = options1;
     this.Util = window.Util;
     this.uid = this.Util.guid();
     this.scroller = $(scrollerSelector);
     this.scroller.attr('data-uid', this.uid);
     this.track = $(trackSelector);
     this.TRACK_TRANSITION = 'carousel-track-transition';
-    this.options = options;
     this.setTrackTransition();
     this.indexSlides();
     this.setCurrent(this.options.initialSlide);
@@ -102,16 +102,14 @@ Scroller = (function() {
   };
 
   Scroller.prototype.goto = function(index, animated) {
-    var $slide, diff, slide_index;
+    var $slide, diff, ref;
     if (animated == null) {
       animated = true;
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
-    slide_index = this.calculateNextSlideAndIndex(index);
-    $slide = slide_index.slide;
-    index = slide_index.index;
+    ref = this.calculateNextSlideAndIndex(index), $slide = ref[0], index = ref[1];
     diff = this.slideStageDiff($slide);
     this.moveTrack(diff);
     return this.setCurrent(index);
@@ -137,10 +135,7 @@ Scroller = (function() {
       }
       $slide = this.getSlide(index);
     }
-    return {
-      slide: $slide,
-      index: index
-    };
+    return [$slide, index];
   };
 
   Scroller.prototype.gotoCurrent = function(animated) {

@@ -1,4 +1,4 @@
-String.prototype.capitalize = ->
+String::capitalize = ->
   @.charAt(0).toUpperCase() + @.slice 1
 
 class Util

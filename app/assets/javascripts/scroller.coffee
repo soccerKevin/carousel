@@ -3,14 +3,13 @@
 ###
 
 class Scroller
-  constructor: (scrollerSelector, trackSelector, options)->
+  constructor: (scrollerSelector, trackSelector, @options)->
     @Util = window.Util
     @uid = @Util.guid()
     @scroller = $ scrollerSelector
     @scroller.attr 'data-uid', @uid
     @track = $ trackSelector
     @TRACK_TRANSITION = 'carousel-track-transition'
-    @options = options
     @setTrackTransition()
     @indexSlides()
     @setCurrent @options.initialSlide
@@ -73,9 +72,7 @@ class Scroller
 
   goto: (index, animated = true)->
     @track.addClass @TRACK_TRANSITION if animated
-    slide_index = @calculateNextSlideAndIndex index
-    $slide = slide_index.slide
-    index = slide_index.index
+    [$slide, index] = @calculateNextSlideAndIndex index
     diff = @slideStageDiff $slide
     @moveTrack diff
     @setCurrent index
@@ -96,7 +93,7 @@ class Scroller
       else if index > @slideCount() - 1
         index = @slideCount() - 1
       $slide = @getSlide index
-    {slide: $slide, index: index}
+    [$slide, index]
 
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
