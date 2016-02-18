@@ -3,9 +3,9 @@ $ ->
     next: '#next .arrow'
     prev: '#prev .arrow'
     alignment: 'center'
-    initialSlide: 0
+    initialSlide: 3
     ltr: true
-    slidesToScroll: 1
+    slidesToScroll: 5
     slideWidth: 0.4
     speed: 800 #mili-seconds
     cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
@@ -37,7 +37,7 @@ $ ->
     # initialSlide: 3 # should not be able to change
     # slideSelector: '.card' # should not be able to change
     # ltr: true
-    # slidesToScroll: 3
+    slidesToScroll: 3
     # speed: 800 #mili-seconds
     # cssEase: 'ease'
     infinite: true

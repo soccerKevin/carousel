@@ -72,13 +72,28 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
-    return false unless @getSlide(index).get(0)? || @options.infinite
     @track.addClass @TRACK_TRANSITION if animated
-    diff = @slideStageDiff index
-    if index < 0
-      index = @slideCount() + index
-    if index > @slideCount() - 1
-      index = index - @slideCount()
+    if @options.infinite
+      if index < 0
+        $slide = @getClone @slideCount() + index, 'front'
+        index += @slideCount()
+      else if index > @slideCount() - 1
+        $slide = @getClone index - @slideCount(), 'rear'
+        index -= @slideCount()
+      else
+        $slide = @getSlide index
+    else
+      if index < 0
+        index = 0
+      else if index > @slideCount() - 1
+        index = @slideCount() - 1
+
+      $slide = @getSlide index
+
+    console.log index
+    console.log $slide
+
+    diff = @slideStageDiff $slide
     @moveTrack diff
     @setCurrent index
 
@@ -96,16 +111,9 @@ class Scroller
 
   # delta(x) of slide[index] to stage
   # uses diff[method]
-  slideStageDiff: (index)->
-    if index < 0
-      $slide = @getClone @slideCount() + index, 'front'
-    else if index > @slideCount() - 1
-      $slide = @getClone index - @slideCount(), 'rear'
-    else
-      $slide = @getSlide index
-
+  slideStageDiff: (slide)->
     method = @options.alignment.capitalize()
-    @["diff#{method}"]($slide)
+    @["diff#{method}"](slide)
 
   diffLeft: (slide)->
     slide.offset().left * -1

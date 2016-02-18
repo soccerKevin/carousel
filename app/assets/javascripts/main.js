@@ -5,9 +5,9 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 0,
+    initialSlide: 3,
     ltr: true,
-    slidesToScroll: 1,
+    slidesToScroll: 5,
     slideWidth: 0.4,
     speed: 800,
     cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)',
@@ -17,6 +17,7 @@ $(function() {
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {
     slideWidth: 1,
+    slidesToScroll: 3,
     infinite: true
   };
   return $('#change-options').on('click', function() {

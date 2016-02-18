@@ -102,23 +102,34 @@ Scroller = (function() {
   };
 
   Scroller.prototype.goto = function(index, animated) {
-    var diff;
+    var $slide, diff;
     if (animated == null) {
       animated = true;
-    }
-    if (!((this.getSlide(index).get(0) != null) || this.options.infinite)) {
-      return false;
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
-    diff = this.slideStageDiff(index);
-    if (index < 0) {
-      index = this.slideCount() + index;
+    if (this.options.infinite) {
+      if (index < 0) {
+        $slide = this.getClone(this.slideCount() + index, 'front');
+        index += this.slideCount();
+      } else if (index > this.slideCount() - 1) {
+        $slide = this.getClone(index - this.slideCount(), 'rear');
+        index -= this.slideCount();
+      } else {
+        $slide = this.getSlide(index);
+      }
+    } else {
+      if (index < 0) {
+        index = 0;
+      } else if (index > this.slideCount() - 1) {
+        index = this.slideCount() - 1;
+      }
+      $slide = this.getSlide(index);
     }
-    if (index > this.slideCount() - 1) {
-      index = index - this.slideCount();
-    }
+    console.log(index);
+    console.log($slide);
+    diff = this.slideStageDiff($slide);
     this.moveTrack(diff);
     return this.setCurrent(index);
   };
@@ -142,17 +153,10 @@ Scroller = (function() {
     return this.getSlides().length;
   };
 
-  Scroller.prototype.slideStageDiff = function(index) {
-    var $slide, method;
-    if (index < 0) {
-      $slide = this.getClone(this.slideCount() + index, 'front');
-    } else if (index > this.slideCount() - 1) {
-      $slide = this.getClone(index - this.slideCount(), 'rear');
-    } else {
-      $slide = this.getSlide(index);
-    }
+  Scroller.prototype.slideStageDiff = function(slide) {
+    var method;
     method = this.options.alignment.capitalize();
-    return this["diff" + method]($slide);
+    return this["diff" + method](slide);
   };
 
   Scroller.prototype.diffLeft = function(slide) {
