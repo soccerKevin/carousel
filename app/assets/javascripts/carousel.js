@@ -104,14 +104,11 @@ Carousel = (function() {
   
     @return [object] carousel instance
    */
-  var CarouselWrapper;
-
   function Carousel(selector, options) {
     if (selector == null) {
       throw new Error('Missing Parameters Error');
     }
     this.carousel = $(selector);
-    this.carouselWrapper = new CarouselWrapper(selector);
     if (!this.carousel[0]) {
       throw new Error('Invalid Carousel Selector');
     }
@@ -126,7 +123,8 @@ Carousel = (function() {
     this.applyOptions(this.options);
     setTimeout(((function(_this) {
       return function() {
-        return _this.scroller.gotoCurrent(false);
+        _this.scroller.gotoCurrent(false);
+        return _this.saveSize();
       };
     })(this)), 50);
   }
@@ -275,6 +273,9 @@ Carousel = (function() {
     return options;
   };
 
+
+  /* @private */
+
   Carousel.prototype.setArrows = function() {
     if (this.nextBtn != null) {
       this.nextBtn.off();
@@ -286,14 +287,39 @@ Carousel = (function() {
     return this.setPrev();
   };
 
+
+  /* @private */
+
   Carousel.prototype.setNext = function() {
     this.nextBtn = $(this.options.next);
     return this.nextHandler();
   };
 
+
+  /* @private */
+
   Carousel.prototype.setPrev = function() {
     this.prevBtn = $(this.options.prev);
     return this.prevHandler();
+  };
+
+
+  /* @private */
+
+  Carousel.prototype.saveSize = function() {
+    this.width = this.carousel.width();
+    return this.height = this.carousel.height();
+  };
+
+
+  /* @private */
+
+  Carousel.prototype.didResize = function() {
+    if (this.width !== this.carousel.width() || this.height !== this.carousel.height()) {
+      this.saveSize();
+      return true;
+    }
+    return false;
   };
 
 
@@ -309,7 +335,7 @@ Carousel = (function() {
   Carousel.prototype.resizeHandler = function() {
     return $(window).resize((function(_this) {
       return function() {
-        if (_this.carouselWrapper.didResize()) {
+        if (_this.didResize()) {
           return _this.resize();
         }
       };
@@ -327,6 +353,9 @@ Carousel = (function() {
     })(this));
   };
 
+
+  /* @private */
+
   Carousel.prototype.prevHandler = function() {
     return this.prevBtn.on('click', (function(_this) {
       return function(e) {
@@ -334,29 +363,6 @@ Carousel = (function() {
       };
     })(this));
   };
-
-  CarouselWrapper = (function() {
-    function CarouselWrapper(selector) {
-      this.carousel = $(selector);
-      this.saveSize();
-    }
-
-    CarouselWrapper.prototype.saveSize = function() {
-      this.width = this.carousel.width();
-      return this.height = this.carousel.height();
-    };
-
-    CarouselWrapper.prototype.didResize = function() {
-      if (this.width !== this.carousel.width() || this.height !== this.carousel.height()) {
-        this.saveSize();
-        return true;
-      }
-      return false;
-    };
-
-    return CarouselWrapper;
-
-  })();
 
   return Carousel;
 
