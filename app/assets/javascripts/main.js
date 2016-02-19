@@ -12,7 +12,10 @@ $(function() {
     speed: 800,
     cssEase: 'ease-out',
     slideSelector: '.card',
-    infinite: true
+    infinite: false,
+    lazyLoad: true,
+    lazyLoadRate: 0,
+    lazyLoadAttribute: 'data-lazy'
   };
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {

@@ -1,5 +1,10 @@
 ###
-  A Carousel Scroller.  Controls the track
+  # A Carousel Scroller.  Controls the track
+  ## Basic Concept
+  #find the difference between the carousel.offset().left and the next slide.offset().left.  then move that distance
+
+  # REMEMBER TO UNSET SLIDES IF YOU CHANGE WHAT THEY ARE
+  #ie, add/remove
 ###
 
 class Scroller
