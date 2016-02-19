@@ -50,6 +50,7 @@ class Scroller
     $remove.remove()
     @unsetSlides()
     @indexSlides()
+    @setCurrent startIndex unless @currentSlideIndex()
     @applyOptions()
     $remove
 

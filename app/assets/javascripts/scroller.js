@@ -78,6 +78,9 @@ Scroller = (function() {
     $remove.remove();
     this.unsetSlides();
     this.indexSlides();
+    if (!this.currentSlideIndex()) {
+      this.setCurrent(startIndex);
+    }
     this.applyOptions();
     return $remove;
   };
