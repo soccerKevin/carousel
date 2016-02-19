@@ -104,7 +104,6 @@ class Carousel
     throw new Error 'Missing Parameters Error' unless selector?
 
     @carousel = $ selector
-    @carouselWrapper = new CarouselWrapper selector
     throw new Error 'Invalid Carousel Selector' unless @carousel[0]
 
     @Util = window.Util
@@ -121,6 +120,7 @@ class Carousel
     @applyOptions @options
     setTimeout (=>
       @scroller.gotoCurrent false
+      @saveSize()
     ), 50
 
   ###
@@ -227,19 +227,34 @@ class Carousel
     delete options.initialSlide
     options
 
+  ### @private ###
   setArrows: ->
     @nextBtn.off() if @nextBtn?
     @prevBtn.off() if @prevBtn?
     @setNext()
     @setPrev()
 
+  ### @private ###
   setNext: ->
     @nextBtn = $(@options.next)
     @nextHandler()
 
+  ### @private ###
   setPrev: ->
     @prevBtn = $(@options.prev)
     @prevHandler()
+
+  ### @private ###
+  saveSize: ->
+    @width = @carousel.width()
+    @height = @carousel.height()
+
+  ### @private ###
+  didResize: ->
+    if @width != @carousel.width() || @height != @carousel.height()
+      @saveSize()
+      return true
+    false
 
   ### @private ###
   initialHandlers: ->
@@ -248,31 +263,17 @@ class Carousel
   ### @private ###
   resizeHandler: ->
     $(window).resize =>
-      @resize() if @carouselWrapper.didResize()
+      @resize() if @didResize()
 
   ### @private ###
   nextHandler: ->
     @nextBtn.on 'click', (e)=>
       @moveDirection 'next'
 
+  ### @private ###
   prevHandler: ->
     @prevBtn.on 'click', (e)=>
       @moveDirection 'prev'
-
-  class CarouselWrapper
-    constructor: (selector)->
-      @carousel = $ selector
-      @saveSize()
-
-    saveSize: ->
-      @width = @carousel.width()
-      @height = @carousel.height()
-
-    didResize: ->
-      if @width != @carousel.width() || @height != @carousel.height()
-        @saveSize()
-        return true
-      false
 
 $ ->
   window.Carousel = Carousel
