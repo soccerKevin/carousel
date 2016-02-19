@@ -53,6 +53,7 @@ Scroller = (function() {
       this.removeInfiniteSlides();
     }
     this.track.append($(slides));
+    this.unsetSlides();
     this.initilizeSlides();
     return this.applyOptions();
   };
@@ -70,6 +71,7 @@ Scroller = (function() {
       return (startIndex <= (ref = $(this).data('carousel-index')) && ref < startIndex + count);
     });
     $remove.remove();
+    this.unsetSlides();
     this.indexSlides();
     this.applyOptions();
     return $remove;
@@ -118,7 +120,11 @@ Scroller = (function() {
    */
 
   Scroller.prototype.getSlides = function() {
-    return this.track.find(this.options.slideSelector).not('.clone');
+    return this.slides = this.slides != null ? this.slides : this.track.find(this.options.slideSelector).not('.clone');
+  };
+
+  Scroller.prototype.unsetSlides = function() {
+    return this.slides = null;
   };
 
   Scroller.prototype.setTrackTransition = function() {

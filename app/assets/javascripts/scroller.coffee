@@ -34,6 +34,7 @@ class Scroller
   addSlides: (slides)->
     @removeInfiniteSlides() if @options.infinite
     @track.append $(slides)
+    @unsetSlides()
     @initilizeSlides()
     @applyOptions()
 
@@ -42,6 +43,7 @@ class Scroller
     $remove = @getSlides().filter ->
       startIndex <= $(@).data('carousel-index') < startIndex + count
     $remove.remove()
+    @unsetSlides()
     @indexSlides()
     @applyOptions()
     $remove
@@ -75,7 +77,10 @@ class Scroller
     #array of jquery slide objects
   ###
   getSlides: ->
-    @track.find(@options.slideSelector).not('.clone')
+    @slides = if @slides? then @slides else @track.find(@options.slideSelector).not('.clone')
+
+  unsetSlides: ->
+    @slides = null
 
   setTrackTransition: ->
     $trackTransition = $("<style id='#{@TRACK_TRANSITION}-#{@uid}'></style>")
