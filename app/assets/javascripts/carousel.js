@@ -104,12 +104,14 @@ Carousel = (function() {
   
     @return [object] carousel instance
    */
+  var CarouselWrapper;
+
   function Carousel(selector, options) {
     if (selector == null) {
       throw new Error('Missing Parameters Error');
     }
     this.carousel = $(selector);
-    this.carouselWrapper = new window.CarouselWrapper(selector);
+    this.carouselWrapper = new CarouselWrapper(selector);
     if (!this.carousel[0]) {
       throw new Error('Invalid Carousel Selector');
     }
@@ -332,6 +334,29 @@ Carousel = (function() {
       };
     })(this));
   };
+
+  CarouselWrapper = (function() {
+    function CarouselWrapper(selector) {
+      this.carousel = $(selector);
+      this.saveSize();
+    }
+
+    CarouselWrapper.prototype.saveSize = function() {
+      this.width = this.carousel.width();
+      return this.height = this.carousel.height();
+    };
+
+    CarouselWrapper.prototype.didResize = function() {
+      if (this.width !== this.carousel.width() || this.height !== this.carousel.height()) {
+        this.saveSize();
+        return true;
+      }
+      return false;
+    };
+
+    return CarouselWrapper;
+
+  })();
 
   return Carousel;
 
