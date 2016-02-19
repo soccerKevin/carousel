@@ -104,7 +104,7 @@ class Carousel
     throw new Error 'Missing Parameters Error' unless selector?
 
     @carousel = $ selector
-    @carouselWrapper = new window.CarouselWrapper selector
+    @carouselWrapper = new CarouselWrapper selector
     throw new Error 'Invalid Carousel Selector' unless @carousel[0]
 
     @Util = window.Util
@@ -258,6 +258,21 @@ class Carousel
   prevHandler: ->
     @prevBtn.on 'click', (e)=>
       @moveDirection 'prev'
+
+  class CarouselWrapper
+    constructor: (selector)->
+      @carousel = $ selector
+      @saveSize()
+
+    saveSize: ->
+      @width = @carousel.width()
+      @height = @carousel.height()
+
+    didResize: ->
+      if @width != @carousel.width() || @height != @carousel.height()
+        @saveSize()
+        return true
+      false
 
 $ ->
   window.Carousel = Carousel
