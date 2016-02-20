@@ -75,7 +75,7 @@ class Scroller
     #the index of the current slide
   ###
   currentSlideIndex: ->
-    parseInt @currentSlide().data('carousel-index')
+    parseInt @currentSlide().data 'carousel-index'
 
   indexSlides: ->
     for index, elem of @getSlides().get()
@@ -131,7 +131,7 @@ class Scroller
     @goto @currentSlideIndex(), animated
 
   getSlide: (index)->
-    @getSlides().filter("[data-carousel-index=#{index}]")
+    @getSlides().filter "[data-carousel-index=#{index}]"
 
   ###
     @return [array]
@@ -143,7 +143,7 @@ class Scroller
   getClone: (index, end)->
     #probably don't need to find by selector then filter
     #could probably just find by .clone...
-    @track.find(@options.slideSelector).filter(".clone.#{end}[data-carousel-index=#{index}]")
+    @track.find(@options.slideSelector).filter ".clone.#{end}[data-carousel-index=#{index}]"
 
   getClones: (index=null)->
     return @track.find '.clone' unless index?
