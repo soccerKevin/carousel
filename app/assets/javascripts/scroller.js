@@ -257,15 +257,11 @@ Scroller = (function() {
   };
 
   Scroller.prototype.setSlideWidth = function() {
-    var $slides, scrollerWidth, width;
-    $slides = this.getSlides();
-    if (this.options.slideWidth === 'auto') {
-      $slides.css('width', 'auto');
-      return;
-    }
+    var scrollerWidth, w, width;
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
-    width = Math.ceil(scrollerWidth * this.options.slideWidth);
-    return $slides.css('width', width);
+    w = this.options.slideWidth;
+    width = parseFloat(w) != null ? parseFloat(w) * scrollerWidth : w;
+    return this.getSlides().css('width', width);
   };
 
   Scroller.prototype.setInfiniteSlides = function() {

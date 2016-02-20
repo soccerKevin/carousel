@@ -181,13 +181,10 @@ class Scroller
     $slides.removeClass('carousel-current').eq(index).addClass 'carousel-current'
 
   setSlideWidth: ()->
-    $slides = @getSlides()
-    if @options.slideWidth == 'auto'
-      $slides.css 'width', 'auto'
-      return
-    scrollerWidth = @scroller[0].getBoundingClientRect().width
-    width = Math.ceil scrollerWidth * @options.slideWidth
-    $slides.css 'width', width
+    scrollerWidth = this.scroller[0].getBoundingClientRect().width;
+    w = @options.slideWidth
+    width = if parseFloat(w)? then parseFloat(w) * scrollerWidth  else w
+    @getSlides().css 'width', width
 
   setInfiniteSlides: ()->
     if @options.infinite && @track.find('.clone').length < 1
