@@ -1,19 +1,28 @@
 ###
-  A Carousel Scroller.  Controls the track
+  # A Carousel Scroller.  Controls the track
+  ## Basic Concept
+  #find the difference between the carousel.offset().left and the next slide.offset().left.  then move that distance
+
+  # REMEMBER TO UNSET SLIDES IF YOU CHANGE WHAT THEY ARE
+  #ie, add/remove
 ###
 
 class Scroller
   constructor: (scrollerSelector, trackSelector, @options)->
+    @TRACK_TRANSITION = 'carousel-track-transition'
     @Util = window.Util
+
     @uid = @Util.guid()
     @scroller = $ scrollerSelector
     @scroller.attr 'data-uid', @uid
     @track = $ trackSelector
-    @TRACK_TRANSITION = 'carousel-track-transition'
-    @setTrackTransition()
     @initilizeSlides()
-    @setCurrent @options.initialSlide
+    @setTrackTransition()
     @handlers()
+
+    # fixes wierd bug
+    # essentially, making sure everything is loaded first
+    # 50ms seems to be the short limit
     setTimeout (=>
       @applyOptions()
     ), 50
@@ -25,8 +34,7 @@ class Scroller
     #will set all options otherwise
     @private
   ###
-  applyOptions: (options=null)->
-    options = if options? then options else @options
+  applyOptions: (options = @options)->
     @setSlideWidth() if @Util.present options.slideWidth
     @setInfiniteSlides() if @Util.present options.infinite
     @gotoCurrent false
@@ -34,28 +42,33 @@ class Scroller
   addSlides: (slides)->
     @removeInfiniteSlides() if @options.infinite
     @track.append $(slides)
+    @unsetSlides()
     @initilizeSlides()
     @applyOptions()
 
-  removeSlides: (startIndex, count=1)->
+  removeSlides: (startIndex, count = 1)->
     @removeInfiniteSlides if @options.infinite
     $remove = @getSlides().filter ->
       startIndex <= $(@).data('carousel-index') < startIndex + count
     $remove.remove()
+    @unsetSlides()
     @indexSlides()
+    @setCurrent startIndex unless @currentSlideIndex()
     @applyOptions()
     $remove
 
   initilizeSlides: ->
     @getSlides().addClass 'carousel-slide'
     @indexSlides()
+    @setCurrent @options.initialSlide
+    @lazyLoad() if @options.lazyLoad?
 
   ###
     @return [object]
     #JQuery object of the current slide for this scroller
   ###
   currentSlide: ->
-    @track.find('.carousel-current')
+    @track.find '.carousel-current'
 
   ###
     @return [int]
@@ -70,12 +83,8 @@ class Scroller
       $(elem).attr('data-carousel-index', index)
         .data 'carousel-index', index
 
-  ###
-    @return [array]
-    #array of jquery slide objects
-  ###
-  getSlides: ->
-    @track.find(@options.slideSelector).not('.clone')
+  unsetSlides: ->
+    @slides = null
 
   setTrackTransition: ->
     $trackTransition = $("<style id='#{@TRACK_TRANSITION}-#{@uid}'></style>")
@@ -91,6 +100,7 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
+    @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
     [$slide, index] = @nextSlideAndIndex index
     diff = @slideStageDiff $slide
@@ -101,8 +111,6 @@ class Scroller
     @private
   ###
   nextSlideAndIndex: (index)->
-    console.log index
-    console.log @slideCount()
     if @options.infinite?
       if index < 0
         $slide = @getClone @slideCount() + index, 'front'
@@ -113,13 +121,10 @@ class Scroller
       else
         $slide = @getSlide index
     else
-      if index < 0
-        index = 0
-      else if index >= @slideCount()
-        index = @slideCount() - 1
+      index = Math.max index, 0
+      index = Math.min index, @slideCount() - 1
       $slide = @getSlide index
 
-    console.log $slide
     [$slide, index]
 
   gotoCurrent: (animated = true)->
@@ -128,8 +133,24 @@ class Scroller
   getSlide: (index)->
     @getSlides().filter("[data-carousel-index=#{index}]")
 
+  ###
+    @return [array]
+    #array of jquery slide objects
+  ###
+  getSlides: ->
+    @slides = if @slides? then @slides else @track.find(@options.slideSelector).not '.clone'
+
   getClone: (index, end)->
+    #probably don't need to find by selector then filter
+    #could probably just find by .clone...
     @track.find(@options.slideSelector).filter(".clone.#{end}[data-carousel-index=#{index}]")
+
+  getClones: (index=null)->
+    return @track.find '.clone' unless index?
+    @track.find ".clone[data-carousel-index=#{index}]"
+
+  getAll: ()->
+    @track.find @options.slideSelector
 
   slideCount: ->
     @getSlides().length
@@ -160,13 +181,10 @@ class Scroller
     $slides.removeClass('carousel-current').eq(index).addClass 'carousel-current'
 
   setSlideWidth: ()->
-    $slides = @getSlides()
-    if @options.slideWidth == 'auto'
-      $slides.css 'width', 'auto'
-      return
-    scrollerWidth = @scroller[0].getBoundingClientRect().width
-    width = Math.ceil scrollerWidth * @options.slideWidth
-    $slides.css 'width', width
+    scrollerWidth = this.scroller[0].getBoundingClientRect().width;
+    w = @options.slideWidth
+    width = if parseFloat(w)? then parseFloat(w) * scrollerWidth  else w
+    @getSlides().css 'width', width
 
   setInfiniteSlides: ()->
     if @options.infinite && @track.find('.clone').length < 1
@@ -185,13 +203,32 @@ class Scroller
     @track.find('.clone').remove()
 
   next: ->
-    slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
+    slides = if @options.ltr? then @options.slidesToScroll else @options.slidesToScroll * -1
     @goto @currentSlideIndex() + slides
 
   prev: ->
-    slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
+    slides = if @options.ltr? then @options.slidesToScroll else @options.slidesToScroll * -1
     @goto @currentSlideIndex() - slides
 
+  lazyLoad: ->
+    current = @getAll().index @currentSlide()
+    start = current - @options.lazyLoadRate
+    end = start + @options.lazyLoadRate * 2 + 1
+    @loadImages start, end
+
+  ###
+    @private
+    @param [int] start
+    #index of first slide/clone to load
+    @param [int] end
+    #index of las slide/clone to load
+  ###
+  loadImages: (start, end) ->
+    start = Math.max start, 0
+    for index, elem of @getAll().get().slice start, end
+      $imgs = $(elem).find 'img'
+      if $imgs.attr('src') != $imgs.attr @options.lazyLoadAttribute
+        $imgs.attr 'src', $imgs.attr @options.lazyLoadAttribute
 
   # slideWidth: '1'
   # alignment: 'left'

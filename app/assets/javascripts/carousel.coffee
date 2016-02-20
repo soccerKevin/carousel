@@ -108,6 +108,7 @@ class Carousel
 
     @Util = window.Util
     @options = @Util.combineHash @defaults(), options
+    @assertDefaults()
 
     @carousel.wrapInner "<div class='carousel-track'></div>"
     @carousel.wrapInner "<div class='carousel-scroller'></div>"
@@ -118,10 +119,28 @@ class Carousel
     @initialHandlers()
 
     @applyOptions @options
+
+    # fixes weird bug
+    # essentially, making sure everything is loaded first
+    # 50ms seems to be the short limit
     setTimeout (=>
       @scroller.gotoCurrent false
       @saveSize()
     ), 50
+
+  assertDefaults: ->
+    @options.slidesToScroll = 1 if @options.slidesToScroll < 1
+
+    if @options.lazyLoad? && @options.lazyLoadRate < @options.slidesToScroll
+      @options.lazyLoadRate = @options.slidesToScroll
+
+    if @options.lazyLoad?
+      option1 = @options.lazyLoadRate
+      option2 = @options.slidesToScroll + Math.ceil 1.0 / @options.slideWidth
+      @options.lazyLoadRate = Math.max option1, option2
+
+    for index, img of @carousel.find('img').get()
+      $(img).attr 'src', '' unless $(img).attr('src')?
 
   ###
     Apply options used to set new and override existing options
@@ -183,7 +202,7 @@ class Carousel
     @param [int] count
     #how many slides to remove
   ###
-  removeSlides: (startIndex, count=1)->
+  removeSlides: (startIndex, count = 1)->
     @scroller.removeSlides startIndex, count
 
   ###
@@ -205,6 +224,7 @@ class Carousel
 
   ###
     resize this carousel
+    #make sure everything is how it should be
   ###
   resize: ->
     @applyOptions()
@@ -218,6 +238,7 @@ class Carousel
   updateOptions: (options)->
     options = Carousel.deleteNonResetables options
     @options = @Util.combineHash @options, options
+    @assertDefaults()
     @applyOptions()
     @scroller.updateOptions options
 

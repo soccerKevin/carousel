@@ -5,14 +5,16 @@ $(function() {
     next: '#next .arrow',
     prev: '#prev .arrow',
     alignment: 'center',
-    initialSlide: 15,
+    initialSlide: 13,
     ltr: true,
     slidesToScroll: 1,
     slideWidth: .33333,
     speed: 800,
     cssEase: 'ease-out',
     slideSelector: '.card',
-    infinite: true
+    lazyLoad: true,
+    lazyLoadRate: 4,
+    lazyLoadAttribute: 'data-lazy'
   };
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {

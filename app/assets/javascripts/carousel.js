@@ -114,6 +114,7 @@ Carousel = (function() {
     }
     this.Util = window.Util;
     this.options = this.Util.combineHash(this.defaults(), options);
+    this.assertDefaults();
     this.carousel.wrapInner("<div class='carousel-track'></div>");
     this.carousel.wrapInner("<div class='carousel-scroller'></div>");
     this.carousel.wrapInner("<div class='carousel-container'></div>");
@@ -128,6 +129,32 @@ Carousel = (function() {
       };
     })(this)), 50);
   }
+
+  Carousel.prototype.assertDefaults = function() {
+    var img, index, option1, option2, ref, results;
+    if (this.options.slidesToScroll < 1) {
+      this.options.slidesToScroll = 1;
+    }
+    if ((this.options.lazyLoad != null) && this.options.lazyLoadRate < this.options.slidesToScroll) {
+      this.options.lazyLoadRate = this.options.slidesToScroll;
+    }
+    if (this.options.lazyLoad != null) {
+      option1 = this.options.lazyLoadRate;
+      option2 = this.options.slidesToScroll + Math.ceil(1.0 / this.options.slideWidth);
+      this.options.lazyLoadRate = Math.max(option1, option2);
+    }
+    ref = this.carousel.find('img').get();
+    results = [];
+    for (index in ref) {
+      img = ref[index];
+      if ($(img).attr('src') == null) {
+        results.push($(img).attr('src', ''));
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  };
 
 
   /*
@@ -243,6 +270,7 @@ Carousel = (function() {
 
   /*
     resize this carousel
+    #make sure everything is how it should be
    */
 
   Carousel.prototype.resize = function() {
@@ -260,6 +288,7 @@ Carousel = (function() {
   Carousel.prototype.updateOptions = function(options) {
     options = Carousel.deleteNonResetables(options);
     this.options = this.Util.combineHash(this.options, options);
+    this.assertDefaults();
     this.applyOptions();
     return this.scroller.updateOptions(options);
   };
