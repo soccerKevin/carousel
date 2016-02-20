@@ -101,11 +101,13 @@ class Scroller
     @private
   ###
   nextSlideAndIndex: (index)->
-    if @options.infinite
+    console.log index
+    console.log @slideCount()
+    if @options.infinite?
       if index < 0
         $slide = @getClone @slideCount() + index, 'front'
         index += @slideCount()
-      else if index >= @slideCount() - 1
+      else if index >= @slideCount()
         $slide = @getClone index - @slideCount(), 'rear'
         index -= @slideCount()
       else
@@ -113,9 +115,11 @@ class Scroller
     else
       if index < 0
         index = 0
-      else if index >= @slideCount() - 1
+      else if index >= @slideCount()
         index = @slideCount() - 1
       $slide = @getSlide index
+
+    console.log $slide
     [$slide, index]
 
   gotoCurrent: (animated = true)->

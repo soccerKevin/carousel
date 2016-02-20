@@ -153,11 +153,13 @@ Scroller = (function() {
 
   Scroller.prototype.nextSlideAndIndex = function(index) {
     var $slide;
-    if (this.options.infinite) {
+    console.log(index);
+    console.log(this.slideCount());
+    if (this.options.infinite != null) {
       if (index < 0) {
         $slide = this.getClone(this.slideCount() + index, 'front');
         index += this.slideCount();
-      } else if (index >= this.slideCount() - 1) {
+      } else if (index >= this.slideCount()) {
         $slide = this.getClone(index - this.slideCount(), 'rear');
         index -= this.slideCount();
       } else {
@@ -166,11 +168,12 @@ Scroller = (function() {
     } else {
       if (index < 0) {
         index = 0;
-      } else if (index >= this.slideCount() - 1) {
+      } else if (index >= this.slideCount()) {
         index = this.slideCount() - 1;
       }
       $slide = this.getSlide(index);
     }
+    console.log($slide);
     return [$slide, index];
   };
 

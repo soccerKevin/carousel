@@ -12,7 +12,7 @@ $(function() {
     speed: 800,
     cssEase: 'ease-out',
     slideSelector: '.card',
-    infinite: false
+    infinite: true
   };
   window.carousel = new window.Carousel('#carousel', options);
   options2 = {
