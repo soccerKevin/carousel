@@ -3,7 +3,7 @@ $ ->
     next: '#next .arrow'
     prev: '#prev .arrow'
     alignment: 'center'
-    initialSlide: 15
+    initialSlide: 13
     ltr: true
     slidesToScroll: 1
     slideWidth: .33333
@@ -11,9 +11,9 @@ $ ->
     # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
     cssEase: 'ease-out'
     slideSelector: '.card'
-    infinite: false
+    # infinite: true
     lazyLoad: true
-    lazyLoadRate: 0
+    lazyLoadRate: 4
     lazyLoadAttribute: 'data-lazy'
 
     # draggable: true

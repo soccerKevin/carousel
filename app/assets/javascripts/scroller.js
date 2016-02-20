@@ -13,15 +13,14 @@ var Scroller;
 Scroller = (function() {
   function Scroller(scrollerSelector, trackSelector, options1) {
     this.options = options1;
+    this.TRACK_TRANSITION = 'carousel-track-transition';
     this.Util = window.Util;
     this.uid = this.Util.guid();
     this.scroller = $(scrollerSelector);
     this.scroller.attr('data-uid', this.uid);
     this.track = $(trackSelector);
-    this.TRACK_TRANSITION = 'carousel-track-transition';
-    this.setTrackTransition();
     this.initilizeSlides();
-    this.setCurrent(this.options.initialSlide);
+    this.setTrackTransition();
     this.handlers();
     setTimeout(((function(_this) {
       return function() {
@@ -41,9 +40,8 @@ Scroller = (function() {
 
   Scroller.prototype.applyOptions = function(options) {
     if (options == null) {
-      options = null;
+      options = this.options;
     }
-    options = options != null ? options : this.options;
     if (this.Util.present(options.slideWidth)) {
       this.setSlideWidth();
     }
@@ -87,7 +85,11 @@ Scroller = (function() {
 
   Scroller.prototype.initilizeSlides = function() {
     this.getSlides().addClass('carousel-slide');
-    return this.indexSlides();
+    this.indexSlides();
+    this.setCurrent(this.options.initialSlide);
+    if (this.options.lazyLoad != null) {
+      return this.lazyLoad();
+    }
   };
 
 
@@ -121,16 +123,6 @@ Scroller = (function() {
     return results;
   };
 
-
-  /*
-    @return [array]
-    #array of jquery slide objects
-   */
-
-  Scroller.prototype.getSlides = function() {
-    return this.slides = this.slides != null ? this.slides : this.track.find(this.options.slideSelector).not('.clone');
-  };
-
   Scroller.prototype.unsetSlides = function() {
     return this.slides = null;
   };
@@ -151,6 +143,9 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
+    if (this.options.lazyLoad != null) {
+      this.lazyLoad();
+    }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
@@ -167,8 +162,6 @@ Scroller = (function() {
 
   Scroller.prototype.nextSlideAndIndex = function(index) {
     var $slide;
-    console.log(index);
-    console.log(this.slideCount());
     if (this.options.infinite != null) {
       if (index < 0) {
         $slide = this.getClone(this.slideCount() + index, 'front');
@@ -180,14 +173,10 @@ Scroller = (function() {
         $slide = this.getSlide(index);
       }
     } else {
-      if (index < 0) {
-        index = 0;
-      } else if (index >= this.slideCount()) {
-        index = this.slideCount() - 1;
-      }
+      index = Math.max(index, 0);
+      index = Math.min(index, this.slideCount() - 1);
       $slide = this.getSlide(index);
     }
-    console.log($slide);
     return [$slide, index];
   };
 
@@ -202,8 +191,32 @@ Scroller = (function() {
     return this.getSlides().filter("[data-carousel-index=" + index + "]");
   };
 
+
+  /*
+    @return [array]
+    #array of jquery slide objects
+   */
+
+  Scroller.prototype.getSlides = function() {
+    return this.slides = this.slides != null ? this.slides : this.track.find(this.options.slideSelector).not('.clone');
+  };
+
   Scroller.prototype.getClone = function(index, end) {
     return this.track.find(this.options.slideSelector).filter(".clone." + end + "[data-carousel-index=" + index + "]");
+  };
+
+  Scroller.prototype.getClones = function(index) {
+    if (index == null) {
+      index = null;
+    }
+    if (index == null) {
+      return this.track.find('.clone');
+    }
+    return this.track.find(".clone[data-carousel-index=" + index + "]");
+  };
+
+  Scroller.prototype.getAll = function() {
+    return this.track.find(this.options.slideSelector);
   };
 
   Scroller.prototype.slideCount = function() {
@@ -278,14 +291,48 @@ Scroller = (function() {
 
   Scroller.prototype.next = function() {
     var slides;
-    slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
+    slides = this.options.ltr != null ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
     return this.goto(this.currentSlideIndex() + slides);
   };
 
   Scroller.prototype.prev = function() {
     var slides;
-    slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
+    slides = this.options.ltr != null ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
     return this.goto(this.currentSlideIndex() - slides);
+  };
+
+  Scroller.prototype.lazyLoad = function() {
+    var current, end, start;
+    current = this.getAll().index(this.currentSlide());
+    start = current - this.options.lazyLoadRate;
+    end = start + this.options.lazyLoadRate * 2 + 1;
+    return this.loadImages(start, end);
+  };
+
+
+  /*
+    @private
+    @param [int] start
+    #index of first slide/clone to load
+    @param [int] end
+    #index of las slide/clone to load
+   */
+
+  Scroller.prototype.loadImages = function(start, end) {
+    var $imgs, elem, index, ref, results;
+    start = Math.max(start, 0);
+    ref = this.getAll().get().slice(start, end);
+    results = [];
+    for (index in ref) {
+      elem = ref[index];
+      $imgs = $(elem).find('img');
+      if ($imgs.attr('src') !== $imgs.attr(this.options.lazyLoadAttribute)) {
+        results.push($imgs.attr('src', $imgs.attr(this.options.lazyLoadAttribute)));
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
   };
 
 
