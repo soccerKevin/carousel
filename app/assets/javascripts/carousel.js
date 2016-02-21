@@ -122,12 +122,7 @@ Carousel = (function() {
     this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
     this.initialHandlers();
     this.applyOptions(this.options);
-    setTimeout(((function(_this) {
-      return function() {
-        _this.scroller.gotoCurrent(false);
-        return _this.saveSize();
-      };
-    })(this)), 50);
+    this.saveSize();
   }
 
   Carousel.prototype.assertDefaults = function() {
@@ -202,15 +197,15 @@ Carousel = (function() {
       slideWidth: 'auto',
       infinite: false,
       slideSelector: '>*',
-      draggable: true,
-      effect: 'scroll',
-      cssEase: 'ease-out',
       speed: 1000,
-      edgeFriction: 0,
-      touchThreshold: 5,
       lazyLoad: false,
       lazyLoadRate: 0,
       lazyLoadAttribute: 'data-lazy',
+      cssEase: 'ease-out',
+      widthHeightRatio: 'auto',
+      draggable: true,
+      edgeFriction: 0,
+      touchThreshold: 5,
       arrows: true,
       hideUnclickableArrows: false,
       titleSlide: false
@@ -275,6 +270,7 @@ Carousel = (function() {
 
   Carousel.prototype.resize = function() {
     this.applyOptions();
+    this.scroller.resize();
     return this.scroller.gotoCurrent(false);
   };
 

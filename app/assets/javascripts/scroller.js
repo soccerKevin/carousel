@@ -138,10 +138,24 @@ Scroller = (function() {
     }
   };
 
+  Scroller.prototype.readyToMove = function(animated) {
+    return !(this.atClone && animated);
+  };
+
+
+  /*
+    @param [int] index
+     * index of the slide to goto
+     * may first go to clone, then to slide ("instantly") if infinite
+   */
+
   Scroller.prototype.goto = function(index, animated) {
-    var $slide, diff, ref;
+    var $slideClone, diff, ref;
     if (animated == null) {
       animated = true;
+    }
+    if (!this.readyToMove()) {
+      return false;
     }
     if (this.options.lazyLoad != null) {
       this.lazyLoad();
@@ -149,35 +163,42 @@ Scroller = (function() {
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
-    ref = this.nextSlideAndIndex(index), $slide = ref[0], index = ref[1];
-    diff = this.slideStageDiff($slide);
+    ref = this.nextSlideCloneAndIndex(index), $slideClone = ref[0], index = ref[1];
+    console.log(index);
+    diff = this.slideCloneStageDiff($slideClone);
+    if (this.scroller.offset().left === diff) {
+      return false;
+    }
     this.moveTrack(diff);
-    return this.setCurrent(index);
+    this.setCurrent(index);
+    return this.atClone = $slideClone.hasClass('clone');
   };
 
 
   /*
     @private
+    @param [slideClone]
+    @return slideClone and index of newCurrent (after a move) slide
    */
 
-  Scroller.prototype.nextSlideAndIndex = function(index) {
-    var $slide;
-    if (this.options.infinite != null) {
+  Scroller.prototype.nextSlideCloneAndIndex = function(index) {
+    var $slideClone;
+    if (this.options.infinite) {
       if (index < 0) {
-        $slide = this.getClone(this.slideCount() + index, 'front');
+        $slideClone = this.getClone(this.slideCount() + index, 'front');
         index += this.slideCount();
       } else if (index >= this.slideCount()) {
-        $slide = this.getClone(index - this.slideCount(), 'rear');
+        $slideClone = this.getClone(index - this.slideCount(), 'rear');
         index -= this.slideCount();
       } else {
-        $slide = this.getSlide(index);
+        $slideClone = this.getSlide(index);
       }
     } else {
       index = Math.max(index, 0);
       index = Math.min(index, this.slideCount() - 1);
-      $slide = this.getSlide(index);
+      $slideClone = this.getSlide(index);
     }
-    return [$slide, index];
+    return [$slideClone, index];
   };
 
   Scroller.prototype.gotoCurrent = function(animated) {
@@ -187,14 +208,19 @@ Scroller = (function() {
     return this.goto(this.currentSlideIndex(), animated);
   };
 
+
+  /*
+    @private
+    @return jquery slide with the given index
+   */
+
   Scroller.prototype.getSlide = function(index) {
     return this.getSlides().filter("[data-carousel-index=" + index + "]");
   };
 
 
   /*
-    @return [array]
-    #array of jquery slide objects
+    @return [array] jquery slide objects
    */
 
   Scroller.prototype.getSlides = function() {
@@ -215,18 +241,27 @@ Scroller = (function() {
     return this.track.find(".clone[data-carousel-index=" + index + "]");
   };
 
+
+  /*
+    @private
+    @return all slides and all clones in order, front-clones + slides + rear-clones
+   */
+
   Scroller.prototype.getAll = function() {
     return this.track.find(this.options.slideSelector);
   };
+
+
+  /* @private */
 
   Scroller.prototype.slideCount = function() {
     return this.getSlides().length;
   };
 
-  Scroller.prototype.slideStageDiff = function(slide) {
+  Scroller.prototype.slideCloneStageDiff = function(slideClone) {
     var method;
     method = this.options.alignment.capitalize();
-    return this["diff" + method](slide);
+    return this["diff" + method](slideClone);
   };
 
   Scroller.prototype.diffLeft = function(slide) {
@@ -245,15 +280,12 @@ Scroller = (function() {
   };
 
   Scroller.prototype.moveTrack = function(difference) {
-    var start;
-    start = this.track.offset().left;
-    return this.track.css('left', start + difference);
+    return this.track.css('left', this.track.offset().left + difference);
   };
 
   Scroller.prototype.setCurrent = function(index) {
-    var $slides;
-    $slides = this.getSlides();
-    return $slides.removeClass('carousel-current').eq(index).addClass('carousel-current');
+    this.getSlides().removeClass('carousel-current');
+    return this.getSlide(index).addClass('carousel-current');
   };
 
   Scroller.prototype.setSlideWidth = function() {
@@ -329,6 +361,10 @@ Scroller = (function() {
       }
     }
     return results;
+  };
+
+  Scroller.prototype.resize = function() {
+    return this.setSlideWidth();
   };
 
 

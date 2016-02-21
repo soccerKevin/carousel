@@ -123,10 +123,9 @@ class Carousel
     # fixes weird bug
     # essentially, making sure everything is loaded first
     # 50ms seems to be the short limit
-    setTimeout (=>
-      @scroller.gotoCurrent false
-      @saveSize()
-    ), 50
+    # setTimeout (=>
+    @saveSize()
+    # ), 50
 
   assertDefaults: ->
     @options.slidesToScroll = 1 if @options.slidesToScroll < 1
@@ -169,24 +168,43 @@ class Carousel
     defaults =
       next: '#next .arrow'
       prev: '#prev .arrow'
+      # left, center, right
       alignment: 'left'
+      # indexed from 0
       initialSlide: 0
+      # left to right / right to left
       ltr: true
+      # per action to move
       slidesToScroll: 1
+      # auto / % of carousel width (as decimal),
+      # auto does not set size
+      # show 3 slides? set to .3333
       slideWidth: 'auto'
+      #is it infinite?
       infinite: false
+      #in case your slides have a container or anchor around them
       slideSelector: '>*'
-      draggable: true
-      effect: 'scroll'
-      cssEase: 'ease-out'
+      # scroll speed
       speed: 1000
+      #lazy load images in slides? (will load all images in a slide)
+      lazyLoad: false
+      #how many slides to lazy load before and after the current slide
+      lazyLoadRate: 0
+      #will sub in this attributes value to a slides img.src when lazy loading
+      lazyLoadAttribute: 'data-lazy'
+      #what easing style to use when sliding (or fading)
+      cssEase: 'ease-out'
+      #scroll or fade
+      # effect: 'scroll'
+      widthHeightRatio: 'auto'
+
+      draggable: true
       edgeFriction: 0
       touchThreshold: 5
-      lazyLoad: false
-      lazyLoadRate: 0
-      lazyLoadAttribute: 'data-lazy'
       arrows: true
       hideUnclickableArrows: false
+      #is there a title slide?
+      #if true, treats the first slide as the title slide
       titleSlide: false
 
   ###
@@ -228,6 +246,7 @@ class Carousel
   ###
   resize: ->
     @applyOptions()
+    @scroller.resize()
     @scroller.gotoCurrent false
 
   ###

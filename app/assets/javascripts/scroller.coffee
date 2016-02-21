@@ -99,43 +99,65 @@ class Scroller
     else
       $('head').append $trackTransition
 
+  readyToMove: (animated)->
+    !(@atClone && animated)
+
+  ###
+    @param [int] index
+    # index of the slide to goto
+    # may first go to clone, then to slide ("instantly") if infinite
+  ###
   goto: (index, animated = true)->
+    return false unless @readyToMove()
+
     @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
-    [$slide, index] = @nextSlideAndIndex index
-    diff = @slideStageDiff $slide
-    @moveTrack diff
-    @setCurrent index
+    [$slideClone, index] = @nextSlideCloneAndIndex index
+    console.log index
+    diff = @slideCloneStageDiff $slideClone
+
+    return false if @scroller.offset().left == diff
+    @moveTrack diff # to a slideClone
+    @setCurrent index # set current to index of slide
+    ###### ALERT ######
+    # current slide could be flagged from '@setCurrent index', but not be in position
+    # in this case, assume that transitionEnd handler will run "gotoCurrent false"
+    @atClone = $slideClone.hasClass 'clone'
 
   ###
     @private
+    @param [slideClone]
+    @return slideClone and index of newCurrent (after a move) slide
   ###
-  nextSlideAndIndex: (index)->
-    if @options.infinite?
+  nextSlideCloneAndIndex: (index)->
+    if @options.infinite
       if index < 0
-        $slide = @getClone @slideCount() + index, 'front'
+        $slideClone = @getClone @slideCount() + index, 'front'
         index += @slideCount()
       else if index >= @slideCount()
-        $slide = @getClone index - @slideCount(), 'rear'
+        $slideClone = @getClone index - @slideCount(), 'rear'
         index -= @slideCount()
       else
-        $slide = @getSlide index
+        $slideClone = @getSlide index
     else
       index = Math.max index, 0
       index = Math.min index, @slideCount() - 1
-      $slide = @getSlide index
+      $slideClone = @getSlide index
 
-    [$slide, index]
+    [$slideClone, index]
 
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
 
+  ###
+    @private
+    @return jquery slide with the given index
+  ###
   getSlide: (index)->
     @getSlides().filter "[data-carousel-index=#{index}]"
 
   ###
-    @return [array]
-    #array of jquery slide objects
+    @return [array] jquery slide objects
   ###
   getSlides: ->
     @slides = if @slides? then @slides else @track.find(@options.slideSelector).not '.clone'
@@ -149,17 +171,22 @@ class Scroller
     return @track.find '.clone' unless index?
     @track.find ".clone[data-carousel-index=#{index}]"
 
+  ###
+    @private
+    @return all slides and all clones in order, front-clones + slides + rear-clones
+  ###
   getAll: ()->
     @track.find @options.slideSelector
 
+  ### @private ###
   slideCount: ->
     @getSlides().length
 
   # delta(x) of slide[index] to stage
   # uses diff[method]
-  slideStageDiff: (slide)->
+  slideCloneStageDiff: (slideClone)->
     method = @options.alignment.capitalize()
-    @["diff#{method}"](slide)
+    @["diff#{method}"](slideClone)
 
   diffLeft: (slide)->
     slide.offset().left * -1
@@ -173,12 +200,11 @@ class Scroller
     scrollerCenter - slideCenter
 
   moveTrack: (difference)->
-    start = @track.offset().left
-    @track.css 'left', start + difference
+    @track.css 'left', @track.offset().left + difference
 
   setCurrent: (index)->
-    $slides = @getSlides()
-    $slides.removeClass('carousel-current').eq(index).addClass 'carousel-current'
+    @getSlides().removeClass 'carousel-current'
+    @getSlide(index).addClass 'carousel-current'
 
   setSlideWidth: ()->
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
@@ -230,6 +256,9 @@ class Scroller
       if $imgs.attr('src') != $imgs.attr @options.lazyLoadAttribute
         $imgs.attr 'src', $imgs.attr @options.lazyLoadAttribute
 
+  resize: ->
+    @setSlideWidth()
+
   # slideWidth: '1'
   # alignment: 'left'
   # initialSlide: 0
@@ -266,6 +295,7 @@ class Scroller
       @track.removeClass @TRACK_TRANSITION
       # needs to be done when moveTrack is finished
       @gotoCurrent false if @options.infinite
+      # @gotoCurrent false if @options.infinite
 
 $ ->
   window.Scroller = Scroller
