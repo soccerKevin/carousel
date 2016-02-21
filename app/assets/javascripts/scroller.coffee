@@ -113,7 +113,6 @@ class Scroller
     @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
     [$slideClone, index] = @nextSlideCloneAndIndex index
-    console.log index
     diff = @slideCloneStageDiff $slideClone
 
     return false if @scroller.offset().left == diff

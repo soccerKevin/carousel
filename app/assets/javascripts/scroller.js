@@ -164,7 +164,6 @@ Scroller = (function() {
       this.track.addClass(this.TRACK_TRANSITION);
     }
     ref = this.nextSlideCloneAndIndex(index), $slideClone = ref[0], index = ref[1];
-    console.log(index);
     diff = this.slideCloneStageDiff($slideClone);
     if (this.scroller.offset().left === diff) {
       return false;
