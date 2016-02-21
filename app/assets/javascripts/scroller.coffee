@@ -11,7 +11,6 @@ class Scroller
   constructor: (scrollerSelector, trackSelector, @options)->
     @TRACK_TRANSITION = 'carousel-track-transition'
     @Util = window.Util
-
     @uid = @Util.guid()
     @scroller = $ scrollerSelector
     @scroller.attr 'data-uid', @uid
@@ -211,7 +210,7 @@ class Scroller
   setSlideWidth: ()->
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
     w = @options.slideWidth
-    width = if parseFloat(w)? then parseFloat(w) * scrollerWidth  else w
+    width = if isNaN parseFloat w then w else parseFloat(w) * scrollerWidth
     @getSlides().css 'width', width
 
   setInfiniteSlides: ()->

@@ -7,12 +7,24 @@ html
     = csrf_meta_tags
   body
     #change-options Change Options
-    #carousel-container.container
-      #prev
+    #carousel1-container.container
+      .prev-btn
         .arrow.noselect &#9664;
-      #next
+      .next-btn
         .arrow.noselect &#9654;
-      #carousel
+      #carousel1
+        - (2..18).each do |num|
+          a href="" onclick="event.preventDefault();"
+            .card
+              .number = num - 1
+              img [data-lazy = asset_path("cards/card#{num}.jpg")]
+
+    #carousel2-container.container
+      .prev-btn
+        .arrow.noselect &#9664;
+      .next-btn
+        .arrow.noselect &#9654;
+      #carousel2
         - (2..18).each do |num|
           a href="" onclick="event.preventDefault();"
             .card

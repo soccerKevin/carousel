@@ -294,7 +294,7 @@ Scroller = (function() {
     var scrollerWidth, w, width;
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
     w = this.options.slideWidth;
-    width = parseFloat(w) != null ? parseFloat(w) * scrollerWidth : w;
+    width = isNaN(parseFloat(w)) ? w : parseFloat(w) * scrollerWidth;
     return this.getSlides().css('width', width);
   };
 
