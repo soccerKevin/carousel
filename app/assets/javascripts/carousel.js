@@ -119,24 +119,22 @@ Carousel = (function() {
     this.carousel.wrapInner("<div class='carousel-scroller'></div>");
     this.carousel.wrapInner("<div class='carousel-container'></div>");
     this.carouselContainer = this.carousel.find('.carousel-container');
-    this.scroller = new window.Scroller('.carousel-scroller', '.carousel-track', this.options);
+    this.scroller = new window.Scroller(this.carousel.selector + " .carousel-scroller", this.carousel.selector + " .carousel-track", this.options);
     this.initialHandlers();
     this.applyOptions(this.options);
     this.saveSize();
   }
 
   Carousel.prototype.assertDefaults = function() {
-    var img, index, option1, option2, ref, results;
+    var img, index, option1, option2, option3, ref, results;
     if (this.options.slidesToScroll < 1) {
       this.options.slidesToScroll = 1;
     }
-    if ((this.options.lazyLoad != null) && this.options.lazyLoadRate < this.options.slidesToScroll) {
-      this.options.lazyLoadRate = this.options.slidesToScroll;
-    }
     if (this.options.lazyLoad != null) {
       option1 = this.options.lazyLoadRate;
-      option2 = this.options.slidesToScroll + Math.ceil(1.0 / this.options.slideWidth);
-      this.options.lazyLoadRate = Math.max(option1, option2);
+      option2 = this.options.slidesToScroll;
+      option3 = isNaN(this.options.slideWidth) ? 0 : this.options.slidesToScroll + Math.ceil(1.0 / this.options.slideWidth);
+      this.options.lazyLoadRate = Math.max(option1, option2, option3);
     }
     ref = this.carousel.find('img').get();
     results = [];
@@ -304,12 +302,7 @@ Carousel = (function() {
   /* @private */
 
   Carousel.prototype.setArrows = function() {
-    if (this.nextBtn != null) {
-      this.nextBtn.off();
-    }
-    if (this.prevBtn != null) {
-      this.prevBtn.off();
-    }
+    this.arrowHandlersOff();
     this.setNext();
     return this.setPrev();
   };
@@ -383,21 +376,7 @@ Carousel = (function() {
   Carousel.prototype.nextHandler = function() {
     return this.nextBtn.on('click', (function(_this) {
       return function(e) {
-        var index;
-        index = _this.moveDirection('next');
-        _this.showBtn('prev');
-        if (!_this.options.infinite && _this.options.hideUnclickableArrows) {
-          if (_this.options.ltr) {
-            if (index >= _this.scroller.slideCount() - 1) {
-              return _this.hideBtn('next');
-            }
-          } else {
-            if (index <= 0) {
-              return _this.hideBtn('next');
-            }
-          }
-        }
-        return _this.showBtn('next');
+        return _this.nextBtnClick();
       };
     })(this));
   };
@@ -408,23 +387,54 @@ Carousel = (function() {
   Carousel.prototype.prevHandler = function() {
     return this.prevBtn.on('click', (function(_this) {
       return function(e) {
-        var index;
-        index = _this.moveDirection('prev');
-        _this.showBtn('next');
-        if (!_this.options.infinite && _this.options.hideUnclickableArrows) {
-          if (!_this.options.ltr) {
-            if (index >= _this.sroller.slideCount() - 1) {
-              return _this.hideBtn('prev');
-            }
-          } else {
-            if (index <= 0) {
-              return _this.hideBtn('prev');
-            }
-          }
-        }
-        return _this.showBtn('prev');
+        return _this.prevBtnClick();
       };
     })(this));
+  };
+
+  Carousel.prototype.nextBtnClick = function() {
+    var index;
+    index = this.moveDirection('next');
+    this.showBtn('prev');
+    if (!this.options.infinite && this.options.hideUnclickableArrows) {
+      if (this.options.ltr) {
+        if (index >= this.scroller.slideCount() - 1) {
+          return this.hideBtn('next');
+        }
+      } else {
+        if (index <= 0) {
+          return this.hideBtn('next');
+        }
+      }
+    }
+    return this.showBtn('next');
+  };
+
+  Carousel.prototype.prevBtnClick = function() {
+    var index;
+    index = this.moveDirection('prev');
+    this.showBtn('next');
+    if (!this.options.infinite && this.options.hideUnclickableArrows) {
+      if (!this.options.ltr) {
+        if (index >= this.sroller.slideCount() - 1) {
+          return this.hideBtn('prev');
+        }
+      } else {
+        if (index <= 0) {
+          return this.hideBtn('prev');
+        }
+      }
+    }
+    return this.showBtn('prev');
+  };
+
+  Carousel.prototype.arrowHandlersOff = function() {
+    if (this.nextBtn != null) {
+      this.nextBtn.off();
+    }
+    if (this.prevBtn != null) {
+      return this.prevBtn.off();
+    }
   };
 
   return Carousel;

@@ -114,7 +114,7 @@ class Carousel
     @carousel.wrapInner "<div class='carousel-scroller'></div>"
     @carousel.wrapInner "<div class='carousel-container'></div>"
     @carouselContainer = @carousel.find '.carousel-container'
-    @scroller = new window.Scroller '.carousel-scroller', '.carousel-track', @options
+    @scroller = new window.Scroller "#{@carousel.selector} .carousel-scroller", "#{@carousel.selector} .carousel-track", @options
 
     @initialHandlers()
 
@@ -128,16 +128,20 @@ class Carousel
     # ), 50
 
   assertDefaults: ->
+    #assert slidesToScroll < 1
     @options.slidesToScroll = 1 if @options.slidesToScroll < 1
 
-    if @options.lazyLoad? && @options.lazyLoadRate < @options.slidesToScroll
-      @options.lazyLoadRate = @options.slidesToScroll
-
+    #assert lazyLoadRate
     if @options.lazyLoad?
       option1 = @options.lazyLoadRate
-      option2 = @options.slidesToScroll + Math.ceil 1.0 / @options.slideWidth
-      @options.lazyLoadRate = Math.max option1, option2
+      option2 = @options.slidesToScroll
+      option3 = if isNaN @options.slideWidth
+          0
+        else
+          @options.slidesToScroll + Math.ceil 1.0 / @options.slideWidth
+      @options.lazyLoadRate = Math.max option1, option2, option3
 
+    #assert img's have src
     for index, img of @carousel.find('img').get()
       $(img).attr 'src', '' unless $(img).attr('src')?
 
@@ -272,8 +276,7 @@ class Carousel
 
   ### @private ###
   setArrows: ->
-    @nextBtn.off() if @nextBtn?
-    @prevBtn.off() if @prevBtn?
+    @arrowHandlersOff()
     @setNext()
     @setPrev()
 
@@ -317,30 +320,41 @@ class Carousel
   ### @private ###
   nextHandler: ->
     @nextBtn.on 'click', (e)=>
-      index = @moveDirection 'next'
-      @showBtn 'prev'
-      if !@options.infinite && @options.hideUnclickableArrows
-        if @options.ltr
-          if index >= @scroller.slideCount() - 1
-            return @hideBtn 'next'
-        else
-          if index <= 0
-            return @hideBtn 'next'
-      @showBtn 'next'
+      @nextBtnClick()
 
   ### @private ###
   prevHandler: ->
     @prevBtn.on 'click', (e)=>
-      index = @moveDirection 'prev'
-      @showBtn 'next'
-      if !@options.infinite && @options.hideUnclickableArrows
-        if !@options.ltr
-          if index >= @sroller.slideCount() - 1
-            return @hideBtn 'prev'
-        else
-          if index <= 0
-            return @hideBtn 'prev'
-      @showBtn 'prev'
+      @prevBtnClick()
+
+  nextBtnClick: ->
+    index = @moveDirection 'next'
+    @showBtn 'prev'
+    if !@options.infinite && @options.hideUnclickableArrows
+      if @options.ltr
+        if index >= @scroller.slideCount() - 1
+          return @hideBtn 'next'
+      else
+        if index <= 0
+          return @hideBtn 'next'
+    @showBtn 'next'
+
+  prevBtnClick: ->
+    index = @moveDirection 'prev'
+    @showBtn 'next'
+    if !@options.infinite && @options.hideUnclickableArrows
+      if !@options.ltr
+        if index >= @sroller.slideCount() - 1
+          return @hideBtn 'prev'
+      else
+        if index <= 0
+          return @hideBtn 'prev'
+    @showBtn 'prev'
+
+  arrowHandlersOff: ->
+    @nextBtn.off() if @nextBtn?
+    @prevBtn.off() if @prevBtn?
+
 
 $ ->
   window.Carousel = Carousel

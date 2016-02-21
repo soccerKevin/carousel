@@ -2,13 +2,13 @@
 $(function() {
   var options, options2;
   options = {
-    next: '#next .arrow',
-    prev: '#prev .arrow',
+    next: '#carousel1-container .next-btn .arrow',
+    prev: '#carousel1-container .prev-btn .arrow',
     alignment: 'center',
     initialSlide: 13,
     ltr: true,
-    slidesToScroll: 3,
-    slideWidth: .33333,
+    slidesToScroll: 4,
+    slideWidth: .25,
     speed: 800,
     cssEase: 'ease-out',
     slideSelector: '.card',
@@ -18,14 +18,28 @@ $(function() {
     lazyLoadAttribute: 'data-lazy',
     hideUnclickableArrows: true
   };
-  window.carousel = new window.Carousel('#carousel', options);
+  window.carousel1 = new window.Carousel('#carousel1', options);
   options2 = {
     slideWidth: 1,
-    slidesToScroll: 3,
-    infinite: true
+    next: '#carousel2-container .next-btn .arrow',
+    prev: '#carousel2-container .prev-btn .arrow',
+    alignment: 'right',
+    initialSlide: 2,
+    ltr: false,
+    slidesToScroll: 4,
+    slideWidth: 'auto',
+    speed: 800,
+    cssEase: 'ease-out',
+    slideSelector: '.card',
+    infinite: true,
+    lazyLoad: true,
+    lazyLoadRate: 4,
+    lazyLoadAttribute: 'data-lazy',
+    hideUnclickableArrows: true
   };
+  window.carousel2 = new window.Carousel('#carousel2', options2);
   return $('#change-options').on('click', function() {
-    window.carousel.removeSlides(4, 5);
-    return window.carousel.updateOptions(options2);
+    window.carousel1.removeSlides(4, 5);
+    return window.carousel1.updateOptions(options2);
   });
 });

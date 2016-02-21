@@ -12,14 +12,15 @@
   }
 }
 
-#carousel-container{
+#carousel1-container, #carousel2-container{
   height: 550px;
   // height: 50vh;
   width: 80%;
   position: relative;
   left: 50px;
+  margin: 10px 0;
 
-  #next, #prev{
+  .next-btn, .prev-btn{
     height: 100%;
     width: 1px;
     overflow: visible;
@@ -40,15 +41,15 @@
     }
   }
 
-  #prev{
+  .prev-btn{
     left: 10px;
   }
 
-  #next{
+  .next-btn{
     right: 40px;
   }
 
-  #carousel{
+  #carousel1, #carousel2{
     height: 100%;
 
     .card{
