@@ -7,7 +7,7 @@ $(function() {
     alignment: 'center',
     initialSlide: 13,
     ltr: true,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     slideWidth: .33333,
     speed: 800,
     cssEase: 'ease-out',

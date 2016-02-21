@@ -99,26 +99,37 @@ class Scroller
     else
       $('head').append $trackTransition
 
-  #go to slide only
-  #may first go to clone, then to slide ("instantly") if infinite
+  readyToMove: (animated)->
+    !(@atClone && animated)
+
+  ###
+    @param [int] index
+    # index of the slide to goto
+    # may first go to clone, then to slide ("instantly") if infinite
+  ###
   goto: (index, animated = true)->
-    return false if @inQuickTransition
-    @inQuickTransition = !animated
+    console.log @readyToMove animated
+    return false unless @readyToMove()
 
     @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
-    [$slideClone, index] = @nextSlideAndIndex index
+    [$slideClone, index] = @nextSlideCloneAndIndex index
     diff = @slideCloneStageDiff $slideClone
+
     return false if @scroller.offset().left == diff
-    @moveTrack diff
-    @setCurrent index
-    @inQuickTransition = false
+    @moveTrack diff # to a slideClone
+    @setCurrent index # set current to index of slide
+    ###### WARNING ######
+    # current slide could be flagged but not be in position
+    # in this case, assume that transitionEnd handler will run "gotoCurrent false"
+    @atClone = $slideClone.hasClass 'clone'
 
   ###
     @private
-    slide OR clone and index of NEXT SLIDE
+    @param [slideClone]
+    @return slideClone and index of newCurrent (after a move) slide
   ###
-  nextSlideAndIndex: (index)->
+  nextSlideCloneAndIndex: (index)->
     if @options.infinite?
       if index < 0
         $slideClone = @getClone @slideCount() + index, 'front'
@@ -138,12 +149,15 @@ class Scroller
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
 
+  ###
+    @private
+    @return jquery slide with the given index
+  ###
   getSlide: (index)->
     @getSlides().filter "[data-carousel-index=#{index}]"
 
   ###
-    @return [array]
-    #array of jquery slide objects
+    @return [array] jquery slide objects
   ###
   getSlides: ->
     @slides = if @slides? then @slides else @track.find(@options.slideSelector).not '.clone'
@@ -157,9 +171,14 @@ class Scroller
     return @track.find '.clone' unless index?
     @track.find ".clone[data-carousel-index=#{index}]"
 
+  ###
+    @private
+    @return all slides and all clones in order, front-clones + slides + rear-clones
+  ###
   getAll: ()->
     @track.find @options.slideSelector
 
+  ### @private ###
   slideCount: ->
     @getSlides().length
 

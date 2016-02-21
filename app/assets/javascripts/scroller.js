@@ -138,38 +138,50 @@ Scroller = (function() {
     }
   };
 
+  Scroller.prototype.readyToMove = function(animated) {
+    return !(this.atClone && animated);
+  };
+
+
+  /*
+    @param [int] index
+     * index of the slide to goto
+     * may first go to clone, then to slide ("instantly") if infinite
+   */
+
   Scroller.prototype.goto = function(index, animated) {
     var $slideClone, diff, ref;
     if (animated == null) {
       animated = true;
     }
-    if (this.inQuickTransition) {
+    console.log(this.readyToMove(animated));
+    if (!this.readyToMove()) {
       return false;
     }
-    this.inQuickTransition = !animated;
     if (this.options.lazyLoad != null) {
       this.lazyLoad();
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
-    ref = this.nextSlideAndIndex(index), $slideClone = ref[0], index = ref[1];
+    ref = this.nextSlideCloneAndIndex(index), $slideClone = ref[0], index = ref[1];
     diff = this.slideCloneStageDiff($slideClone);
     if (this.scroller.offset().left === diff) {
       return false;
     }
     this.moveTrack(diff);
     this.setCurrent(index);
-    return this.inQuickTransition = false;
+    return this.atClone = $slideClone.hasClass('clone');
   };
 
 
   /*
     @private
-    slide OR clone and index of NEXT SLIDE
+    @param [slideClone]
+    @return slideClone and index of newCurrent (after a move) slide
    */
 
-  Scroller.prototype.nextSlideAndIndex = function(index) {
+  Scroller.prototype.nextSlideCloneAndIndex = function(index) {
     var $slideClone;
     if (this.options.infinite != null) {
       if (index < 0) {
@@ -196,14 +208,19 @@ Scroller = (function() {
     return this.goto(this.currentSlideIndex(), animated);
   };
 
+
+  /*
+    @private
+    @return jquery slide with the given index
+   */
+
   Scroller.prototype.getSlide = function(index) {
     return this.getSlides().filter("[data-carousel-index=" + index + "]");
   };
 
 
   /*
-    @return [array]
-    #array of jquery slide objects
+    @return [array] jquery slide objects
    */
 
   Scroller.prototype.getSlides = function() {
@@ -224,9 +241,18 @@ Scroller = (function() {
     return this.track.find(".clone[data-carousel-index=" + index + "]");
   };
 
+
+  /*
+    @private
+    @return all slides and all clones in order, front-clones + slides + rear-clones
+   */
+
   Scroller.prototype.getAll = function() {
     return this.track.find(this.options.slideSelector);
   };
+
+
+  /* @private */
 
   Scroller.prototype.slideCount = function() {
     return this.getSlides().length;
