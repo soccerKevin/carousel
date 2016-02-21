@@ -154,7 +154,6 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
-    console.log(this.readyToMove(animated));
     if (!this.readyToMove()) {
       return false;
     }
@@ -165,6 +164,7 @@ Scroller = (function() {
       this.track.addClass(this.TRACK_TRANSITION);
     }
     ref = this.nextSlideCloneAndIndex(index), $slideClone = ref[0], index = ref[1];
+    console.log(index);
     diff = this.slideCloneStageDiff($slideClone);
     if (this.scroller.offset().left === diff) {
       return false;
@@ -183,7 +183,7 @@ Scroller = (function() {
 
   Scroller.prototype.nextSlideCloneAndIndex = function(index) {
     var $slideClone;
-    if (this.options.infinite != null) {
+    if (this.options.infinite) {
       if (index < 0) {
         $slideClone = this.getClone(this.slideCount() + index, 'front');
         index += this.slideCount();

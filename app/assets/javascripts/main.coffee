@@ -11,7 +11,7 @@ $ ->
     # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
     cssEase: 'ease-out'
     slideSelector: '.card'
-    infinite: true
+    infinite: false
     lazyLoad: true
     lazyLoadRate: 4
     lazyLoadAttribute: 'data-lazy'

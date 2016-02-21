@@ -108,19 +108,19 @@ class Scroller
     # may first go to clone, then to slide ("instantly") if infinite
   ###
   goto: (index, animated = true)->
-    console.log @readyToMove animated
     return false unless @readyToMove()
 
     @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
     [$slideClone, index] = @nextSlideCloneAndIndex index
+    console.log index
     diff = @slideCloneStageDiff $slideClone
 
     return false if @scroller.offset().left == diff
     @moveTrack diff # to a slideClone
     @setCurrent index # set current to index of slide
-    ###### WARNING ######
-    # current slide could be flagged but not be in position
+    ###### ALERT ######
+    # current slide could be flagged from '@setCurrent index', but not be in position
     # in this case, assume that transitionEnd handler will run "gotoCurrent false"
     @atClone = $slideClone.hasClass 'clone'
 
@@ -130,7 +130,7 @@ class Scroller
     @return slideClone and index of newCurrent (after a move) slide
   ###
   nextSlideCloneAndIndex: (index)->
-    if @options.infinite?
+    if @options.infinite
       if index < 0
         $slideClone = @getClone @slideCount() + index, 'front'
         index += @slideCount()
