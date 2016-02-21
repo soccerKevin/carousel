@@ -115,17 +115,9 @@ class Carousel
     @carousel.wrapInner "<div class='carousel-container'></div>"
     @carouselContainer = @carousel.find '.carousel-container'
     @scroller = new window.Scroller "#{@carousel.selector} .carousel-scroller", "#{@carousel.selector} .carousel-track", @options
-
     @initialHandlers()
-
     @applyOptions @options
-
-    # fixes weird bug
-    # essentially, making sure everything is loaded first
-    # 50ms seems to be the short limit
-    # setTimeout (=>
     @saveSize()
-    # ), 50
 
   assertDefaults: ->
     #assert slidesToScroll < 1
@@ -151,6 +143,7 @@ class Carousel
   ###
   applyOptions: ()->
     @setArrows()
+    @keyEventsHandler()
 
   ###
     @return JQuery object of the current slide
@@ -204,6 +197,7 @@ class Carousel
       # hide prev arrow if can't move previous
       # hide next arrow if can't move next
       hideUnclickableArrows: false
+      keyEvents: false
 
       draggable: true
       edgeFriction: 0
@@ -354,6 +348,18 @@ class Carousel
   arrowHandlersOff: ->
     @nextBtn.off() if @nextBtn?
     @prevBtn.off() if @prevBtn?
+
+  keyEvents: (e)->
+    console.log e
+
+  keyEventsHandler: ->
+    console.log @options.keyEvents
+    if @options.keyEvents
+      $(document).on 'keypress', @keyEvents
+    else
+      $(document).off 'keypress', @keyEvents
+
+
 
 
 $ ->
