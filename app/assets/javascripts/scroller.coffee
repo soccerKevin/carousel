@@ -193,7 +193,7 @@ class Scroller
     slide.offset().left * -1
 
   diffRight: (slide)->
-    @scroller.width() - (slide.offset().left + slide.width())
+    Math.ceil @scroller.width() - (slide.offset().left + slide.width())
 
   diffCenter: (slide)->
     scrollerCenter = @scroller.width() / 2

@@ -271,7 +271,7 @@ Scroller = (function() {
   };
 
   Scroller.prototype.diffRight = function(slide) {
-    return this.scroller.width() - (slide.offset().left + slide.width());
+    return Math.ceil(this.scroller.width() - (slide.offset().left + slide.width()));
   };
 
   Scroller.prototype.diffCenter = function(slide) {
