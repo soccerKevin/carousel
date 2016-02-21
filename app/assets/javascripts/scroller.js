@@ -87,7 +87,7 @@ Scroller = (function() {
     this.getSlides().addClass('carousel-slide');
     this.indexSlides();
     this.setCurrent(this.options.initialSlide);
-    if (this.options.lazyLoad != null) {
+    if (this.options.lazyLoad) {
       return this.lazyLoad();
     }
   };
@@ -147,6 +147,8 @@ Scroller = (function() {
     @param [int] index
      * index of the slide to goto
      * may first go to clone, then to slide ("instantly") if infinite
+    @return [int] index of the new slide
+    #-1 if didn't move
    */
 
   Scroller.prototype.goto = function(index, animated) {
@@ -154,10 +156,10 @@ Scroller = (function() {
     if (animated == null) {
       animated = true;
     }
-    if (!this.readyToMove()) {
-      return false;
+    if (!this.readyToMove(animated)) {
+      return -1;
     }
-    if (this.options.lazyLoad != null) {
+    if (this.options.lazyLoad) {
       this.lazyLoad();
     }
     if (animated) {
@@ -166,11 +168,12 @@ Scroller = (function() {
     ref = this.nextSlideCloneAndIndex(index), $slideClone = ref[0], index = ref[1];
     diff = this.slideCloneStageDiff($slideClone);
     if (this.scroller.offset().left === diff) {
-      return false;
+      return -1;
     }
     this.moveTrack(diff);
     this.setCurrent(index);
-    return this.atClone = $slideClone.hasClass('clone');
+    this.atClone = $slideClone.hasClass('clone');
+    return index;
   };
 
 
@@ -316,15 +319,27 @@ Scroller = (function() {
     return this.track.find('.clone').remove();
   };
 
+
+  /*
+    @return [int] index of the new slide
+    #-1 if didn't move
+   */
+
   Scroller.prototype.next = function() {
     var slides;
-    slides = this.options.ltr != null ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
+    slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
     return this.goto(this.currentSlideIndex() + slides);
   };
 
+
+  /*
+    @return [int] index of the new slide
+    #-1 if didn't move
+   */
+
   Scroller.prototype.prev = function() {
     var slides;
-    slides = this.options.ltr != null ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
+    slides = this.options.ltr ? this.options.slidesToScroll : this.options.slidesToScroll * -1;
     return this.goto(this.currentSlideIndex() - slides);
   };
 

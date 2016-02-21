@@ -11,12 +11,12 @@ $ ->
     # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
     cssEase: 'ease-out'
     slideSelector: '.card'
-    infinite: false
+    infinite: true
     lazyLoad: true
     lazyLoadRate: 4
     lazyLoadAttribute: 'data-lazy'
+    hideUnclickableArrows: true
     # arrows: true
-    # hideUnclickableArrows: false
 
     # draggable: true
     # effect: 'fade'

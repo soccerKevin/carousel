@@ -61,7 +61,7 @@ class Scroller
     @getSlides().addClass 'carousel-slide'
     @indexSlides()
     @setCurrent @options.initialSlide
-    @lazyLoad() if @options.lazyLoad?
+    @lazyLoad() if @options.lazyLoad
 
   ###
     @return [object]
@@ -106,22 +106,25 @@ class Scroller
     @param [int] index
     # index of the slide to goto
     # may first go to clone, then to slide ("instantly") if infinite
+    @return [int] index of the new slide
+    #-1 if didn't move
   ###
   goto: (index, animated = true)->
-    return false unless @readyToMove()
+    return -1 unless @readyToMove animated
 
-    @lazyLoad() if @options.lazyLoad?
+    @lazyLoad() if @options.lazyLoad
     @track.addClass @TRACK_TRANSITION if animated
     [$slideClone, index] = @nextSlideCloneAndIndex index
     diff = @slideCloneStageDiff $slideClone
 
-    return false if @scroller.offset().left == diff
+    return -1 if @scroller.offset().left == diff
     @moveTrack diff # to a slideClone
     @setCurrent index # set current to index of slide
     ###### ALERT ######
     # current slide could be flagged from '@setCurrent index', but not be in position
     # in this case, assume that transitionEnd handler will run "gotoCurrent false"
     @atClone = $slideClone.hasClass 'clone'
+    index
 
   ###
     @private
@@ -227,12 +230,20 @@ class Scroller
   removeInfiniteSlides: ->
     @track.find('.clone').remove()
 
+  ###
+    @return [int] index of the new slide
+    #-1 if didn't move
+  ###
   next: ->
-    slides = if @options.ltr? then @options.slidesToScroll else @options.slidesToScroll * -1
+    slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
     @goto @currentSlideIndex() + slides
 
+  ###
+    @return [int] index of the new slide
+    #-1 if didn't move
+  ###
   prev: ->
-    slides = if @options.ltr? then @options.slidesToScroll else @options.slidesToScroll * -1
+    slides = if @options.ltr then @options.slidesToScroll else @options.slidesToScroll * -1
     @goto @currentSlideIndex() - slides
 
   lazyLoad: ->

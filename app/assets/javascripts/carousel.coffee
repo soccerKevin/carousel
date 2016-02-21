@@ -197,12 +197,14 @@ class Carousel
       #scroll or fade
       # effect: 'scroll'
       widthHeightRatio: 'auto'
+      # hide prev arrow if can't move previous
+      # hide next arrow if can't move next
+      hideUnclickableArrows: false
 
       draggable: true
       edgeFriction: 0
       touchThreshold: 5
       arrows: true
-      hideUnclickableArrows: false
       #is there a title slide?
       #if true, treats the first slide as the title slide
       titleSlide: false
@@ -237,8 +239,9 @@ class Carousel
   moveDirection: (direction)->
     return false if @moving
     @moving = true
-    @scroller[direction]()
+    index = @scroller[direction]()
     @moving = false
+    index
 
   ###
     resize this carousel
@@ -296,6 +299,12 @@ class Carousel
       return true
     false
 
+  showBtn: (btn)->
+    @["#{btn}Btn"].show()
+
+  hideBtn: (btn)->
+    @["#{btn}Btn"].hide()
+
   ### @private ###
   initialHandlers: ->
     @resizeHandler()
@@ -308,12 +317,30 @@ class Carousel
   ### @private ###
   nextHandler: ->
     @nextBtn.on 'click', (e)=>
-      @moveDirection 'next'
+      index = @moveDirection 'next'
+      @showBtn 'prev'
+      if !@options.infinite && @options.hideUnclickableArrows
+        if @options.ltr
+          if index >= @scroller.slideCount() - 1
+            return @hideBtn 'next'
+        else
+          if index <= 0
+            return @hideBtn 'next'
+      @showBtn 'next'
 
   ### @private ###
   prevHandler: ->
     @prevBtn.on 'click', (e)=>
-      @moveDirection 'prev'
+      index = @moveDirection 'prev'
+      @showBtn 'next'
+      if !@options.infinite && @options.hideUnclickableArrows
+        if !@options.ltr
+          if index >= @sroller.slideCount() - 1
+            return @hideBtn 'prev'
+        else
+          if index <= 0
+            return @hideBtn 'prev'
+      @showBtn 'prev'
 
 $ ->
   window.Carousel = Carousel

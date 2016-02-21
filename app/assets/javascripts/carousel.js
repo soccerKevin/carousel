@@ -203,11 +203,11 @@ Carousel = (function() {
       lazyLoadAttribute: 'data-lazy',
       cssEase: 'ease-out',
       widthHeightRatio: 'auto',
+      hideUnclickableArrows: false,
       draggable: true,
       edgeFriction: 0,
       touchThreshold: 5,
       arrows: true,
-      hideUnclickableArrows: false,
       titleSlide: false
     };
   };
@@ -254,12 +254,14 @@ Carousel = (function() {
    */
 
   Carousel.prototype.moveDirection = function(direction) {
+    var index;
     if (this.moving) {
       return false;
     }
     this.moving = true;
-    this.scroller[direction]();
-    return this.moving = false;
+    index = this.scroller[direction]();
+    this.moving = false;
+    return index;
   };
 
 
@@ -347,6 +349,14 @@ Carousel = (function() {
     return false;
   };
 
+  Carousel.prototype.showBtn = function(btn) {
+    return this[btn + "Btn"].show();
+  };
+
+  Carousel.prototype.hideBtn = function(btn) {
+    return this[btn + "Btn"].hide();
+  };
+
 
   /* @private */
 
@@ -373,7 +383,21 @@ Carousel = (function() {
   Carousel.prototype.nextHandler = function() {
     return this.nextBtn.on('click', (function(_this) {
       return function(e) {
-        return _this.moveDirection('next');
+        var index;
+        index = _this.moveDirection('next');
+        _this.showBtn('prev');
+        if (!_this.options.infinite && _this.options.hideUnclickableArrows) {
+          if (_this.options.ltr) {
+            if (index >= _this.scroller.slideCount() - 1) {
+              return _this.hideBtn('next');
+            }
+          } else {
+            if (index <= 0) {
+              return _this.hideBtn('next');
+            }
+          }
+        }
+        return _this.showBtn('next');
       };
     })(this));
   };
@@ -384,7 +408,21 @@ Carousel = (function() {
   Carousel.prototype.prevHandler = function() {
     return this.prevBtn.on('click', (function(_this) {
       return function(e) {
-        return _this.moveDirection('prev');
+        var index;
+        index = _this.moveDirection('prev');
+        _this.showBtn('next');
+        if (!_this.options.infinite && _this.options.hideUnclickableArrows) {
+          if (!_this.options.ltr) {
+            if (index >= _this.sroller.slideCount() - 1) {
+              return _this.hideBtn('prev');
+            }
+          } else {
+            if (index <= 0) {
+              return _this.hideBtn('prev');
+            }
+          }
+        }
+        return _this.showBtn('prev');
       };
     })(this));
   };
