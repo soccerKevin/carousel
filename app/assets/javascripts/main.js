@@ -12,7 +12,7 @@ $(function() {
     speed: 800,
     cssEase: 'ease-out',
     slideSelector: '.card',
-    infinite: false,
+    infinite: true,
     lazyLoad: true,
     lazyLoadRate: 4,
     lazyLoadAttribute: 'data-lazy'

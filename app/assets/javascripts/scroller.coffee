@@ -99,51 +99,41 @@ class Scroller
     else
       $('head').append $trackTransition
 
+  #go to slide only
+  #may first go to clone, then to slide ("instantly") if infinite
   goto: (index, animated = true)->
     return false if @inQuickTransition
     @inQuickTransition = !animated
 
     @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
-    [$slide, index] = @nextSlideAndIndex index
-    diff = @slideStageDiff $slide
-    console.log diff
-    console.log @inQuickTransition
-    if diff == -58
-      try
-        throw new Error("")
-      catch e
-        console.log e
-      # return false
-    else
-      try
-        throw new Error("")
-      catch e
-        console.log "not -58"
-        console.log e
+    [$slideClone, index] = @nextSlideAndIndex index
+    diff = @slideCloneStageDiff $slideClone
+    return false if @scroller.offset().left == diff
     @moveTrack diff
     @setCurrent index
     @inQuickTransition = false
 
   ###
     @private
+    slide OR clone and index of NEXT SLIDE
   ###
   nextSlideAndIndex: (index)->
     if @options.infinite?
       if index < 0
-        $slide = @getClone @slideCount() + index, 'front'
+        $slideClone = @getClone @slideCount() + index, 'front'
         index += @slideCount()
       else if index >= @slideCount()
-        $slide = @getClone index - @slideCount(), 'rear'
+        $slideClone = @getClone index - @slideCount(), 'rear'
         index -= @slideCount()
       else
-        $slide = @getSlide index
+        $slideClone = @getSlide index
     else
       index = Math.max index, 0
       index = Math.min index, @slideCount() - 1
-      $slide = @getSlide index
+      $slideClone = @getSlide index
 
-    [$slide, index]
+    [$slideClone, index]
 
   gotoCurrent: (animated = true)->
     @goto @currentSlideIndex(), animated
@@ -175,9 +165,9 @@ class Scroller
 
   # delta(x) of slide[index] to stage
   # uses diff[method]
-  slideStageDiff: (slide)->
+  slideCloneStageDiff: (slideClone)->
     method = @options.alignment.capitalize()
-    @["diff#{method}"](slide)
+    @["diff#{method}"](slideClone)
 
   diffLeft: (slide)->
     slide.offset().left * -1
@@ -191,12 +181,11 @@ class Scroller
     scrollerCenter - slideCenter
 
   moveTrack: (difference)->
-    start = @track.offset().left
-    @track.css 'left', start + difference
+    @track.css 'left', @track.offset().left + difference
 
   setCurrent: (index)->
-    $slides = @getSlides()
-    $slides.removeClass('carousel-current').eq(index).addClass 'carousel-current'
+    @getSlides().removeClass 'carousel-current'
+    @getSlide(index).addClass 'carousel-current'
 
   setSlideWidth: ()->
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;

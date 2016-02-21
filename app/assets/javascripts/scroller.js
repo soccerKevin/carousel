@@ -139,7 +139,7 @@ Scroller = (function() {
   };
 
   Scroller.prototype.goto = function(index, animated) {
-    var $slide, diff, e, ref;
+    var $slideClone, diff, ref;
     if (animated == null) {
       animated = true;
     }
@@ -153,25 +153,10 @@ Scroller = (function() {
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
     }
-    ref = this.nextSlideAndIndex(index), $slide = ref[0], index = ref[1];
-    diff = this.slideStageDiff($slide);
-    console.log(diff);
-    console.log(this.inQuickTransition);
-    if (diff === -58) {
-      try {
-        throw new Error("");
-      } catch (_error) {
-        e = _error;
-        console.log(e);
-      }
-    } else {
-      try {
-        throw new Error("");
-      } catch (_error) {
-        e = _error;
-        console.log("not -58");
-        console.log(e);
-      }
+    ref = this.nextSlideAndIndex(index), $slideClone = ref[0], index = ref[1];
+    diff = this.slideCloneStageDiff($slideClone);
+    if (this.scroller.offset().left === diff) {
+      return false;
     }
     this.moveTrack(diff);
     this.setCurrent(index);
@@ -181,26 +166,27 @@ Scroller = (function() {
 
   /*
     @private
+    slide OR clone and index of NEXT SLIDE
    */
 
   Scroller.prototype.nextSlideAndIndex = function(index) {
-    var $slide;
+    var $slideClone;
     if (this.options.infinite != null) {
       if (index < 0) {
-        $slide = this.getClone(this.slideCount() + index, 'front');
+        $slideClone = this.getClone(this.slideCount() + index, 'front');
         index += this.slideCount();
       } else if (index >= this.slideCount()) {
-        $slide = this.getClone(index - this.slideCount(), 'rear');
+        $slideClone = this.getClone(index - this.slideCount(), 'rear');
         index -= this.slideCount();
       } else {
-        $slide = this.getSlide(index);
+        $slideClone = this.getSlide(index);
       }
     } else {
       index = Math.max(index, 0);
       index = Math.min(index, this.slideCount() - 1);
-      $slide = this.getSlide(index);
+      $slideClone = this.getSlide(index);
     }
-    return [$slide, index];
+    return [$slideClone, index];
   };
 
   Scroller.prototype.gotoCurrent = function(animated) {
@@ -246,10 +232,10 @@ Scroller = (function() {
     return this.getSlides().length;
   };
 
-  Scroller.prototype.slideStageDiff = function(slide) {
+  Scroller.prototype.slideCloneStageDiff = function(slideClone) {
     var method;
     method = this.options.alignment.capitalize();
-    return this["diff" + method](slide);
+    return this["diff" + method](slideClone);
   };
 
   Scroller.prototype.diffLeft = function(slide) {
@@ -268,15 +254,12 @@ Scroller = (function() {
   };
 
   Scroller.prototype.moveTrack = function(difference) {
-    var start;
-    start = this.track.offset().left;
-    return this.track.css('left', start + difference);
+    return this.track.css('left', this.track.offset().left + difference);
   };
 
   Scroller.prototype.setCurrent = function(index) {
-    var $slides;
-    $slides = this.getSlides();
-    return $slides.removeClass('carousel-current').eq(index).addClass('carousel-current');
+    this.getSlides().removeClass('carousel-current');
+    return this.getSlide(index).addClass('carousel-current');
   };
 
   Scroller.prototype.setSlideWidth = function() {
