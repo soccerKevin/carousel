@@ -139,10 +139,14 @@ Scroller = (function() {
   };
 
   Scroller.prototype.goto = function(index, animated) {
-    var $slide, diff, ref;
+    var $slide, diff, e, ref;
     if (animated == null) {
       animated = true;
     }
+    if (this.inQuickTransition) {
+      return false;
+    }
+    this.inQuickTransition = !animated;
     if (this.options.lazyLoad != null) {
       this.lazyLoad();
     }
@@ -151,8 +155,27 @@ Scroller = (function() {
     }
     ref = this.nextSlideAndIndex(index), $slide = ref[0], index = ref[1];
     diff = this.slideStageDiff($slide);
+    console.log(diff);
+    console.log(this.inQuickTransition);
+    if (diff === -58) {
+      try {
+        throw new Error("");
+      } catch (_error) {
+        e = _error;
+        console.log(e);
+      }
+    } else {
+      try {
+        throw new Error("");
+      } catch (_error) {
+        e = _error;
+        console.log("not -58");
+        console.log(e);
+      }
+    }
     this.moveTrack(diff);
-    return this.setCurrent(index);
+    this.setCurrent(index);
+    return this.inQuickTransition = false;
   };
 
 
@@ -329,6 +352,10 @@ Scroller = (function() {
       }
     }
     return results;
+  };
+
+  Scroller.prototype.resize = function() {
+    return this.setSlideWidth();
   };
 
 

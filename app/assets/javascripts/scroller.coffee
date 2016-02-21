@@ -100,12 +100,30 @@ class Scroller
       $('head').append $trackTransition
 
   goto: (index, animated = true)->
+    return false if @inQuickTransition
+    @inQuickTransition = !animated
+
     @lazyLoad() if @options.lazyLoad?
     @track.addClass @TRACK_TRANSITION if animated
     [$slide, index] = @nextSlideAndIndex index
     diff = @slideStageDiff $slide
+    console.log diff
+    console.log @inQuickTransition
+    if diff == -58
+      try
+        throw new Error("")
+      catch e
+        console.log e
+      # return false
+    else
+      try
+        throw new Error("")
+      catch e
+        console.log "not -58"
+        console.log e
     @moveTrack diff
     @setCurrent index
+    @inQuickTransition = false
 
   ###
     @private
@@ -230,6 +248,9 @@ class Scroller
       if $imgs.attr('src') != $imgs.attr @options.lazyLoadAttribute
         $imgs.attr 'src', $imgs.attr @options.lazyLoadAttribute
 
+  resize: ->
+    @setSlideWidth()
+
   # slideWidth: '1'
   # alignment: 'left'
   # initialSlide: 0
@@ -266,6 +287,7 @@ class Scroller
       @track.removeClass @TRACK_TRANSITION
       # needs to be done when moveTrack is finished
       @gotoCurrent false if @options.infinite
+      # @gotoCurrent false if @options.infinite
 
 $ ->
   window.Scroller = Scroller

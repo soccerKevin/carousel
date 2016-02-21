@@ -12,6 +12,7 @@ $(function() {
     speed: 800,
     cssEase: 'ease-out',
     slideSelector: '.card',
+    infinite: false,
     lazyLoad: true,
     lazyLoadRate: 4,
     lazyLoadAttribute: 'data-lazy'
@@ -23,6 +24,7 @@ $(function() {
     infinite: true
   };
   return $('#change-options').on('click', function() {
-    return window.carousel.removeSlides(4, 5);
+    window.carousel.removeSlides(4, 5);
+    return window.carousel.updateOptions(options2);
   });
 });
