@@ -176,12 +176,17 @@ Scroller = (function() {
     }
     this.moveTrack(diff);
     this.setCurrent(index);
+    this.slideSelected = index;
     this.atClone = $slideClone.hasClass('clone');
     if (!animated) {
-      this.setSelected(index);
+      this.afterSlideChange();
       this.dispatchEvent('slideChanged');
     }
     return index;
+  };
+
+  Scroller.prototype.afterSlideChange = function() {
+    return this.setSelected(this.slideSelected);
   };
 
   Scroller.prototype.dispatchEvent = function(eventType) {
@@ -419,6 +424,7 @@ Scroller = (function() {
     return $(document).on(transitionEnd, (function(_this) {
       return function() {
         _this.track.removeClass(_this.TRACK_TRANSITION);
+        _this.afterSlideChange();
         if (_this.options.infinite) {
           return _this.gotoCurrent(false);
         }

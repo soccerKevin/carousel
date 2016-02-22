@@ -119,15 +119,19 @@ class Scroller
     return -1 if @scroller.offset().left == diff
     @moveTrack diff # to a slideClone
     @setCurrent index
+    @slideSelected = index
     # @setCurrent index # set current to index of slide
     ###### ALERT ######
     # current slide could be flagged from '@setCurrent index', but not be in position
     # in this case, assume that transitionEnd handler will run "gotoCurrent false"
     @atClone = $slideClone.hasClass 'clone'
     unless animated
-      @setSelected index
+      @afterSlideChange()
       @dispatchEvent 'slideChanged'
     index
+
+  afterSlideChange: ->
+    @setSelected @slideSelected
 
   dispatchEvent: (eventType)->
     @scroller.trigger eventType
@@ -294,6 +298,7 @@ class Scroller
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd'
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
+      @afterSlideChange()
       # needs to be done when moveTrack is finished
       @gotoCurrent false if @options.infinite
 
