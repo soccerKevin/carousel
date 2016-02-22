@@ -207,12 +207,7 @@ Carousel = (function() {
       cssEase: 'ease-out',
       widthHeightRatio: 'auto',
       hideUnclickableArrows: false,
-      keyEvents: false,
-      draggable: true,
-      edgeFriction: 0,
-      touchThreshold: 5,
-      arrows: true,
-      titleSlide: false
+      keyEvents: false
     };
   };
 
@@ -456,11 +451,16 @@ Carousel = (function() {
 
   Carousel.prototype.keyEventsHandler = function() {
     if (this.options.keyEvents) {
-      return $(document).on('keypress', (function(_this) {
+      $(document).on('keypress', (function(_this) {
         return function(e) {
           return _this.keyEvents(e);
         };
       })(this));
+    }
+    if (this.options.wheelEvents) {
+      return document.addEventListener('onscroll', function(e) {
+        return console.log(e.wheelDelta);
+      });
     }
   };
 

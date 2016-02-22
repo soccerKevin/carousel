@@ -17,6 +17,7 @@ $ ->
     lazyLoadAttribute: 'data-lazy'
     hideUnclickableArrows: true
     keyEvents: true
+    wheelEvents: true
     # arrows: true
 
     # draggable: true

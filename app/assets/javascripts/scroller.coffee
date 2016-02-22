@@ -265,25 +265,6 @@ class Scroller
   resize: ->
     @setSlideWidth()
 
-  # slideWidth: '1'
-  # alignment: 'left'
-  # initialSlide: 0
-  # ltr: true
-  # slidesToScroll: 1
-  # slideSelector: '>*'
-  # infinite: true
-  # cssEase: 'ease-out'
-
-  # draggable: true
-  # effect: 'scroll'
-  # speed: 1000
-  # edgeFriction: 0
-  # touchThreshold: 5
-  # lazyLoad: false
-  # lazyLoadRate: 0
-  # lazyLoadAttribute: 'data-lazy'
-  # titleSlide: false
-
   ###
     @params [hash] new options
     #a set of only the options you wish to change

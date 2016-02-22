@@ -17,7 +17,8 @@ $(function() {
     lazyLoadRate: 4,
     lazyLoadAttribute: 'data-lazy',
     hideUnclickableArrows: true,
-    keyEvents: true
+    keyEvents: true,
+    wheelEvents: true
   };
   window.carousel1 = new window.Carousel('#carousel1', options);
   options1a = options2 = {

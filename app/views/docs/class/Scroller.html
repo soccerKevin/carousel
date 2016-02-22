@@ -31,12 +31,46 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>A Carousel Scroller.  Controls the track</p>
+  <h1 id="a-carousel-scroller-controls-the-track">A Carousel Scroller.  Controls the track</h1>
+<h2 id="basic-concept">Basic Concept</h2><p>#find the difference between the carousel.offset().left and the next slide.offset().left.  then move that distance</p><h1 id="remember-to-unset-slides-if-you-change-what-they-are">REMEMBER TO UNSET SLIDES IF YOU CHANGE WHAT THEY ARE</h1><p>#ie, add/remove</p>
 </div>
 <div class='tags'>
 </div>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#addSlides-dynamic'>
+        #
+(void)
+<b>addSlides</b><span>(slides)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeSlides-dynamic'>
+        #
+(void)
+<b>removeSlides</b><span>(startIndex, count = 1)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initilizeSlides-dynamic'>
+        #
+(void)
+<b>initilizeSlides</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
   <li>
     <span class='signature'>
       <a href='#currentSlide-dynamic'>
@@ -74,14 +108,13 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#getSlides-dynamic'>
+      <a href='#unsetSlides-dynamic'>
         #
-(array)
-<b>getSlides</b><span>()</span>
+(void)
+<b>unsetSlides</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
-      #array of jquery slide objects 
     </span>
   </li>
   <li>
@@ -97,13 +130,27 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#goto-dynamic'>
+      <a href='#readyToMove-dynamic'>
         #
 (void)
+<b>readyToMove</b><span>(animated)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#goto-dynamic'>
+        #
+(int)
 <b>goto</b><span>(index, animated = true)</span>
       </a>
     </span>
     <span class='desc'>
+      <h1 id="index-of-the-slide-to-goto">index of the slide to goto</h1> <h1 id="may-first-go-to-clone-then-to-slide-instantly-if-infinite">may first go to clone, then to slide (&quot;instantly&quot;) if infinite</h1>
+#-1 if didn&#39;t move
+
     </span>
   </li>
   <li>
@@ -119,10 +166,55 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#slideStageDiff-dynamic'>
+      <a href='#getSlides-dynamic'>
+        #
+(array)
+<b>getSlides</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getClone-dynamic'>
         #
 (void)
-<b>slideStageDiff</b><span>(index)</span>
+<b>getClone</b><span>(index, end)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getClones-dynamic'>
+        #
+(void)
+<b>getClones</b><span>(index = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#slideCount-dynamic'>
+        #
+(void)
+<b>slideCount</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#slideCloneStageDiff-dynamic'>
+        #
+(void)
+<b>slideCloneStageDiff</b><span>(slideClone)</span>
       </a>
     </span>
     <span class='desc'>
@@ -198,10 +290,10 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#next-dynamic'>
+      <a href='#setInfiniteSlides-dynamic'>
         #
 (void)
-<b>next</b><span>()</span>
+<b>setInfiniteSlides</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -209,10 +301,78 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#prev-dynamic'>
+      <a href='#addInfiniteSlides-dynamic'>
         #
 (void)
+<b>addInfiniteSlides</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#cloneSlides-dynamic'>
+        #
+(void)
+<b>cloneSlides</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeInfiniteSlides-dynamic'>
+        #
+(void)
+<b>removeInfiniteSlides</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#next-dynamic'>
+        #
+(int)
+<b>next</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      #-1 if didn&#39;t move 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prev-dynamic'>
+        #
+(int)
 <b>prev</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      #-1 if didn&#39;t move 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#lazyLoad-dynamic'>
+        #
+(void)
+<b>lazyLoad</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#resize-dynamic'>
+        #
+(void)
+<b>resize</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -227,21 +387,7 @@
       </a>
     </span>
     <span class='desc'>
-      <p>alignment: &#39;left&#39; initialSlide: 0
-ltr: true
-slidesToScroll: 1
-infinite: false
-slideSelector: &#39;&gt;*&#39;
-draggable: true
-effect: &#39;scroll&#39;
-cssEase: &#39;ease-out&#39;
-speed: 1000
-edgeFriction: 0
-touchThreshold: 5
-lazyLoad: false
-lazyLoadRate: 0
-lazyLoadAttribute: &#39;data-lazy&#39;
-titleSlide: false</p>
+      @params [hash] new options <p>#a set of only the options you wish to change</p>
     </span>
   </li>
   <li>
@@ -281,6 +427,33 @@ titleSlide: false</p>
 </div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='addSlides-dynamic'>
+      #
+(void)
+<b>addSlides</b><span>(slides)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeSlides-dynamic'>
+      #
+(void)
+<b>removeSlides</b><span>(startIndex, count = 1)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='initilizeSlides-dynamic'>
+      #
+(void)
+<b>initilizeSlides</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
   <div class='method_details'>
     <p class='signature' id='currentSlide-dynamic'>
       #
@@ -331,24 +504,13 @@ titleSlide: false</p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='getSlides-dynamic'>
+    <p class='signature' id='unsetSlides-dynamic'>
       #
-(array)
-<b>getSlides</b><span>()</span>
+(void)
+<b>unsetSlides</b><span>()</span>
       <br>
     </p>
-    <div class='docstring'>
-  <p>#array of jquery slide objects</p>
-</div>
-<div class='tags'>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <tt>array</tt>
-    </li>
-  </ul>
-</div>
+    
   </div>
   <div class='method_details'>
     <p class='signature' id='setTrackTransition-dynamic'>
@@ -360,13 +522,49 @@ titleSlide: false</p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='goto-dynamic'>
+    <p class='signature' id='readyToMove-dynamic'>
       #
 (void)
-<b>goto</b><span>(index, animated = true)</span>
+<b>readyToMove</b><span>(animated)</span>
       <br>
     </p>
     
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='goto-dynamic'>
+      #
+(int)
+<b>goto</b><span>(index, animated = true)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h1 id="index-of-the-slide-to-goto">index of the slide to goto</h1>
+<h1 id="may-first-go-to-clone-then-to-slide-instantly-if-infinite">may first go to clone, then to slide (&quot;instantly&quot;) if infinite</h1><p>#-1 if didn&#39;t move</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>int</tt>
+      )
+      &mdash;
+      <span class='desc'>index of the new slide </span>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='gotoCurrent-dynamic'>
@@ -378,10 +576,63 @@ titleSlide: false</p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='slideStageDiff-dynamic'>
+    <p class='signature' id='getSlides-dynamic'>
+      #
+(array)
+<b>getSlides</b><span>()</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>array</tt>
+      )
+      &mdash;
+      <span class='desc'>jquery slide objects </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getClone-dynamic'>
       #
 (void)
-<b>slideStageDiff</b><span>(index)</span>
+<b>getClone</b><span>(index, end)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getClones-dynamic'>
+      #
+(void)
+<b>getClones</b><span>(index = null)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='slideCount-dynamic'>
+      #
+(void)
+<b>slideCount</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='slideCloneStageDiff-dynamic'>
+      #
+(void)
+<b>slideCloneStageDiff</b><span>(slideClone)</span>
       <br>
     </p>
     <div class='docstring'>
@@ -446,19 +697,103 @@ uses diff[method]</p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='next-dynamic'>
+    <p class='signature' id='setInfiniteSlides-dynamic'>
       #
 (void)
-<b>next</b><span>()</span>
+<b>setInfiniteSlides</b><span>()</span>
       <br>
     </p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='prev-dynamic'>
+    <p class='signature' id='addInfiniteSlides-dynamic'>
       #
 (void)
+<b>addInfiniteSlides</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='cloneSlides-dynamic'>
+      #
+(void)
+<b>cloneSlides</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeInfiniteSlides-dynamic'>
+      #
+(void)
+<b>removeInfiniteSlides</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='next-dynamic'>
+      #
+(int)
+<b>next</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#-1 if didn&#39;t move</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>int</tt>
+      )
+      &mdash;
+      <span class='desc'>index of the new slide </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prev-dynamic'>
+      #
+(int)
 <b>prev</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#-1 if didn&#39;t move</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>int</tt>
+      )
+      &mdash;
+      <span class='desc'>index of the new slide </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='lazyLoad-dynamic'>
+      #
+(void)
+<b>lazyLoad</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='resize-dynamic'>
+      #
+(void)
+<b>resize</b><span>()</span>
       <br>
     </p>
     
@@ -471,22 +806,7 @@ uses diff[method]</p>
       <br>
     </p>
     <div class='docstring'>
-  <p>alignment: &#39;left&#39;
-initialSlide: 0
-ltr: true
-slidesToScroll: 1
-infinite: false
-slideSelector: &#39;&gt;*&#39;
-draggable: true
-effect: &#39;scroll&#39;
-cssEase: &#39;ease-out&#39;
-speed: 1000
-edgeFriction: 0
-touchThreshold: 5
-lazyLoad: false
-lazyLoadRate: 0
-lazyLoadAttribute: &#39;data-lazy&#39;
-titleSlide: false</p>
+  <p>@params [hash] new options</p><p>#a set of only the options you wish to change</p>
 </div>
 <div class='tags'>
 </div>

@@ -174,39 +174,40 @@ class Carousel
       ltr: true
       # per action to move
       slidesToScroll: 1
-      # auto / % of carousel width (as decimal),
+      # auto or % of carousel width (as decimal)
       # auto does not set size
-      # show 3 slides? set to .3333
+      # want to show 3 slides? set to .3333.  4 slides? .25
       slideWidth: 'auto'
-      #is it infinite?
+      # is it infinite?
       infinite: false
-      #in case your slides have a container or anchor around them
+      # in case your slides have a container or anchor around them
       slideSelector: '>*'
       # scroll speed
       speed: 1000
-      #lazy load images in slides? (will load all images in a slide)
+      # lazy load images in slides? (will load all images in a slide)
       lazyLoad: false
-      #how many slides to lazy load before and after the current slide
+      # how many slides to lazy load before and after the current slide
       lazyLoadRate: 0
-      #will sub in this attributes value to a slides img.src when lazy loading
+      # will sub in this attributes value to a slides img.src when lazy loading
       lazyLoadAttribute: 'data-lazy'
-      #what easing style to use when sliding (or fading)
+      # what easing style to use when sliding (or fading)
       cssEase: 'ease-out'
-      #scroll or fade
+      # scroll or fade
       # effect: 'scroll'
       widthHeightRatio: 'auto'
       # hide prev arrow if can't move previous
       # hide next arrow if can't move next
       hideUnclickableArrows: false
       keyEvents: false
+      # wheelEvents: false
 
-      draggable: true
-      edgeFriction: 0
-      touchThreshold: 5
-      arrows: true
-      #is there a title slide?
-      #if true, treats the first slide as the title slide
-      titleSlide: false
+      # draggable: true
+      # edgeFriction: 0
+      # touchThreshold: 5
+      # arrows: true
+      # is there a title slide?
+      # if true, treats the first slide as the title slide
+      # titleSlide: false
 
   ###
     @param [array] slides
@@ -361,6 +362,13 @@ class Carousel
     if @options.keyEvents
       $(document).on 'keypress', (e)=>
         @keyEvents e
+
+    if @options.wheelEvents
+      # $(document).on 'mousewheel', (e)=>
+      #   console.log e
+      document.addEventListener 'onscroll', (e)->
+        console.log(e.wheelDelta);
+
 
 
 $ ->

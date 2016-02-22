@@ -32,12 +32,38 @@
       <h2>Overview</h2>
       <div class='docstring'>
   <h1 id="defaults-">defaults =</h1>
-<h1 id="-param-next-string-">@param next [string]</h1><p>#default: none</p><p>#next button selector (required)</p><h1 id="-param-prev-string-">@param prev [string]</h1><p>#default: none</p><p>#prev button selector (required)</p><h1 id="-option-alignment-string-">@option alignment [string]</h1><p>#default: &#39;left&#39;</p><p>#values: left, right, center</p><h1 id="-option-initialslide-int-">@option initialSlide [int]</h1><p>#default: 0</p><p>#must be positive</p><h1 id="-option-ltr-boolean-">@option ltr [boolean]</h1><p>#default: true</p><p>#left to right (true or false)</p><h1 id="-option-slidestoscroll-int-">@option slidesToScroll [int]</h1><p>#default: 1</p><p>#shift this many slides</p><h1 id="-option-float-slidewidth">@option [float] slideWidth</h1><p>#default: 1</p><p>#width of slides compared to carousel as a decimal</p><p>#example:</p><p>#show 2 slides at once, set to .5</p><p>#show 4 slides at once, set to .25</p><h1 id="-option-boolean-infinite">@option [boolean] infinite</h1><p>#default: false</p><p>#fake the infinite slides</p><h1 id="-option-string-slideselector">@option [string] slideSelector</h1><p>#default: &#39;&gt;*&#39;</p><p>#Carousel uses to get elements to use as slides</p><h1 id="-option-boolean-draggable">@option [boolean] draggable</h1><p>#default: true</p><p>#allow the user to move the carousel using their mouse</p><h1 id="-option-string-effect">@option [string] effect</h1><p>#default: &#39;scroll&#39;</p><p>#possible: scroll, fade</p><p>#the effect to use when changing slides</p><h1 id="-option-string-cssease">@option [string] cssEase</h1><p>#default: &#39;ease-out&#39;</p><p>#method of transition</p><h1 id="-option-int-speed">@option [int] speed</h1><p>#default: 1000</p><p>#speed of transition in ms</p><p>#edgeFriction: 0</p><p>#touchThreshold: 5</p><h1 id="-option-boolean-lazyload">@option [boolean] lazyLoad</h1><p>#default: false</p><p>#load images as you need them vs all at once</p><h1 id="-option-int-lazyloadrate">@option [int] lazyLoadRate</h1><p>#default: 0</p><p>#load this many images past the current image</p><h1 id="-option-string-lazyloadattribute">@option [string] lazyLoadAttribute</h1><p>#default: &#39;data-lazy&#39;</p><p>#attribute on img tag to get the source of the image for lazy loading</p><h1 id="-option-boolean-arrows">@option [boolean] arrows</h1><p>#default: true</p><p>#show the prev and next arrows</p><h1 id="-option-boolean-hideunclickablearrows">@option [boolean] hideUnclickableArrows</h1><p>#default: false</p><p>#hide left arrow if no more slides to the left</p><p>#hide right arrow if no more slides to the right</p><p>#only available in non-infinite mode</p><h1 id="-option-boolean-titleslide">@option [boolean] titleSlide</h1><p>#default: false</p><p>#marks the first slide as a title slide</p>
+<h1 id="-param-next-string-">@param next [string]</h1><p>#default: none</p><p>#next button selector (required)</p><h1 id="-param-prev-string-">@param prev [string]</h1><p>#default: none</p><p>#prev button selector (required)</p><h1 id="-option-alignment-string-">@option alignment [string]</h1><p>#default: &#39;left&#39;</p><p>#values: left, right, center</p><h1 id="-option-initialslide-int-">@option initialSlide [int]</h1><p>#default: 0</p><p>#must be positive</p><h1 id="-option-ltr-boolean-">@option ltr [boolean]</h1><p>#default: true</p><p>#left to right (true or false)</p><h1 id="-option-slidestoscroll-int-">@option slidesToScroll [int]</h1><p>#default: 1</p><p>#shift this many slides</p><h1 id="-option-float-slidewidth">@option [float] slideWidth</h1><p>#default: 1</p><p>#width of slides compared to carousel as a decimal</p><p>#example:</p><p>#show 2 slides at once, set to .5</p><p>#show 4 slides at once, set to .25</p><h1 id="-option-boolean-infinite">@option [boolean] infinite</h1><p>#default: false</p><p>#fake the infinite slides</p><h1 id="-option-string-slideselector">@option [string] slideSelector</h1><p>#default: &#39;&gt;*&#39;</p><p>#Carousel uses to get elements to use as slides</p><p>#incase direct children are not what you want to be referenced as slides</p><h1 id="-option-boolean-draggable">@option [boolean] draggable</h1><p>#default: true</p><p>#allow the user to move the carousel using their mouse</p><h1 id="-option-string-effect">@option [string] effect</h1><p>#default: &#39;scroll&#39;</p><p>#possible: scroll, fade</p><p>#the effect to use when changing slides</p><h1 id="-option-string-cssease">@option [string] cssEase</h1><p>#default: &#39;ease-out&#39;</p><p>#method of transition</p><h1 id="-option-int-speed">@option [int] speed</h1><p>#default: 1000</p><p>#speed of transition in ms</p><p>#edgeFriction: 0</p><p>#touchThreshold: 5</p><h1 id="-option-boolean-lazyload">@option [boolean] lazyLoad</h1><p>#default: false</p><p>#load images as you need them vs all at once</p><h1 id="-option-int-lazyloadrate">@option [int] lazyLoadRate</h1><p>#default: 0</p><p>#load this many images past the current image</p><h1 id="-option-string-lazyloadattribute">@option [string] lazyLoadAttribute</h1><p>#default: &#39;data-lazy&#39;</p><p>#attribute on img tag to get the source of the image for lazy loading</p><h1 id="-option-boolean-hideunclickablearrows">@option [boolean] hideUnclickableArrows</h1><p>#default: false</p><p>#hide left arrow if no more slides to the left</p><p>#hide right arrow if no more slides to the right</p><p>#only available in non-infinite mode</p><h1 id="-option-boolean-titleslide">@option [boolean] titleSlide</h1><p>#default: false</p><p>#marks the first slide as a title slide</p>
 </div>
 <div class='tags'>
 </div>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#deleteNonResetables-static'>
+        .
+(void)
+<b>deleteNonResetables</b><span>(options)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+</ul>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#assertDefaults-dynamic'>
+        #
+(void)
+<b>assertDefaults</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
   <li>
     <span class='signature'>
       <a href='#currentSlide-dynamic'>
@@ -62,14 +88,26 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#resetableOptions-dynamic'>
+      <a href='#addSlides-dynamic'>
         #
 (void)
-<b>resetableOptions</b><span>()</span>
+<b>addSlides</b><span>(slides)</span>
       </a>
     </span>
     <span class='desc'>
-      # 
+      #an array of slides to add 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeSlides-dynamic'>
+        #
+(void)
+<b>removeSlides</b><span>(startIndex, count = 1)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      #where to start removing slides from <p>#how many slides to remove</p>
     </span>
   </li>
   <li>
@@ -93,7 +131,7 @@
       </a>
     </span>
     <span class='desc'>
-      <h1 id="-next-prev-">&#39;next&#39;/&#39;prev&#39;</h1> 
+      #&#39;next&#39;/&#39;prev&#39; 
     </span>
   </li>
   <li>
@@ -105,7 +143,7 @@
       </a>
     </span>
     <span class='desc'>
-      resize this carousel 
+      resize this carousel <p>#make sure everything is how it should be</p>
     </span>
   </li>
   <li>
@@ -122,6 +160,18 @@
   </li>
   <li>
     <span class='signature'>
+      <a href='#setArrows-dynamic'>
+        #
+(void)
+<b>setArrows</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#setNext-dynamic'>
         #
 (void)
@@ -129,6 +179,7 @@
       </a>
     </span>
     <span class='desc'>
+      # 
     </span>
   </li>
   <li>
@@ -137,6 +188,53 @@
         #
 (void)
 <b>setPrev</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#saveSize-dynamic'>
+        #
+(void)
+<b>saveSize</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#didResize-dynamic'>
+        #
+(void)
+<b>didResize</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#showBtn-dynamic'>
+        #
+(void)
+<b>showBtn</b><span>(btn)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hideBtn-dynamic'>
+        #
+(void)
+<b>hideBtn</b><span>(btn)</span>
       </a>
     </span>
     <span class='desc'>
@@ -187,9 +285,82 @@
       </a>
     </span>
     <span class='desc'>
+      # 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#nextBtnClick-dynamic'>
+        #
+(void)
+<b>nextBtnClick</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prevBtnClick-dynamic'>
+        #
+(void)
+<b>prevBtnClick</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#arrowHandlersOff-dynamic'>
+        #
+(void)
+<b>arrowHandlersOff</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#keyEvents-dynamic'>
+        #
+(void)
+<b>keyEvents</b><span>(e)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#keyEventsHandler-dynamic'>
+        #
+(void)
+<b>keyEventsHandler</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
     </span>
   </li>
 </ul>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='deleteNonResetables-static'>
+      .
+(void)
+<b>deleteNonResetables</b><span>(options)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
       <h2>Constructor Details</h2>
       <div class='methods'>
   <div class='method_details'>
@@ -239,6 +410,15 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
+    <p class='signature' id='assertDefaults-dynamic'>
+      #
+(void)
+<b>assertDefaults</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
     <p class='signature' id='currentSlide-dynamic'>
       #
 (?)
@@ -281,17 +461,59 @@
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='resetableOptions-dynamic'>
+    <p class='signature' id='addSlides-dynamic'>
       #
 (void)
-<b>resetableOptions</b><span>()</span>
+<b>addSlides</b><span>(slides)</span>
       <br>
     </p>
     <div class='docstring'>
-  <h2 id="-private">@private</h2>
-
+  <p>#an array of slides to add</p>
 </div>
 <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>slides</span>
+      <span class='type'>
+        (
+          <tt>array</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeSlides-dynamic'>
+      #
+(void)
+<b>removeSlides</b><span>(startIndex, count = 1)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#where to start removing slides from</p><p>#how many slides to remove</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>startIndex</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+    </li>
+    <li>
+      <span class='name'>count</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
@@ -326,8 +548,7 @@
       <br>
     </p>
     <div class='docstring'>
-  <h1 id="-next-prev-">&#39;next&#39;/&#39;prev&#39;</h1>
-
+  <p>#&#39;next&#39;/&#39;prev&#39;</p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -351,7 +572,7 @@
       <br>
     </p>
     <div class='docstring'>
-  <p>resize this carousel</p>
+  <p>resize this carousel</p><p>#make sure everything is how it should be</p>
 </div>
 <div class='tags'>
 </div>
@@ -381,19 +602,89 @@
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='setArrows-dynamic'>
+      #
+(void)
+<b>setArrows</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='setNext-dynamic'>
       #
 (void)
 <b>setNext</b><span>()</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='setPrev-dynamic'>
       #
 (void)
 <b>setPrev</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='saveSize-dynamic'>
+      #
+(void)
+<b>saveSize</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='didResize-dynamic'>
+      #
+(void)
+<b>didResize</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='showBtn-dynamic'>
+      #
+(void)
+<b>showBtn</b><span>(btn)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hideBtn-dynamic'>
+      #
+(void)
+<b>hideBtn</b><span>(btn)</span>
       <br>
     </p>
     
@@ -445,6 +736,56 @@
       #
 (void)
 <b>prevHandler</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h2 id="-private">@private</h2>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='nextBtnClick-dynamic'>
+      #
+(void)
+<b>nextBtnClick</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prevBtnClick-dynamic'>
+      #
+(void)
+<b>prevBtnClick</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='arrowHandlersOff-dynamic'>
+      #
+(void)
+<b>arrowHandlersOff</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='keyEvents-dynamic'>
+      #
+(void)
+<b>keyEvents</b><span>(e)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='keyEventsHandler-dynamic'>
+      #
+(void)
+<b>keyEventsHandler</b><span>()</span>
       <br>
     </p>
     
