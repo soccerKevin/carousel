@@ -173,7 +173,17 @@ Scroller = (function() {
     this.moveTrack(diff);
     this.setCurrent(index);
     this.atClone = $slideClone.hasClass('clone');
+    if (!animated) {
+      this.setSelected(index);
+    }
     return index;
+  };
+
+  Scroller.prototype.afterAnimatedGoto = function() {
+    this.setSelected(this.currentSlideIndex());
+    if (this.options.infinite) {
+      return this.gotoCurrent(false);
+    }
   };
 
 
@@ -290,6 +300,11 @@ Scroller = (function() {
     return this.getSlide(index).addClass('carousel-current');
   };
 
+  Scroller.prototype.setSelected = function(index) {
+    this.getSlides().removeClass('carousel-selected');
+    return this.getSlide(index).addClass('carousel-selected');
+  };
+
   Scroller.prototype.setSlideWidth = function() {
     var scrollerWidth, w, width;
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
@@ -402,9 +417,7 @@ Scroller = (function() {
     return $(document).on(transitionEnd, (function(_this) {
       return function() {
         _this.track.removeClass(_this.TRACK_TRANSITION);
-        if (_this.options.infinite) {
-          return _this.gotoCurrent(false);
-        }
+        return _this.afterAnimatedGoto();
       };
     })(this));
   };

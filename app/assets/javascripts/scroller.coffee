@@ -115,12 +115,18 @@ class Scroller
 
     return -1 if @scroller.offset().left == diff
     @moveTrack diff # to a slideClone
-    @setCurrent index # set current to index of slide
+    @setCurrent index
+    # @setCurrent index # set current to index of slide
     ###### ALERT ######
     # current slide could be flagged from '@setCurrent index', but not be in position
     # in this case, assume that transitionEnd handler will run "gotoCurrent false"
     @atClone = $slideClone.hasClass 'clone'
+    @setSelected index unless animated
     index
+
+  afterAnimatedGoto: ->
+    @setSelected @currentSlideIndex()
+    @gotoCurrent false if @options.infinite
 
   ###
     @private
@@ -204,6 +210,10 @@ class Scroller
     @getSlides().removeClass 'carousel-current'
     @getSlide(index).addClass 'carousel-current'
 
+  setSelected: (index)->
+    @getSlides().removeClass 'carousel-selected'
+    @getSlide(index).addClass 'carousel-selected'
+
   setSlideWidth: ()->
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;
     w = @options.slideWidth
@@ -281,8 +291,7 @@ class Scroller
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
       # needs to be done when moveTrack is finished
-      @gotoCurrent false if @options.infinite
-      # @gotoCurrent false if @options.infinite
+      @afterAnimatedGoto()
 
 $ ->
   window.Scroller = Scroller

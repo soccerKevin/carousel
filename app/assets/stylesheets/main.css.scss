@@ -54,10 +54,18 @@
 
     .card{
       position: relative;
+      background: black;
 
       img{
         // width: 100%;
         height: 100%;
+        opacity: .2;
+      }
+
+      &.carousel-selected{
+        img{
+          opacity: 1;
+        }
       }
 
       .number{
