@@ -110,6 +110,7 @@ class Scroller
   ###
   goto: (index, animated = true)->
     return -1 unless @readyToMove animated
+    @removeSelected()
 
     @lazyLoad() if @options.lazyLoad
     @track.addClass @TRACK_TRANSITION if animated
@@ -219,8 +220,11 @@ class Scroller
     @getSlide(index).addClass 'carousel-current'
 
   setSelected: (index)->
-    @getSlides().removeClass 'carousel-selected'
+    @removeSelected()
     @getSlide(index).addClass 'carousel-selected'
+
+  removeSelected: ->
+    @getSlides().removeClass 'carousel-selected'
 
   setSlideWidth: ()->
     scrollerWidth = this.scroller[0].getBoundingClientRect().width;

@@ -163,6 +163,7 @@ Scroller = (function() {
     if (!this.readyToMove(animated)) {
       return -1;
     }
+    this.removeSelected();
     if (this.options.lazyLoad) {
       this.lazyLoad();
     }
@@ -308,8 +309,12 @@ Scroller = (function() {
   };
 
   Scroller.prototype.setSelected = function(index) {
-    this.getSlides().removeClass('carousel-selected');
+    this.removeSelected();
     return this.getSlide(index).addClass('carousel-selected');
+  };
+
+  Scroller.prototype.removeSelected = function() {
+    return this.getSlides().removeClass('carousel-selected');
   };
 
   Scroller.prototype.setSlideWidth = function() {
