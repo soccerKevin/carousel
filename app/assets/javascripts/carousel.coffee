@@ -1,3 +1,4 @@
+window.keyCount = 0
 ###
   Responsive Carousel that just works
 
@@ -360,10 +361,6 @@ class Carousel
     if @options.keyEvents
       $(document).on 'keypress', (e)=>
         @keyEvents e
-    # else
-    #   $(document).off 'keypress', @keyEvents
-
-
 
 
 $ ->

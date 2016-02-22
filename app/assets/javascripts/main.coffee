@@ -5,7 +5,7 @@ $ ->
     alignment: 'center' #left, center, right
     initialSlide: 13 #indexed from 0
     ltr: true #left to right / right to left
-    slidesToScroll: 4 #per action to move
+    slidesToScroll: 1 #per action to move
     slideWidth: .25
     speed: 800 #mili-seconds
     # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
@@ -62,7 +62,7 @@ $ ->
     alignment: 'right' #left, center, right
     initialSlide: 2 #indexed from 0
     ltr: false #left to right / right to left
-    slidesToScroll: 4 #per action to move
+    slidesToScroll: 1 #per action to move
     slideWidth: 'auto'
     speed: 800 #mili-seconds
     # cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
