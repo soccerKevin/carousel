@@ -95,6 +95,11 @@ window.keyCount = 0;
    * @option [boolean] titleSlide
   #default: false
   #marks the first slide as a title slide
+
+   * Event Types
+  #karouselLoad
+  #karouselOptionsChanged
+  #slideChanged
  */
 
 Carousel = (function() {

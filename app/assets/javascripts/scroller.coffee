@@ -22,6 +22,7 @@ class Scroller
     # wait for dom to layout and css to paint
     $(window).load =>
       @applyOptions()
+      @dispatchEvent 'karouselLoad'
 
   ###
     #use to apply the initial options
@@ -33,7 +34,9 @@ class Scroller
   applyOptions: (options = @options)->
     @setSlideWidth() if @Util.present options.slideWidth
     @setInfiniteSlides() if @Util.present options.infinite
-    @gotoCurrent false
+    index = @gotoCurrent false
+    @dispatchEvent 'karouselOptionsChanged'
+    index
 
   addSlides: (slides)->
     @removeInfiniteSlides() if @options.infinite
@@ -121,12 +124,13 @@ class Scroller
     # current slide could be flagged from '@setCurrent index', but not be in position
     # in this case, assume that transitionEnd handler will run "gotoCurrent false"
     @atClone = $slideClone.hasClass 'clone'
-    @setSelected index unless animated
+    unless animated
+      @setSelected index
+      @dispatchEvent 'slideChanged'
     index
 
-  afterAnimatedGoto: ->
-    @setSelected @currentSlideIndex()
-    @gotoCurrent false if @options.infinite
+  dispatchEvent: (eventType)->
+    @scroller.trigger eventType
 
   ###
     @private
@@ -291,7 +295,7 @@ class Scroller
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
       # needs to be done when moveTrack is finished
-      @afterAnimatedGoto()
+      @gotoCurrent false if @options.infinite
 
 $ ->
   window.Scroller = Scroller
