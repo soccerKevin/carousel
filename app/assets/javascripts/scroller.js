@@ -22,11 +22,11 @@ Scroller = (function() {
     this.initilizeSlides();
     this.setTrackTransition();
     this.handlers();
-    setTimeout(((function(_this) {
+    $(window).load((function(_this) {
       return function() {
         return _this.applyOptions();
       };
-    })(this)), 50);
+    })(this));
   }
 
 

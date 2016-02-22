@@ -19,12 +19,9 @@ class Scroller
     @setTrackTransition()
     @handlers()
 
-    # fixes wierd bug
-    # essentially, making sure everything is loaded first
-    # 50ms seems to be the short limit
-    setTimeout (=>
+    # wait for dom to layout and css to paint
+    $(window).load =>
       @applyOptions()
-    ), 50
 
   ###
     #use to apply the initial options
