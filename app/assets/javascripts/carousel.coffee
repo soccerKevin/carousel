@@ -350,14 +350,18 @@ class Carousel
     @prevBtn.off() if @prevBtn?
 
   keyEvents: (e)->
-    console.log e
+    return false unless @options.keyEvents
+    if e.keyCode == 37
+      @prevBtnClick()
+    else if e.keyCode == 39
+      @nextBtnClick()
 
   keyEventsHandler: ->
-    console.log @options.keyEvents
     if @options.keyEvents
-      $(document).on 'keypress', @keyEvents
-    else
-      $(document).off 'keypress', @keyEvents
+      $(document).on 'keypress', (e)=>
+        @keyEvents e
+    # else
+    #   $(document).off 'keypress', @keyEvents
 
 
 

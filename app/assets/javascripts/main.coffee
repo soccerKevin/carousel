@@ -73,6 +73,7 @@ $ ->
     lazyLoadRate: 4
     lazyLoadAttribute: 'data-lazy'
     hideUnclickableArrows: true
+    keyEvents: true
     # arrows: true
 
     # draggable: true

@@ -36,7 +36,8 @@ $(function() {
     lazyLoad: true,
     lazyLoadRate: 4,
     lazyLoadAttribute: 'data-lazy',
-    hideUnclickableArrows: true
+    hideUnclickableArrows: true,
+    keyEvents: true
   };
   window.carousel2 = new window.Carousel('#carousel2', options2);
   return $('#change-options').on('click', function() {

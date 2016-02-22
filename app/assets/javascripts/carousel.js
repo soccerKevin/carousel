@@ -440,15 +440,23 @@ Carousel = (function() {
   };
 
   Carousel.prototype.keyEvents = function(e) {
-    return console.log(e);
+    if (!this.options.keyEvents) {
+      return false;
+    }
+    if (e.keyCode === 37) {
+      return this.prevBtnClick();
+    } else if (e.keyCode === 39) {
+      return this.nextBtnClick();
+    }
   };
 
   Carousel.prototype.keyEventsHandler = function() {
-    console.log(this.options.keyEvents);
     if (this.options.keyEvents) {
-      return $(document).on('keypress', this.keyEvents);
-    } else {
-      return $(document).off('keypress', this.keyEvents);
+      return $(document).on('keypress', (function(_this) {
+        return function(e) {
+          return _this.keyEvents(e);
+        };
+      })(this));
     }
   };
 
