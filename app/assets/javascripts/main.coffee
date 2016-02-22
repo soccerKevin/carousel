@@ -85,8 +85,18 @@ $ ->
 
   window.carousel2 = new window.Carousel '#carousel2', options2
 
+  #karouselLoad
+  #karouselOptionsChanged
+  #slideChanged
+
   $(document).on 'slideChanged', (e)=>
-    console.log 'SLIDE CHANGED'
+    console.log 'slideChanged'
+
+  $(document).on 'karouselOptionsChanged', (e)=>
+    console.log 'optionsChanged'
+
+  $(document).on 'karouselLoad', (e)=>
+    console.log 'loaded'
 
   $('#change-options').on 'click', ->
     # $slides = $('#extras').children()

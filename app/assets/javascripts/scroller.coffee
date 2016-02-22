@@ -22,6 +22,7 @@ class Scroller
     # wait for dom to layout and css to paint
     $(window).load =>
       @applyOptions()
+      @dispatchEvent 'karouselLoad'
 
   ###
     #use to apply the initial options
@@ -33,7 +34,9 @@ class Scroller
   applyOptions: (options = @options)->
     @setSlideWidth() if @Util.present options.slideWidth
     @setInfiniteSlides() if @Util.present options.infinite
-    @gotoCurrent false
+    index = @gotoCurrent false
+    @dispatchEvent 'karouselOptionsChanged'
+    index
 
   addSlides: (slides)->
     @removeInfiniteSlides() if @options.infinite
@@ -123,8 +126,11 @@ class Scroller
     @atClone = $slideClone.hasClass 'clone'
     unless animated
       @setSelected index
-      @scroller.trigger 'slideChanged'
+      @dispatchEvent 'slideChanged'
     index
+
+  dispatchEvent: (eventType)->
+    @scroller.trigger eventType
 
   ###
     @private

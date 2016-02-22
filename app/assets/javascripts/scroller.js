@@ -24,7 +24,8 @@ Scroller = (function() {
     this.handlers();
     $(window).load((function(_this) {
       return function() {
-        return _this.applyOptions();
+        _this.applyOptions();
+        return _this.dispatchEvent('karouselLoad');
       };
     })(this));
   }
@@ -39,6 +40,7 @@ Scroller = (function() {
    */
 
   Scroller.prototype.applyOptions = function(options) {
+    var index;
     if (options == null) {
       options = this.options;
     }
@@ -48,7 +50,9 @@ Scroller = (function() {
     if (this.Util.present(options.infinite)) {
       this.setInfiniteSlides();
     }
-    return this.gotoCurrent(false);
+    index = this.gotoCurrent(false);
+    this.dispatchEvent('karouselOptionsChanged');
+    return index;
   };
 
   Scroller.prototype.addSlides = function(slides) {
@@ -175,9 +179,13 @@ Scroller = (function() {
     this.atClone = $slideClone.hasClass('clone');
     if (!animated) {
       this.setSelected(index);
-      this.scroller.trigger('slideChanged');
+      this.dispatchEvent('slideChanged');
     }
     return index;
+  };
+
+  Scroller.prototype.dispatchEvent = function(eventType) {
+    return this.scroller.trigger(eventType);
   };
 
 
