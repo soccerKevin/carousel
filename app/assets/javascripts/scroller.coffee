@@ -110,7 +110,6 @@ class Scroller
   ###
   goto: (index, animated = true)->
     return -1 unless @readyToMove animated
-    @removeSelected()
 
     @lazyLoad() if @options.lazyLoad
     @track.addClass @TRACK_TRANSITION if animated
@@ -118,6 +117,8 @@ class Scroller
     diff = @slideCloneStageDiff $slideClone
 
     return -1 if @scroller.offset().left == diff
+
+    @removeSelected()
     @moveTrack diff # to a slideClone
     @setCurrent index
     @slideSelected = index

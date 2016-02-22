@@ -163,7 +163,6 @@ Scroller = (function() {
     if (!this.readyToMove(animated)) {
       return -1;
     }
-    this.removeSelected();
     if (this.options.lazyLoad) {
       this.lazyLoad();
     }
@@ -175,6 +174,7 @@ Scroller = (function() {
     if (this.scroller.offset().left === diff) {
       return -1;
     }
+    this.removeSelected();
     this.moveTrack(diff);
     this.setCurrent(index);
     this.slideSelected = index;
