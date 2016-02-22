@@ -175,15 +175,9 @@ Scroller = (function() {
     this.atClone = $slideClone.hasClass('clone');
     if (!animated) {
       this.setSelected(index);
+      this.scroller.trigger('slideChanged');
     }
     return index;
-  };
-
-  Scroller.prototype.afterAnimatedGoto = function() {
-    this.setSelected(this.currentSlideIndex());
-    if (this.options.infinite) {
-      return this.gotoCurrent(false);
-    }
   };
 
 
@@ -417,7 +411,9 @@ Scroller = (function() {
     return $(document).on(transitionEnd, (function(_this) {
       return function() {
         _this.track.removeClass(_this.TRACK_TRANSITION);
-        return _this.afterAnimatedGoto();
+        if (_this.options.infinite) {
+          return _this.gotoCurrent(false);
+        }
       };
     })(this));
   };

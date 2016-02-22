@@ -121,12 +121,10 @@ class Scroller
     # current slide could be flagged from '@setCurrent index', but not be in position
     # in this case, assume that transitionEnd handler will run "gotoCurrent false"
     @atClone = $slideClone.hasClass 'clone'
-    @setSelected index unless animated
+    unless animated
+      @setSelected index
+      @scroller.trigger 'slideChanged'
     index
-
-  afterAnimatedGoto: ->
-    @setSelected @currentSlideIndex()
-    @gotoCurrent false if @options.infinite
 
   ###
     @private
@@ -291,7 +289,7 @@ class Scroller
     $(document).on transitionEnd, =>
       @track.removeClass @TRACK_TRANSITION
       # needs to be done when moveTrack is finished
-      @afterAnimatedGoto()
+      @gotoCurrent false if @options.infinite
 
 $ ->
   window.Scroller = Scroller
