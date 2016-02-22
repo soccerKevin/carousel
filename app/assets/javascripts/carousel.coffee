@@ -1,4 +1,3 @@
-window.keyCount = 0
 ###
   Responsive Carousel that just works
 
