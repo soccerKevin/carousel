@@ -205,7 +205,6 @@ Carousel = (function() {
       lazyLoadRate: 0,
       lazyLoadAttribute: 'data-lazy',
       cssEase: 'ease-out',
-      widthHeightRatio: 'auto',
       hideUnclickableArrows: false,
       keyEvents: false
     };

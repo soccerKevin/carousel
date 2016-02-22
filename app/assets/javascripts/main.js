@@ -21,7 +21,8 @@ $(function() {
     wheelEvents: true
   };
   window.carousel1 = new window.Carousel('#carousel1', options);
-  options1a = options2 = {
+  options1a = {};
+  options2 = {
     slideWidth: 1,
     next: '#carousel2-container .next-btn .arrow',
     prev: '#carousel2-container .prev-btn .arrow',

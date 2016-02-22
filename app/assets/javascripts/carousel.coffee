@@ -182,7 +182,7 @@ class Carousel
       infinite: false
       # in case your slides have a container or anchor around them
       slideSelector: '>*'
-      # scroll speed
+      # scroll speed (ms)
       speed: 1000
       # lazy load images in slides? (will load all images in a slide)
       lazyLoad: false
@@ -194,12 +194,12 @@ class Carousel
       cssEase: 'ease-out'
       # scroll or fade
       # effect: 'scroll'
-      widthHeightRatio: 'auto'
       # hide prev arrow if can't move previous
       # hide next arrow if can't move next
       hideUnclickableArrows: false
       keyEvents: false
       # wheelEvents: false
+      # widthHeightRatio: 'auto'
 
       # draggable: true
       # edgeFriction: 0

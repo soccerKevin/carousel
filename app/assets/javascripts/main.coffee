@@ -29,7 +29,7 @@ $ ->
   window.carousel1 = new window.Carousel '#carousel1', options
 
 
-  options1a =
+  options1a = {}
     # next: '#carousel1-container .next-btn .arrow'
     # prev: '#carousel1-container .prev-btn .arrow'
     # alignment: 'center' #left, center, right

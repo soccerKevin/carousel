@@ -213,7 +213,7 @@ class Scroller
   setInfiniteSlides: ()->
     if @options.infinite && @track.find('.clone').length < 1
       @addInfiniteSlides()
-    else
+    else if !@options.infinite
       @removeInfiniteSlides()
 
   addInfiniteSlides: ->

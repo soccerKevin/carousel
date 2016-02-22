@@ -301,7 +301,7 @@ Scroller = (function() {
   Scroller.prototype.setInfiniteSlides = function() {
     if (this.options.infinite && this.track.find('.clone').length < 1) {
       return this.addInfiniteSlides();
-    } else {
+    } else if (!this.options.infinite) {
       return this.removeInfiniteSlides();
     }
   };
