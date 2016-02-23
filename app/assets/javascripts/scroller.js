@@ -168,6 +168,7 @@ Scroller = (function() {
     }
     if (animated) {
       this.track.addClass(this.TRACK_TRANSITION);
+      this.transitionEndHandler();
     }
     ref = this.nextSlideCloneAndIndex(index), $slideClone = ref[0], index = ref[1];
     diff = this.slideCloneStageDiff($slideClone);
@@ -187,6 +188,7 @@ Scroller = (function() {
   };
 
   Scroller.prototype.afterSlideChange = function() {
+    this.track.removeClass(this.TRACK_TRANSITION);
     return this.setSelected(this.slideSelected);
   };
 
@@ -419,16 +421,13 @@ Scroller = (function() {
     return this.applyOptions(options);
   };
 
-  Scroller.prototype.handlers = function() {
-    return this.transitionEndHandler();
-  };
+  Scroller.prototype.handlers = function() {};
 
   Scroller.prototype.transitionEndHandler = function() {
     var transitionEnd;
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd';
-    return $(document).on(transitionEnd, (function(_this) {
+    return $(document).one(transitionEnd, (function(_this) {
       return function() {
-        _this.track.removeClass(_this.TRACK_TRANSITION);
         _this.afterSlideChange();
         if (_this.options.infinite) {
           return _this.gotoCurrent(false);

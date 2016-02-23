@@ -458,9 +458,7 @@ Carousel = (function() {
       })(this));
     }
     if (this.options.wheelEvents) {
-      return document.addEventListener('onscroll', function(e) {
-        return console.log(e.wheelDelta);
-      });
+      return document.addEventListener('onscroll', function(e) {});
     }
   };
 

@@ -90,13 +90,13 @@ $ ->
   #slideChanged
 
   $(document).on 'slideChanged', (e)=>
-    console.log 'slideChanged'
+    # console.log 'slideChanged'
 
   $(document).on 'karouselOptionsChanged', (e)=>
-    console.log 'optionsChanged'
+    # console.log 'optionsChanged'
 
   $(document).on 'karouselLoad', (e)=>
-    console.log 'loaded'
+    # console.log 'loaded'
 
   $('#change-options').on 'click', ->
     # $slides = $('#extras').children()

@@ -368,10 +368,8 @@ class Carousel
         @keyEvents e
 
     if @options.wheelEvents
-      # $(document).on 'mousewheel', (e)=>
-      #   console.log e
       document.addEventListener 'onscroll', (e)->
-        console.log(e.wheelDelta);
+        # console.log(e.wheelDelta);
 
 
 

@@ -112,7 +112,9 @@ class Scroller
     return -1 unless @readyToMove animated
 
     @lazyLoad() if @options.lazyLoad
-    @track.addClass @TRACK_TRANSITION if animated
+    if animated
+      @track.addClass @TRACK_TRANSITION
+      @transitionEndHandler()
     [$slideClone, index] = @nextSlideCloneAndIndex index
     diff = @slideCloneStageDiff $slideClone
 
@@ -133,6 +135,7 @@ class Scroller
     index
 
   afterSlideChange: ->
+    @track.removeClass @TRACK_TRANSITION
     @setSelected @slideSelected
 
   dispatchEvent: (eventType)->
@@ -297,12 +300,11 @@ class Scroller
     @applyOptions options
 
   handlers: ->
-    @transitionEndHandler()
+    # @transitionEndHandler()
 
   transitionEndHandler: ->
     transitionEnd = 'transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd transitionEnd'
-    $(document).on transitionEnd, =>
-      @track.removeClass @TRACK_TRANSITION
+    $(document).one transitionEnd, =>
       @afterSlideChange()
       # needs to be done when moveTrack is finished
       @gotoCurrent false if @options.infinite

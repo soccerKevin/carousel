@@ -43,19 +43,13 @@ $(function() {
   };
   window.carousel2 = new window.Carousel('#carousel2', options2);
   $(document).on('slideChanged', (function(_this) {
-    return function(e) {
-      return console.log('slideChanged');
-    };
+    return function(e) {};
   })(this));
   $(document).on('karouselOptionsChanged', (function(_this) {
-    return function(e) {
-      return console.log('optionsChanged');
-    };
+    return function(e) {};
   })(this));
   $(document).on('karouselLoad', (function(_this) {
-    return function(e) {
-      return console.log('loaded');
-    };
+    return function(e) {};
   })(this));
   return $('#change-options').on('click', function() {
     return window.carousel1.updateOptions(options1a);
